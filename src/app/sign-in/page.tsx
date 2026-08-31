@@ -1,12 +1,29 @@
 import { signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function SignInPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
       <div className="w-full max-w-sm space-y-6">
         <div className="space-y-2 text-center flex flex-col items-center">
-          <img src="/logo.png" alt="Saarthi Logo" className="w-16 h-16 rounded-xl mb-4 shadow-sm object-cover" />
+          
+          {/* Logo with Next.js Image for proper optimization + fallback */}
+          <div className="relative w-16 h-16 rounded-xl mb-4 shadow-sm overflow-hidden bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
+            <Image
+              src="/logo.png"
+              alt="Saarthi"
+              width={64}
+              height={64}
+              priority
+              className="w-16 h-16 rounded-xl object-cover"
+              onError={(e) => {
+                // Hide the img and show the gradient fallback
+                (e.target as HTMLImageElement).style.display = 'none';
+              }}
+            />
+          </div>
+
           <h1 className="text-2xl font-bold tracking-tight">Saarthi</h1>
           <p className="text-sm text-[hsl(var(--ink-secondary))]">
             Enter your credentials to unlock.
