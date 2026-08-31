@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
   
   try {
     const body = await req.json();
-    const { name, type, creditLimitMinor, statementDay, dueDay } = body;
+    const { name, type, creditLimitMinor, statementDay, dueDay, lastFour, notes, institutionId } = body;
     if (!name || !type) return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
 
     const [acc] = await db.insert(financeAccounts).values({
@@ -33,6 +33,9 @@ export async function POST(req: NextRequest) {
       creditLimitMinor: creditLimitMinor || null,
       statementDay: statementDay || null,
       dueDay: dueDay || null,
+      lastFour: lastFour || null,
+      notes: notes || null,
+      institutionId: institutionId || null,
     }).returning();
     
     if (body.initialBalanceMinor && body.initialBalanceMinor > 0) {

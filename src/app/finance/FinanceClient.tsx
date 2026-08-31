@@ -37,7 +37,7 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <h1 className="text-2xl font-bold">Finance</h1>
-          <Button size="sm" onClick={() => setIsAddAccountOpen(true)} className="gap-2 h-8 px-3 text-xs"><Plus className="w-3.5 h-3.5" /> Add Account</Button>
+          <Button variant="secondary" onClick={() => setIsAddAccountOpen(true)} className="gap-2 h-8 px-3 text-xs"><Plus className="w-3.5 h-3.5" /> Add finance</Button>
         </div>
         <div className="flex items-center gap-4">
           <Button variant="utility" onClick={prevMonth}><ChevronLeft className="w-4 h-4" /></Button>
@@ -46,7 +46,16 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
         </div>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      {accounts.length === 0 && summary.totalIncome === 0 && summary.totalExpense === 0 ? (
+        <EmptyState 
+          icon={<Landmark className="w-8 h-8" />}
+          title="Start tracking your money"
+          description="Add your bank accounts and credit cards to see your balances, spending, and upcoming payments in one place."
+          action={<Button onClick={() => setIsAddAccountOpen(true)} className="gap-2"><Plus className="w-4 h-4" /> Add finance</Button>}
+        />
+      ) : (
+        <>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="hover:border-[hsl(var(--ink-muted))] transition-colors">
           <CardHeader className="pb-2"><CardTitle className="text-[13px] text-[hsl(var(--ink-muted))] font-semibold tracking-wider">INCOME</CardTitle></CardHeader>
           <CardContent><p className="text-2xl font-bold text-[hsl(var(--success))]">₹{summary.totalIncome.toLocaleString()}</p></CardContent>
@@ -77,7 +86,7 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
           <CardHeader><CardTitle className="flex items-center gap-2"><Landmark className="w-5 h-5" /> Bank Accounts</CardTitle></CardHeader>
           <CardContent>
             {accounts.filter((a: any) => a.type === 'BANK_ACCOUNT').length === 0 ? (
-              <EmptyState compact icon={<Landmark className="w-5 h-5" />} title="No bank accounts" description="Create an account to track your money." />
+              <EmptyState compact icon={<Landmark className="w-5 h-5" />} title="No bank accounts yet" description="Add an account to start tracking your money." action={<Button variant="secondary" onClick={() => setIsAddAccountOpen(true)}>Add bank account</Button>} />
             ) : (
               <div className="space-y-4">
                 {accounts.filter((a: any) => a.type === 'BANK_ACCOUNT').map((acc: any) => (
@@ -95,7 +104,7 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
           <CardHeader><CardTitle className="flex items-center gap-2"><CreditCard className="w-5 h-5 text-[hsl(var(--ink-secondary))]" /> Credit Cards</CardTitle></CardHeader>
           <CardContent>
             {accounts.filter((a: any) => a.type === 'CREDIT_CARD').length === 0 ? (
-              <EmptyState compact icon={<CreditCard className="w-5 h-5" />} title="No credit cards" description="Link your credit cards here." />
+              <EmptyState compact icon={<CreditCard className="w-5 h-5" />} title="No credit cards yet" description="Add a credit card to track outstanding balances and payments." action={<Button variant="secondary" onClick={() => setIsAddAccountOpen(true)}>Add credit card</Button>} />
             ) : (
               <div className="space-y-4">
                 {accounts.filter((a: any) => a.type === 'CREDIT_CARD').map((acc: any) => (
@@ -156,13 +165,14 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
             )}
           </CardContent>
         </Card>
-      </div>
+        </div>
       
-      <div className="flex gap-4">
-        <Button variant="utility" className="w-full" onClick={() => router.push('/finance/rules')}>Manage Rules</Button>
-        <Button variant="utility" className="w-full" onClick={() => router.push('/finance/recurring')}>Manage Recurring</Button>
-        <Button variant="utility" className="w-full" onClick={() => router.push('/finance/ocr')}>Import Statement</Button>
-      </div>
+        <div className="flex gap-4">
+          <Button variant="utility" className="w-full" onClick={() => router.push('/finance/rules')}>Manage Rules</Button>
+          <Button variant="utility" className="w-full" onClick={() => router.push('/finance/recurring')}>Manage Recurring</Button>
+          <Button variant="utility" className="w-full" onClick={() => router.push('/finance/ocr')}>Import Statement</Button>
+        </div>
+      </>)}
 
       <AddAccountDialog 
         open={isAddAccountOpen} 

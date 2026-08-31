@@ -412,6 +412,9 @@ export const financeAccounts = pgTable('finance_accounts', {
   creditLimitMinor: integer('credit_limit_minor'), // e.g. for credit cards
   statementDay: integer('statement_day'), // 1-31
   dueDay: integer('due_day'), // 1-31
+  lastFour: text('last_four'),
+  notes: text('notes'),
+  institutionId: text('institution_id'),
   isActive: boolean('is_active').default(true).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),

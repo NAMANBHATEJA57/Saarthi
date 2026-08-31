@@ -71,6 +71,13 @@
       "when": 1788181337751,
       "tag": "0009_clear_gideon",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1788184994989,
+      "tag": "0010_glossy_timeslip",
+      "breakpoints": true
     }
   ]
 }

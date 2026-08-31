@@ -1,7 +1,8 @@
 import { auth, signOut } from "@/auth";
 import { db } from "@/lib/db";
 import { userPreferences, users } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, isNull, and } from "drizzle-orm";
+import { financeAccounts } from "@/lib/db/schema";
 import { SettingsForm } from "./SettingsForm";
 import { SettingsFinanceSection } from "@/components/settings/SettingsFinanceSection";
 import { LogOut } from "lucide-react";
@@ -19,6 +20,8 @@ export default async function SettingsPage() {
     theme: "system" as "system" | "dark" | "light",
   };
 
+  let accounts: any[] = [];
+
   if (userId) {
     const userRec = await db.select().from(users).where(eq(users.id, userId)).limit(1);
     if (userRec.length > 0 && userRec[0].name) {
@@ -35,6 +38,8 @@ export default async function SettingsPage() {
         theme: prefs[0].theme as "system" | "dark" | "light",
       };
     }
+    
+    accounts = await db.select().from(financeAccounts).where(and(eq(financeAccounts.userId, userId), isNull(financeAccounts.deletedAt)));
   }
 
   return (
@@ -70,7 +75,7 @@ export default async function SettingsPage() {
         </form>
       </div>
 
-      <SettingsFinanceSection />
+      <SettingsFinanceSection accounts={accounts} />
 
       <div className="space-y-4 bg-[hsl(var(--surface))] p-5 rounded-lg border border-[hsl(var(--hairline))]">
         <h3 className="text-sm font-semibold">Data Export</h3>
