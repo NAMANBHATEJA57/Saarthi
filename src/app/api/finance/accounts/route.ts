@@ -3,6 +3,7 @@ import { auth } from '@/auth';
 import { db } from '@/lib/db';
 import { financeAccounts } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
+import { financeTransactions } from '@/lib/db/schema';
 
 export async function GET(req: NextRequest) {
   const session = await auth();
@@ -33,6 +34,20 @@ export async function POST(req: NextRequest) {
       statementDay: statementDay || null,
       dueDay: dueDay || null,
     }).returning();
+    
+    if (body.initialBalanceMinor && body.initialBalanceMinor > 0) {
+      await db.insert(financeTransactions).values({
+        userId: session.user.id,
+        type: type === 'CREDIT_CARD' ? 'EXPENSE' : 'INCOME',
+        amountMinor: body.initialBalanceMinor,
+        currencyCode: 'INR',
+        transactionDate: new Date().toISOString().split('T')[0],
+        accountId: acc.id,
+        remark: 'Opening Balance',
+        source: 'MANUAL',
+        status: 'POSTED',
+      });
+    }
     
     return NextResponse.json({ account: acc });
   } catch (err) {

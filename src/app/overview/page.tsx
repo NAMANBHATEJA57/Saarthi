@@ -79,37 +79,30 @@ export default async function OverviewPage() {
         </section>
       )}
 
-      {/* Module Roadmap */}
+      {/* Active Modules */}
       <section>
-        <h2 className="text-xs font-semibold text-[hsl(var(--ink-muted))] tracking-wider mb-4">MODULE ROADMAP</h2>
+        <h2 className="text-xs font-semibold text-[hsl(var(--ink-muted))] tracking-wider mb-4">ACTIVE MODULES</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="p-5 rounded-lg bg-[hsl(var(--surface-elevated))] border border-[hsl(var(--hairline))] relative overflow-hidden">
+          <Link href="/food" className="group block p-5 rounded-lg bg-[hsl(var(--surface-elevated))] border border-[hsl(var(--hairline))] hover:border-[hsl(var(--ink-muted))] transition-colors relative overflow-hidden">
             <div className="absolute top-0 right-0 w-16 h-16 bg-[hsl(var(--primary))] opacity-10 blur-2xl rounded-full" />
-            <Apple className="w-6 h-6 text-[hsl(var(--primary))] mb-3" />
+            <Apple className="w-6 h-6 text-[hsl(var(--primary))] mb-3 group-hover:scale-110 transition-transform" />
             <h3 className="font-semibold text-sm mb-1">Food</h3>
-            <p className="text-xs text-[hsl(var(--ink-secondary))] mb-4">Nutrition and meal tracking.</p>
-            <span className="inline-flex items-center text-[10px] font-semibold tracking-wider text-[hsl(var(--primary))] bg-blue-500/10 px-2 py-1 rounded-full uppercase">
-              Coming Next
-            </span>
-          </div>
+            <p className="text-xs text-[hsl(var(--ink-secondary))]">Nutrition and meal tracking.</p>
+          </Link>
 
-          <div className="p-5 rounded-lg bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))] opacity-70">
-            <Dumbbell className="w-6 h-6 text-[hsl(var(--ink-muted))] mb-3" />
+          <Link href="/workout" className="group block p-5 rounded-lg bg-[hsl(var(--surface-elevated))] border border-[hsl(var(--hairline))] hover:border-[hsl(var(--ink-muted))] transition-colors relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-16 h-16 bg-orange-500 opacity-10 blur-2xl rounded-full" />
+            <Dumbbell className="w-6 h-6 text-orange-500 mb-3 group-hover:scale-110 transition-transform" />
             <h3 className="font-semibold text-sm mb-1">Workout</h3>
-            <p className="text-xs text-[hsl(var(--ink-secondary))] mb-4">Exercise tracking and programs.</p>
-            <span className="inline-flex items-center text-[10px] font-semibold tracking-wider text-[hsl(var(--ink-muted))] bg-[hsl(var(--canvas))] border border-[hsl(var(--hairline))] px-2 py-1 rounded-full uppercase">
-              Planned Later
-            </span>
-          </div>
+            <p className="text-xs text-[hsl(var(--ink-secondary))]">Exercise tracking and programs.</p>
+          </Link>
 
-          <div className="p-5 rounded-lg bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))] opacity-70">
-            <Scale className="w-6 h-6 text-[hsl(var(--ink-muted))] mb-3" />
+          <Link href="/weight" className="group block p-5 rounded-lg bg-[hsl(var(--surface-elevated))] border border-[hsl(var(--hairline))] hover:border-[hsl(var(--ink-muted))] transition-colors relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-16 h-16 bg-purple-500 opacity-10 blur-2xl rounded-full" />
+            <Scale className="w-6 h-6 text-purple-500 mb-3 group-hover:scale-110 transition-transform" />
             <h3 className="font-semibold text-sm mb-1">Weight</h3>
-            <p className="text-xs text-[hsl(var(--ink-secondary))] mb-4">Body metrics and goals.</p>
-            <span className="inline-flex items-center text-[10px] font-semibold tracking-wider text-[hsl(var(--ink-muted))] bg-[hsl(var(--canvas))] border border-[hsl(var(--hairline))] px-2 py-1 rounded-full uppercase">
-              Planned Later
-            </span>
-          </div>
+            <p className="text-xs text-[hsl(var(--ink-secondary))]">Body metrics and goals.</p>
+          </Link>
         </div>
       </section>
 

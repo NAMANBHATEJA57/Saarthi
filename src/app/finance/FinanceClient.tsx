@@ -7,13 +7,15 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, RefreshCcw, Receipt } from 'lucide-react';
 import { EmptyState } from '@/components/shared/EmptyState';
 import { useRouter } from 'next/navigation';
-import { Landmark, CreditCard } from 'lucide-react';
+import { Landmark, CreditCard, Plus } from 'lucide-react';
+import { AddAccountDialog } from '@/components/finance/AddAccountDialog';
 
 export default function FinanceClient({ initialSummary, initialBalances, initialAccountBalances, currentMonth }: any) {
   const router = useRouter();
   const [summary, setSummary] = useState(initialSummary);
   const [balances, setBalances] = useState(initialBalances);
   const [accounts, setAccounts] = useState(initialAccountBalances || []);
+  const [isAddAccountOpen, setIsAddAccountOpen] = useState(false);
 
   const prevMonth = () => {
     const d = new Date(currentMonth + '-01');
@@ -33,7 +35,10 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Finance</h1>
+        <div className="flex items-center gap-4">
+          <h1 className="text-2xl font-bold">Finance</h1>
+          <Button size="sm" onClick={() => setIsAddAccountOpen(true)} className="gap-2 h-8 px-3 text-xs"><Plus className="w-3.5 h-3.5" /> Add Account</Button>
+        </div>
         <div className="flex items-center gap-4">
           <Button variant="utility" onClick={prevMonth}><ChevronLeft className="w-4 h-4" /></Button>
           <span className="font-medium">{new Date(currentMonth + '-01').toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}</span>
@@ -158,6 +163,12 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
         <Button variant="utility" className="w-full" onClick={() => router.push('/finance/recurring')}>Manage Recurring</Button>
         <Button variant="utility" className="w-full" onClick={() => router.push('/finance/ocr')}>Import Statement</Button>
       </div>
+
+      <AddAccountDialog 
+        open={isAddAccountOpen} 
+        onOpenChange={setIsAddAccountOpen} 
+        onSuccess={() => window.location.reload()} 
+      />
     </div>
   );
 }

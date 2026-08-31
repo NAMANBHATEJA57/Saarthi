@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { userPreferences, users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { SettingsForm } from "./SettingsForm";
+import { SettingsFinanceSection } from "@/components/settings/SettingsFinanceSection";
 import { LogOut } from "lucide-react";
 
 export default async function SettingsPage() {
@@ -68,6 +69,8 @@ export default async function SettingsPage() {
           </button>
         </form>
       </div>
+
+      <SettingsFinanceSection />
 
       <div className="space-y-4 bg-[hsl(var(--surface))] p-5 rounded-lg border border-[hsl(var(--hairline))]">
         <h3 className="text-sm font-semibold">Data Export</h3>
