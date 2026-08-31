@@ -7,7 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, Plus } from 'lucide-react';
+import { ChevronLeft, Plus, Repeat } from 'lucide-react';
+import { EmptyState } from '@/components/shared/EmptyState';
 
 export default function RecurringRulesPage() {
   const router = useRouter();
@@ -77,7 +78,17 @@ export default function RecurringRulesPage() {
 
       <div className="space-y-4">
         {rules.length === 0 && !showForm && (
-          <p className="text-muted-foreground">No active recurring rules.</p>
+          <EmptyState
+            icon={<Repeat className="w-6 h-6" />}
+            title="No recurring rules"
+            description="Automate your budget tracking by adding recurring income or expenses."
+            action={
+              <Button variant="primary" onClick={() => setShowForm(true)}>
+                <Plus className="w-4 h-4 mr-2" />
+                Add Rule
+              </Button>
+            }
+          />
         )}
         
         {rules.map(rule => (
@@ -98,9 +109,11 @@ export default function RecurringRulesPage() {
       </div>
 
       {!showForm ? (
-        <Button variant="utility" onClick={() => setShowForm(true)} className="w-full flex gap-2">
-          <Plus className="w-4 h-4" /> Add Recurring Transaction
-        </Button>
+        rules.length > 0 && (
+          <Button variant="utility" onClick={() => setShowForm(true)} className="w-full flex gap-2">
+            <Plus className="w-4 h-4" /> Add Recurring Transaction
+          </Button>
+        )
       ) : (
         <Card>
           <CardContent className="p-4 space-y-4">

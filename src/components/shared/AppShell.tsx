@@ -78,7 +78,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {/* Desktop Sidebar (hidden on mobile) */}
       <aside className="hidden md:flex flex-col w-64 border-r border-[hsl(var(--hairline))] bg-[hsl(var(--canvas))] sticky top-0 h-[100dvh]">
         <div className="p-4 flex items-center gap-2 mb-2">
-          <img src="/Logo.png" alt="Saarthi Logo" className="w-6 h-6 rounded-[4px] object-cover" />
+          <img src="/logo.png" alt="Saarthi Logo" className="w-6 h-6 rounded-[4px] object-cover" />
           <span className="font-semibold text-[14px]">Saarthi</span>
         </div>
 

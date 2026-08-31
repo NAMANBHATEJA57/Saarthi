@@ -1,6 +1,7 @@
 import { Search, Link as LinkIcon, Calendar, CheckSquare, Dumbbell, Scale, FileText } from "lucide-react";
 import { auth } from "@/auth";
 import { SearchService } from "@/lib/search/service";
+import { EmptyState } from "@/components/shared/EmptyState";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -86,18 +87,18 @@ export default async function SearchPage({
             ))}
           </div>
         ) : (
-          <section className="bg-[hsl(var(--canvas))] border border-[hsl(var(--hairline))] border-dashed rounded-lg p-12 text-center">
-            <p className="text-sm text-[hsl(var(--ink-secondary))]">
-              No results found for "{query}"
-            </p>
-          </section>
+          <EmptyState
+            icon={<Search className="w-6 h-6" />}
+            title="No results found"
+            description={`We couldn't find anything matching "${query}".`}
+          />
         )
       ) : (
-        <section className="bg-[hsl(var(--canvas))] border border-[hsl(var(--hairline))] border-dashed rounded-lg p-12 text-center">
-          <p className="text-sm text-[hsl(var(--ink-secondary))]">
-            Enter a query to search across Saarthi.
-          </p>
-        </section>
+        <EmptyState
+          icon={<Search className="w-6 h-6" />}
+          title="Search Saarthi"
+          description="Enter a query above to search across your tasks, notes, workouts, and more."
+        />
       )}
     </div>
   );

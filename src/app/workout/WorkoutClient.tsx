@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Settings2, Trash2 } from "lucide-react";
+import { Plus, Settings2, Trash2, Activity, Dumbbell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RoutineEditor, WorkoutRoutine } from "@/components/workout/RoutineEditor";
 import { ScheduleEditor } from "@/components/workout/ScheduleEditor";
+import { EmptyState } from "@/components/shared/EmptyState";
 import { useRouter } from "next/navigation";
 
 const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -120,9 +121,12 @@ export function WorkoutClient({
         </h2>
         
         {recentSessions.length === 0 ? (
-          <div className="p-6 text-center text-sm text-[hsl(var(--ink-secondary))] border border-[hsl(var(--hairline))] rounded-xl">
-            No completed workouts yet.
-          </div>
+          <EmptyState
+            compact
+            icon={<Activity className="w-5 h-5" />}
+            title="No recent workouts"
+            description="Your completed sessions will appear here."
+          />
         ) : (
           <div className="grid grid-cols-1 gap-3">
             {recentSessions.map((session) => (
@@ -164,12 +168,17 @@ export function WorkoutClient({
         </div>
 
         {initialRoutines.length === 0 ? (
-          <div className="p-8 text-center bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))] rounded-xl">
-            <p className="text-[hsl(var(--ink-secondary))] mb-4">No routines created yet.</p>
-            <Button onClick={() => setIsCreatingRoutine(true)}>
-              Create Routine
-            </Button>
-          </div>
+          <EmptyState
+            icon={<Dumbbell className="w-6 h-6" />}
+            title="No routines yet"
+            description="Build your first workout routine to start tracking your progress."
+            action={
+              <Button variant="primary" onClick={() => setIsCreatingRoutine(true)}>
+                <Plus className="w-4 h-4 mr-2" />
+                Create Routine
+              </Button>
+            }
+          />
         ) : (
           <div className="grid grid-cols-1 gap-3">
             {initialRoutines.map((routine) => (

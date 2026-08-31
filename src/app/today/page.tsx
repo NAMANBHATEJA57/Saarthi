@@ -5,11 +5,12 @@ import { db } from "@/lib/db";
 import { userPreferences, weightEntries, workoutSchedules, workoutRoutines, workoutExercises, workoutDisplayStates, notes } from "@/lib/db/schema";
 import { eq, and, desc, isNull } from "drizzle-orm";
 import { WorkoutTodayWidget } from "@/components/workout/WorkoutTodayWidget";
-import { IndianRupee, CheckSquare } from "lucide-react";
+import { IndianRupee, CheckSquare, StickyNote } from "lucide-react";
 import { getMonthlySummary } from "@/lib/finance/service";
 import { getTodayTasksSummary } from "@/lib/tasks/service";
 import { CalendarTodayWidget } from "@/components/calendar/CalendarTodayWidget";
 import { RelationshipService } from "@/lib/relationships/service";
+import { EmptyState } from "@/components/shared/EmptyState";
 
 export default async function TodayPage() {
   const session = await auth();
@@ -206,12 +207,12 @@ export default async function TodayPage() {
       )}
 
       {/* Tasks Today */}
-      {todayTasks.length > 0 && (
-        <section>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xs font-semibold text-[hsl(var(--ink-muted))] tracking-wider">TASKS DUE TODAY</h2>
-            <Link href="/tasks" className="text-xs font-medium text-[hsl(var(--primary))] hover:underline">View all</Link>
-          </div>
+      <section>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xs font-semibold text-[hsl(var(--ink-muted))] tracking-wider">TASKS DUE TODAY</h2>
+          <Link href="/tasks" className="text-xs font-medium text-[hsl(var(--primary))] hover:underline">View all</Link>
+        </div>
+        {todayTasks.length > 0 ? (
           <div className="space-y-2">
             {todayTasks.map(task => (
               <div key={task.id} className="flex items-start gap-3 p-3 bg-[hsl(var(--surface-elevated))] rounded-lg border border-[hsl(var(--hairline))]">
@@ -237,16 +238,23 @@ export default async function TodayPage() {
               </div>
             ))}
           </div>
-        </section>
-      )}
+        ) : (
+          <EmptyState
+            compact
+            icon={<CheckSquare className="w-5 h-5" />}
+            title="No tasks due today"
+            description="You're all caught up for the day!"
+          />
+        )}
+      </section>
 
       {/* Recent Notes */}
-      {recentNotes.length > 0 && (
-        <section>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xs font-semibold text-[hsl(var(--ink-muted))] tracking-wider">RECENT NOTES</h2>
-            <Link href="/notes" className="text-xs font-medium text-[hsl(var(--primary))] hover:underline">View all</Link>
-          </div>
+      <section>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xs font-semibold text-[hsl(var(--ink-muted))] tracking-wider">RECENT NOTES</h2>
+          <Link href="/notes" className="text-xs font-medium text-[hsl(var(--primary))] hover:underline">View all</Link>
+        </div>
+        {recentNotes.length > 0 ? (
           <div className="space-y-2">
             {recentNotes.map(note => (
               <Link href="/notes" key={note.id} className="flex flex-col gap-1 p-3 bg-[hsl(var(--surface-elevated))] rounded-lg border border-[hsl(var(--hairline))] group hover:border-[hsl(var(--ink-tertiary))] transition-colors">
@@ -257,19 +265,24 @@ export default async function TodayPage() {
               </Link>
             ))}
           </div>
-        </section>
-      )}
+        ) : (
+          <EmptyState
+            compact
+            icon={<StickyNote className="w-5 h-5" />}
+            title="No recent notes"
+            description="Jot down your thoughts and ideas."
+          />
+        )}
+      </section>
 
       {/* Next Up */}
       <section>
         <h2 className="text-xs font-semibold text-[hsl(var(--ink-muted))] tracking-wider mb-4">NEXT UP</h2>
-        <div className="rounded-lg border border-[hsl(var(--hairline))] border-dashed p-8 text-center bg-[hsl(var(--canvas))]">
-          <Apple className="w-8 h-8 mx-auto text-[hsl(var(--ink-muted))] mb-3 opacity-50" />
-          <h3 className="text-sm font-semibold mb-1">Food is pending refinement</h3>
-          <p className="text-xs text-[hsl(var(--ink-secondary))] max-w-md mx-auto">
-            Food module has been partially implemented. Check out the new Finance and Workout features in the meantime.
-          </p>
-        </div>
+        <EmptyState
+          icon={<Apple className="w-6 h-6" />}
+          title="Food is pending refinement"
+          description="Food module has been partially implemented. Check out the new Finance and Workout features in the meantime."
+        />
       </section>
     </div>
   );

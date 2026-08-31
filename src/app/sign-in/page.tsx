@@ -6,7 +6,7 @@ export default function SignInPage() {
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
       <div className="w-full max-w-sm space-y-6">
         <div className="space-y-2 text-center flex flex-col items-center">
-          <img src="/Logo.png" alt="Saarthi Logo" className="w-16 h-16 rounded-xl mb-4 shadow-sm object-cover" />
+          <img src="/logo.png" alt="Saarthi Logo" className="w-16 h-16 rounded-xl mb-4 shadow-sm object-cover" />
           <h1 className="text-2xl font-bold tracking-tight">Saarthi</h1>
           <p className="text-sm text-[hsl(var(--ink-secondary))]">
             Enter your credentials to unlock.

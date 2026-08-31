@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Trash2 } from 'lucide-react';
+import { Trash2, LineChart as LineChartIcon, Scale } from 'lucide-react';
+import { EmptyState } from '@/components/shared/EmptyState';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function WeightPage() {
@@ -150,7 +151,12 @@ export default function WeightPage() {
                 </ResponsiveContainer>
               </div>
             ) : (
-              <div className="h-[250px] flex items-center justify-center text-muted-foreground">No data yet. Log your first weight!</div>
+              <EmptyState
+                compact
+                icon={<LineChartIcon className="w-5 h-5" />}
+                title="No trend data"
+                description="Log your weight to see your progress over time."
+              />
             )}
           </CardContent>
         </Card>
@@ -163,7 +169,12 @@ export default function WeightPage() {
         <CardContent>
           <div className="space-y-4">
             {history.length === 0 && !loading && (
-              <p className="text-muted-foreground">No entries found.</p>
+              <EmptyState
+                compact
+                icon={<Scale className="w-5 h-5" />}
+                title="No history"
+                description="Your past weight entries will appear here."
+              />
             )}
             {history.map(entry => (
               <div key={entry.id} className="flex items-center justify-between p-4 rounded-lg border bg-card">

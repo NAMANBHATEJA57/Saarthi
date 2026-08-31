@@ -32,7 +32,7 @@ export const users = pgTable('users', {
 export const accounts = pgTable(
   'accounts',
   {
-    userId: uuid('user_id')
+    userId: text('user_id')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
     type: text('type').$type<AdapterAccountType>().notNull(),
@@ -55,7 +55,7 @@ export const accounts = pgTable(
 
 export const sessions = pgTable('sessions', {
   sessionToken: text('session_token').primaryKey(),
-  userId: uuid('user_id')
+  userId: text('user_id')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   expires: timestamp('expires', { mode: 'date' }).notNull(),
@@ -94,7 +94,7 @@ export const calendarConnections = pgTable('calendar_connections', {
 
 export const userPreferences = pgTable('user_preferences', {
   id: uuid('id').primaryKey().defaultRandom(),
-  userId: uuid('user_id')
+  userId: text('user_id')
     .notNull()
     .unique()
     .references(() => users.id, { onDelete: 'cascade' }),
@@ -113,7 +113,7 @@ export const searchDocuments = pgTable(
   'search_documents',
   {
     id: uuid('id').primaryKey().defaultRandom(),
-    userId: uuid('user_id')
+    userId: text('user_id')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
     entityType: text('entity_type').notNull(),
@@ -141,7 +141,7 @@ export const searchDocuments = pgTable(
 
 export const auditEvents = pgTable('audit_events', {
   id: uuid('id').primaryKey().defaultRandom(),
-  userId: uuid('user_id')
+  userId: text('user_id')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   eventType: text('event_type').notNull(),

@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, RefreshCcw } from 'lucide-react';
+import { ChevronLeft, ChevronRight, RefreshCcw, Receipt } from 'lucide-react';
+import { EmptyState } from '@/components/shared/EmptyState';
 import { useRouter } from 'next/navigation';
 
 export default function FinanceClient({ initialSummary, initialBalances, currentMonth }: any) {
@@ -83,7 +84,12 @@ export default function FinanceClient({ initialSummary, initialBalances, current
           <CardHeader><CardTitle>Category Spending</CardTitle></CardHeader>
           <CardContent>
             {Object.keys(summary.categorySpending).length === 0 ? (
-              <p className="text-sm text-muted-foreground">No expenses this month.</p>
+              <EmptyState
+                compact
+                icon={<Receipt className="w-5 h-5" />}
+                title="No expenses"
+                description="No spending recorded this month."
+              />
             ) : (
               <div className="space-y-2">
                 {Object.entries(summary.categorySpending).map(([catName, amount]: [string, any]) => (

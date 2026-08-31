@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, ChevronRight, CheckSquare, Edit, Trash2 } from 'lucide-react';
 import { RelationshipManager } from '@/components/relationships/RelationshipManager';
+import { EmptyState } from '@/components/shared/EmptyState';
 
 export function TasksClient({ initialOpenTasks, initialCompletedTasks }: { initialOpenTasks: any[], initialCompletedTasks: any[] }) {
   const [openTasks, setOpenTasks] = useState(initialOpenTasks);
@@ -96,9 +97,11 @@ export function TasksClient({ initialOpenTasks, initialCompletedTasks }: { initi
   return (
     <div className="space-y-6">
       {openTasks.length === 0 ? (
-        <div className="p-8 text-center text-[hsl(var(--ink-secondary))] bg-[hsl(var(--surface))] rounded-lg border border-[hsl(var(--hairline))]">
-          Nothing open right now.
-        </div>
+        <EmptyState
+          icon={<CheckSquare className="w-6 h-6" />}
+          title="You're all caught up!"
+          description="Enjoy your day or create a new task when you're ready."
+        />
       ) : (
         <div className="space-y-2">
           {openTasks.map(t => renderTask(t, true))}

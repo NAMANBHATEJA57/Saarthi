@@ -1,5 +1,5 @@
 CREATE TABLE "accounts" (
-	"user_id" uuid NOT NULL,
+	"user_id" text NOT NULL,
 	"type" text NOT NULL,
 	"provider" text NOT NULL,
 	"provider_account_id" text NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE "accounts" (
 --> statement-breakpoint
 CREATE TABLE "audit_events" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"user_id" uuid NOT NULL,
+	"user_id" text NOT NULL,
 	"event_type" text NOT NULL,
 	"target_type" text NOT NULL,
 	"target_id" text NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE "audit_events" (
 --> statement-breakpoint
 CREATE TABLE "search_documents" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"user_id" uuid NOT NULL,
+	"user_id" text NOT NULL,
 	"entity_type" text NOT NULL,
 	"entity_id" text NOT NULL,
 	"title" text NOT NULL,
@@ -38,13 +38,13 @@ CREATE TABLE "search_documents" (
 --> statement-breakpoint
 CREATE TABLE "sessions" (
 	"session_token" text PRIMARY KEY NOT NULL,
-	"user_id" uuid NOT NULL,
+	"user_id" text NOT NULL,
 	"expires" timestamp NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "user_preferences" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"user_id" uuid NOT NULL,
+	"user_id" text NOT NULL,
 	"timezone" text DEFAULT 'UTC' NOT NULL,
 	"week_starts_on" integer DEFAULT 1 NOT NULL,
 	"theme" text DEFAULT 'system' NOT NULL,

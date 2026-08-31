@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { formatRelativeTime } from '@/lib/utils';
 import { Search, Plus, Trash, StickyNote } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { EmptyState } from '@/components/shared/EmptyState';
 
 export function NotesClient({ initialNotes }: { initialNotes: any[] }) {
   const router = useRouter();
@@ -116,21 +117,26 @@ export function NotesClient({ initialNotes }: { initialNotes: any[] }) {
       )}
 
       {notes.length === 0 ? (
-        <div className="flex flex-col items-center justify-center text-center py-16 bg-[hsl(var(--surface))] rounded-2xl border border-dashed border-[hsl(var(--hairline))]">
-          <div className="w-12 h-12 rounded-full bg-[hsl(var(--surface-elevated))] flex items-center justify-center mb-4 text-[hsl(var(--ink-secondary))]">
-            <StickyNote className="w-6 h-6 opacity-80" />
-          </div>
-          <h3 className="text-lg font-medium text-[hsl(var(--ink))] mb-1">No Notes</h3>
-          <p className="text-sm text-[hsl(var(--ink-secondary))] mb-6">Capture your thoughts and ideas quickly.</p>
-          <Button variant="primary" onClick={() => setIsCreating(true)}>
-            <Plus className="w-4 h-4 mr-2" />
-            New Note
-          </Button>
-        </div>
+        <EmptyState
+          icon={<StickyNote className="w-6 h-6" />}
+          title="Your digital brain is empty"
+          description="Capture your thoughts, ideas, and reminders quickly."
+          action={
+            <Button variant="primary" onClick={() => setIsCreating(true)}>
+              <Plus className="w-4 h-4 mr-2" />
+              New Note
+            </Button>
+          }
+        />
       ) : (
         <div className="space-y-3">
           {filteredNotes.length === 0 && search && (
-            <p className="text-[hsl(var(--ink-secondary))] text-center py-4">No notes match your search.</p>
+            <EmptyState
+              compact
+              icon={<Search className="w-5 h-5" />}
+              title="No matches found"
+              description={`No notes matching "${search}"`}
+            />
           )}
           {filteredNotes.map((note) => (
             <button
