@@ -70,3 +70,32 @@ export async function saveSettings(formData: FormData) {
     return { error: "Failed to save settings" };
   }
 }
+
+export async function updateTimezone(timezone: string) {
+  const session = await auth();
+  if (!session?.user?.id) return { error: "Unauthorized" };
+  const userId = session.user.id;
+
+  try {
+    const existing = await db.select().from(userPreferences).where(eq(userPreferences.userId, userId)).limit(1);
+    if (existing.length > 0) {
+      if (existing[0].timezone === timezone) return { success: true }; // No change needed
+      await db.update(userPreferences)
+        .set({ timezone, updatedAt: new Date() })
+        .where(eq(userPreferences.userId, userId));
+    } else {
+      await db.insert(userPreferences).values({
+        userId,
+        timezone,
+        weekStartsOn: 1,
+        theme: "system",
+      });
+    }
+    revalidatePath("/today");
+    revalidatePath("/settings");
+    return { success: true };
+  } catch (err) {
+    console.error("Failed to update timezone:", err);
+    return { error: "Failed" };
+  }
+}

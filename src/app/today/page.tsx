@@ -11,13 +11,14 @@ import { getTodayTasksSummary } from "@/lib/tasks/service";
 import { CalendarTodayWidget } from "@/components/calendar/CalendarTodayWidget";
 import { RelationshipService } from "@/lib/relationships/service";
 import { EmptyState } from "@/components/shared/EmptyState";
+import { TimezoneSync } from "@/components/shared/TimezoneSync";
 
 export default async function TodayPage() {
   const session = await auth();
   let userName = session?.user?.name || "there";
   const userId = session?.user?.id;
   let hasPreferences = false;
-  let latestWeight = null;
+  let userTimezone = "UTC";
   if (userId) {
     const userRec = await db.select().from(users).where(eq(users.id, userId)).limit(1);
     if (userRec.length > 0 && userRec[0].name) {
@@ -25,7 +26,10 @@ export default async function TodayPage() {
     }
 
     const prefs = await db.select().from(userPreferences).where(eq(userPreferences.userId, userId)).limit(1);
-    hasPreferences = prefs.length > 0;
+    if (prefs.length > 0) {
+      hasPreferences = true;
+      userTimezone = prefs[0].timezone;
+    }
     
     const weights = await db.select().from(weightEntries)
       .where(and(eq(weightEntries.userId, userId), isNull(weightEntries.deletedAt)))
@@ -34,16 +38,32 @@ export default async function TodayPage() {
     latestWeight = weights.length > 0 ? weights[0] : null;
   }
 
-  // Format date natively
+  // Format date natively using user's timezone
   const dateObj = new Date();
-  const todayDateString = dateObj.toLocaleDateString('en-CA'); // YYYY-MM-DD
-  const currentWeekday = dateObj.getDay(); // 0-6
+  
+  // Format to YYYY-MM-DD in the user's timezone
+  const dateStrFormatter = new Intl.DateTimeFormat('en-CA', {
+    timeZone: userTimezone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  });
+  const todayDateString = dateStrFormatter.format(dateObj); // YYYY-MM-DD
 
-  const today = new Intl.DateTimeFormat('en-US', {
+  // Format weekday index (0-6)
+  const weekdayFormatter = new Intl.DateTimeFormat('en-US', { timeZone: userTimezone, weekday: 'long' });
+  const weekdayName = weekdayFormatter.format(dateObj);
+  const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const currentWeekday = weekdays.indexOf(weekdayName);
+
+  // Format nice display date
+  const displayFormatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: userTimezone,
     weekday: 'long',
     month: 'long',
     day: 'numeric'
-  }).format(dateObj);
+  });
+  const today = displayFormatter.format(dateObj);
 
   let todayRoutine = null;
   let todayDisplayState = null;
@@ -117,6 +137,8 @@ export default async function TodayPage() {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
+      {userId && <TimezoneSync serverTimezone={userTimezone} />}
+      
       {/* Header */}
       <header className="space-y-1">
         <p className="text-sm font-medium text-[hsl(var(--ink-secondary))] uppercase tracking-wider">{today}</p>
