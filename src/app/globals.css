@@ -41,8 +41,8 @@
   body {
     background:
       linear-gradient(
-        hsl(0 0% 10% / 0.86),
-        hsl(0 0% 10% / 0.86)
+        rgba(25, 25, 25, 0.7),
+        rgba(25, 25, 25, 0.7)
       ),
       url('/Bg.svg') center top / cover fixed;
     position: relative;
