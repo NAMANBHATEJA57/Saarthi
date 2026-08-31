@@ -1,6 +1,6 @@
 import { auth, signOut } from "@/auth";
 import { db } from "@/lib/db";
-import { userPreferences } from "@/lib/db/schema";
+import { userPreferences, users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { SettingsForm } from "./SettingsForm";
 import { LogOut } from "lucide-react";
@@ -19,6 +19,12 @@ export default async function SettingsPage() {
   };
 
   if (userId) {
+    const userRec = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+    if (userRec.length > 0 && userRec[0].name) {
+      userName = userRec[0].name;
+    }
+    initialData.name = userName;
+
     const prefs = await db.select().from(userPreferences).where(eq(userPreferences.userId, userId)).limit(1);
     if (prefs.length > 0) {
       initialData = {

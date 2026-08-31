@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import { Search, Apple, Scale } from "lucide-react";
 import Link from "next/link";
 import { db } from "@/lib/db";
-import { userPreferences, weightEntries, workoutSchedules, workoutRoutines, workoutExercises, workoutDisplayStates, notes } from "@/lib/db/schema";
+import { userPreferences, weightEntries, workoutSchedules, workoutRoutines, workoutExercises, workoutDisplayStates, notes, users } from "@/lib/db/schema";
 import { eq, and, desc, isNull } from "drizzle-orm";
 import { WorkoutTodayWidget } from "@/components/workout/WorkoutTodayWidget";
 import { IndianRupee, CheckSquare, StickyNote } from "lucide-react";
@@ -14,12 +14,16 @@ import { EmptyState } from "@/components/shared/EmptyState";
 
 export default async function TodayPage() {
   const session = await auth();
-  const userName = session?.user?.name || "there";
+  let userName = session?.user?.name || "there";
   const userId = session?.user?.id;
-
   let hasPreferences = false;
   let latestWeight = null;
   if (userId) {
+    const userRec = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+    if (userRec.length > 0 && userRec[0].name) {
+      userName = userRec[0].name;
+    }
+
     const prefs = await db.select().from(userPreferences).where(eq(userPreferences.userId, userId)).limit(1);
     hasPreferences = prefs.length > 0;
     
