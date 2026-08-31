@@ -1,14 +1,134 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Edit2, Archive, Trash2, Landmark, CreditCard, RefreshCcw } from "lucide-react";
+import { Plus, Edit2, Archive, Trash2, Landmark, CreditCard, RefreshCcw, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { AddAccountDialog } from "@/components/finance/AddAccountDialog";
 import { PUBLIC_INSTITUTIONS } from "@/lib/constants/institutions";
 import { cn } from "@/lib/utils";
 
+function EditAccountDialog({ account, open, onOpenChange, onSaved }: { account: any; open: boolean; onOpenChange: (v: boolean) => void; onSaved: () => void }) {
+  const [name, setName] = useState(account?.name || "");
+  const [lastFour, setLastFour] = useState(account?.lastFour || "");
+  const [creditLimit, setCreditLimit] = useState(account?.creditLimitMinor ? account.creditLimitMinor.toString() : "");
+  const [loading, setLoading] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  if (!account) return null;
+
+  const isCard = account.type === 'CREDIT_CARD';
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const payload: any = { name };
+      if (lastFour) payload.lastFour = lastFour;
+      if (isCard && creditLimit) payload.creditLimitMinor = parseInt(creditLimit, 10);
+
+      const res = await fetch(`/api/finance/accounts/${account.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        setSaved(true);
+        setTimeout(() => {
+          onSaved();
+          onOpenChange(false);
+          setSaved(false);
+        }, 700);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[400px] p-0 overflow-hidden border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]">
+
+        {/* Header */}
+        <div className="flex items-center justify-between p-5 border-b border-[hsl(var(--hairline))]">
+          <div className="flex items-center gap-3">
+            <div className={cn(
+              "w-9 h-9 rounded-lg flex items-center justify-center text-white font-bold text-sm",
+              isCard ? "bg-gradient-to-br from-purple-500 to-purple-700" : "bg-gradient-to-br from-blue-500 to-blue-700"
+            )}>
+              {name.charAt(0).toUpperCase() || (isCard ? 'C' : 'B')}
+            </div>
+            <div>
+              <p className="font-semibold text-sm">{account.name}</p>
+              <p className="text-xs text-[hsl(var(--ink-secondary))]">{isCard ? 'Credit Card' : 'Bank Account'}</p>
+            </div>
+          </div>
+          <button onClick={() => onOpenChange(false)} className="text-[hsl(var(--ink-secondary))] hover:text-[hsl(var(--ink))]">
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSave} className="p-5 space-y-4">
+          <div className="space-y-1.5">
+            <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Display Name</Label>
+            <Input
+              value={name}
+              onChange={e => setName(e.target.value)}
+              placeholder="e.g. HDFC Savings, ICICI Amazon Pay"
+              className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-10"
+              required
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Last 4 Digits</Label>
+            <Input
+              value={lastFour}
+              onChange={e => setLastFour(e.target.value.slice(0, 4))}
+              placeholder="e.g. 4242"
+              maxLength={4}
+              className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-10 font-mono tracking-widest"
+            />
+          </div>
+
+          {isCard && (
+            <div className="space-y-1.5">
+              <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Credit Limit (₹)</Label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[hsl(var(--ink-secondary))] text-sm">₹</span>
+                <Input
+                  type="number"
+                  value={creditLimit}
+                  onChange={e => setCreditLimit(e.target.value)}
+                  placeholder="e.g. 200000"
+                  className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-10 pl-7"
+                />
+              </div>
+            </div>
+          )}
+
+          <div className="flex gap-3 pt-2">
+            <Button type="button" variant="utility" className="flex-1 h-10" onClick={() => onOpenChange(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="primary" className="flex-1 h-10 gap-2" disabled={loading || saved}>
+              {saved ? <><Check className="w-4 h-4" /> Saved!</> : loading ? 'Saving...' : 'Save changes'}
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export function SettingsFinanceSection({ accounts = [] }: { accounts?: any[] }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [editAccount, setEditAccount] = useState<any>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const activeAccounts = accounts.filter(a => a.isActive);
@@ -41,7 +161,7 @@ export function SettingsFinanceSection({ accounts = [] }: { accounts?: any[] }) 
   const renderAccount = (acc: any) => {
     const inst = getInstitutionDetails(acc.institutionId, acc.type);
     return (
-      <div key={acc.id} className="flex items-center justify-between p-4 bg-[hsl(var(--canvas))] border border-[hsl(var(--hairline))] rounded-lg">
+      <div key={acc.id} className="flex items-center justify-between p-4 bg-[hsl(var(--canvas))] border border-[hsl(var(--hairline))] rounded-lg group hover:border-[hsl(var(--ink-muted))] transition-colors">
         <div className="flex items-center gap-4">
           {inst && (
             <div className={cn("shrink-0 w-10 h-10 rounded-md flex items-center justify-center text-white font-bold bg-gradient-to-br", inst.gradient, !acc.isActive && "opacity-50 grayscale")}>
@@ -52,7 +172,7 @@ export function SettingsFinanceSection({ accounts = [] }: { accounts?: any[] }) 
             <div className="flex items-center gap-2">
               <span className={cn("font-medium", !acc.isActive && "text-[hsl(var(--ink-secondary))] line-through")}>{acc.name}</span>
               {acc.lastFour && (
-                <span className="text-xs px-1.5 py-0.5 bg-[hsl(var(--surface-elevated))] text-[hsl(var(--ink-secondary))] border border-[hsl(var(--hairline))] rounded">
+                <span className="text-xs px-1.5 py-0.5 bg-[hsl(var(--surface-elevated))] text-[hsl(var(--ink-secondary))] border border-[hsl(var(--hairline))] rounded font-mono">
                   •••• {acc.lastFour}
                 </span>
               )}
@@ -65,10 +185,19 @@ export function SettingsFinanceSection({ accounts = [] }: { accounts?: any[] }) 
             </div>
           </div>
         </div>
-        
-        <div className="flex items-center gap-2">
-          {/* Note: Balance display would normally be computed from transactions. 
-              Here we just provide actions for settings. */}
+
+        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+          {/* EDIT */}
+          <Button
+            variant="icon"
+            className="h-8 w-8 text-[hsl(var(--ink-secondary))] hover:text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/10"
+            onClick={() => setEditAccount(acc)}
+            title="Edit"
+          >
+            <Edit2 className="w-4 h-4" />
+          </Button>
+
+          {/* ARCHIVE / RESTORE */}
           {acc.isActive ? (
             <Button variant="icon" className="h-8 w-8 text-[hsl(var(--ink-secondary))]" onClick={() => handleArchive(acc.id, true)} title="Archive">
               <Archive className="w-4 h-4" />
@@ -78,7 +207,14 @@ export function SettingsFinanceSection({ accounts = [] }: { accounts?: any[] }) 
               <RefreshCcw className="w-4 h-4" />
             </Button>
           )}
-          <Button variant="icon" className="h-8 w-8 text-[hsl(var(--destructive))] hover:text-white hover:bg-[hsl(var(--destructive))]" onClick={() => handleDelete(acc.id)} title="Remove">
+
+          {/* DELETE */}
+          <Button
+            variant="icon"
+            className="h-8 w-8 text-[hsl(var(--destructive))] hover:text-white hover:bg-[hsl(var(--destructive))]"
+            onClick={() => handleDelete(acc.id)}
+            title="Remove"
+          >
             <Trash2 className="w-4 h-4" />
           </Button>
         </div>
@@ -95,12 +231,7 @@ export function SettingsFinanceSection({ accounts = [] }: { accounts?: any[] }) 
             Manage your connected bank accounts and credit cards. Removing an account hides it but preserves past transaction history.
           </p>
         </div>
-        <Button 
-          variant="secondary" 
-          onClick={() => setIsOpen(true)}
-          className="gap-2 shrink-0"
-          disabled={isRefreshing}
-        >
+        <Button variant="secondary" onClick={() => setIsOpen(true)} className="gap-2 shrink-0" disabled={isRefreshing}>
           <Plus className="w-4 h-4" /> Add Account
         </Button>
       </div>
@@ -140,10 +271,13 @@ export function SettingsFinanceSection({ accounts = [] }: { accounts?: any[] }) 
         )}
       </div>
 
-      <AddAccountDialog 
-        open={isOpen} 
-        onOpenChange={setIsOpen} 
-        onSuccess={() => window.location.reload()} 
+      <AddAccountDialog open={isOpen} onOpenChange={setIsOpen} onSuccess={() => window.location.reload()} />
+
+      <EditAccountDialog
+        account={editAccount}
+        open={!!editAccount}
+        onOpenChange={(v) => !v && setEditAccount(null)}
+        onSaved={() => window.location.reload()}
       />
     </div>
   );
