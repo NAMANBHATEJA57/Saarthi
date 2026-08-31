@@ -4,11 +4,12 @@ import { db } from '@/lib/db';
 import { financeAccounts } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, context: { params: Promise<{ id: string }> }) {
   const session = await auth();
   if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   
   try {
+    const { id } = await context.params;
     const body = await req.json();
     const { name, creditLimitMinor, statementDay, dueDay, lastFour, notes, isActive } = body;
     
@@ -25,7 +26,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 
     const [acc] = await db.update(financeAccounts)
       .set(updateData)
-      .where(and(eq(financeAccounts.id, params.id), eq(financeAccounts.userId, session.user.id)))
+      .where(and(eq(financeAccounts.id, id), eq(financeAccounts.userId, session.user.id)))
       .returning();
       
     if (!acc) return NextResponse.json({ error: 'Not found' }, { status: 404 });
@@ -35,15 +36,16 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, context: { params: Promise<{ id: string }> }) {
   const session = await auth();
   if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   
   try {
+    const { id } = await context.params;
     // Soft delete
     const [acc] = await db.update(financeAccounts)
       .set({ deletedAt: new Date() })
-      .where(and(eq(financeAccounts.id, params.id), eq(financeAccounts.userId, session.user.id)))
+      .where(and(eq(financeAccounts.id, id), eq(financeAccounts.userId, session.user.id)))
       .returning();
       
     if (!acc) return NextResponse.json({ error: 'Not found' }, { status: 404 });
