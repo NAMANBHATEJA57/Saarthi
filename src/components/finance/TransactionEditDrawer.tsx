@@ -202,7 +202,7 @@ export function TransactionEditDrawer({
           )}
 
           <div className="flex gap-3 pt-2">
-            <Button type="button" variant="destructive" className="h-11 px-4" onClick={handleDelete} disabled={loading || saved}>Delete</Button>
+            <Button type="button" variant="utility" className="h-11 px-4 text-[hsl(var(--destructive))] hover:border-[hsl(var(--destructive))] hover:bg-[hsl(var(--destructive))]/10" onClick={handleDelete} disabled={loading || saved}>Delete</Button>
             <Button type="button" variant="utility" className="flex-1 h-11" onClick={() => onOpenChange(false)}>Cancel</Button>
             <Button type="submit" variant="primary" className="flex-1 h-11 gap-2" disabled={loading || saved}>
               {saved ? <><Check className="w-4 h-4" /> Saved!</> : loading ? 'Saving...' : 'Save'}
