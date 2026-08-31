@@ -6,8 +6,16 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Plus, Loader2 } from 'lucide-react';
 
-export function TransactionCaptureForm({ onSuccess, onCancel }: { onSuccess: () => void; onCancel: () => void }) {
-  const [type, setType] = useState<'EXPENSE' | 'INCOME' | 'TRANSFER' | 'CREDIT_CARD_PURCHASE' | 'CREDIT_CARD_PAYMENT'>('EXPENSE');
+export function TransactionCaptureForm({ 
+  onSuccess, 
+  onCancel,
+  defaultType = 'EXPENSE'
+}: { 
+  onSuccess: () => void; 
+  onCancel: () => void;
+  defaultType?: 'EXPENSE' | 'INCOME' | 'TRANSFER' | 'CREDIT_CARD_PURCHASE' | 'CREDIT_CARD_PAYMENT';
+}) {
+  const [type, setType] = useState<'EXPENSE' | 'INCOME' | 'TRANSFER' | 'CREDIT_CARD_PURCHASE' | 'CREDIT_CARD_PAYMENT'>(defaultType);
   const [amount, setAmount] = useState<string>('');
   const [categoryId, setCategoryId] = useState<string>('');
   const [accountId, setAccountId] = useState<string>('');

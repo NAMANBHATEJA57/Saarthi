@@ -10,6 +10,8 @@ import { useRouter } from 'next/navigation';
 import { Landmark, CreditCard, Plus } from 'lucide-react';
 import { AddAccountDialog } from '@/components/finance/AddAccountDialog';
 import { TransactionHistory } from '@/components/finance/TransactionHistory';
+import { TransactionCaptureForm } from '@/components/finance/TransactionCaptureForm';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 export default function FinanceClient({ initialSummary, initialBalances, initialAccountBalances, currentMonth }: any) {
   const router = useRouter();
@@ -17,6 +19,7 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
   const [balances, setBalances] = useState(initialBalances);
   const [accounts, setAccounts] = useState(initialAccountBalances || []);
   const [isAddAccountOpen, setIsAddAccountOpen] = useState(false);
+  const [transactionFormType, setTransactionFormType] = useState<'EXPENSE' | 'CREDIT_CARD_PURCHASE' | null>(null);
 
   const prevMonth = () => {
     const d = new Date(currentMonth + '-01');
@@ -43,9 +46,14 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold tracking-tight">Ledger</h1>
         <div className="flex items-center gap-4">
-          <Button variant="utility" onClick={prevMonth}><ChevronLeft className="w-4 h-4" /></Button>
-          <span className="font-medium text-sm">{new Date(currentMonth + '-01').toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}</span>
-          <Button variant="utility" onClick={nextMonth}><ChevronRight className="w-4 h-4" /></Button>
+          <Button variant="utility" onClick={() => setIsAddAccountOpen(true)} className="hidden sm:flex gap-2">
+            <Plus className="w-4 h-4" /> Add Account
+          </Button>
+          <div className="flex items-center gap-2 border-l border-[hsl(var(--hairline))] pl-4">
+            <Button variant="utility" onClick={prevMonth}><ChevronLeft className="w-4 h-4" /></Button>
+            <span className="font-medium text-sm w-32 text-center">{new Date(currentMonth + '-01').toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}</span>
+            <Button variant="utility" onClick={nextMonth}><ChevronRight className="w-4 h-4" /></Button>
+          </div>
         </div>
       </div>
 
@@ -86,7 +94,7 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between pb-2 bg-[hsl(var(--surface))] rounded-t-lg">
                   <CardTitle className="flex items-center gap-2 text-base"><Landmark className="w-5 h-5" /> Bank Accounts</CardTitle>
-                  <Button variant="utility" onClick={() => setIsAddAccountOpen(true)} className="h-7 px-2 text-xs"><Plus className="w-3 h-3 mr-1" /> Add</Button>
+                  <Button variant="utility" onClick={() => setTransactionFormType('EXPENSE')} className="h-7 px-2 text-xs"><Plus className="w-3 h-3 mr-1" /> Add</Button>
                 </CardHeader>
                 <CardContent className="p-0">
                   {bankAccounts.length === 0 ? (
@@ -114,7 +122,7 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between pb-2 bg-[hsl(var(--surface))] rounded-t-lg">
                   <CardTitle className="flex items-center gap-2 text-base"><CreditCard className="w-5 h-5 text-[hsl(var(--ink-secondary))]" /> Credit Cards</CardTitle>
-                  <Button variant="utility" onClick={() => setIsAddAccountOpen(true)} className="h-7 px-2 text-xs"><Plus className="w-3 h-3 mr-1" /> Add</Button>
+                  <Button variant="utility" onClick={() => setTransactionFormType('CREDIT_CARD_PURCHASE')} className="h-7 px-2 text-xs"><Plus className="w-3 h-3 mr-1" /> Add</Button>
                 </CardHeader>
                 <CardContent className="p-0">
                   {creditCards.length === 0 ? (
@@ -187,6 +195,26 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
         onOpenChange={setIsAddAccountOpen} 
         onSuccess={() => window.location.reload()} 
       />
+
+      <Dialog open={!!transactionFormType} onOpenChange={(open) => !open && setTransactionFormType(null)}>
+        <DialogContent className="sm:max-w-[460px] p-0 overflow-hidden border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]">
+          <DialogHeader className="px-6 py-4 border-b border-[hsl(var(--hairline))] bg-[hsl(var(--surface-elevated))]">
+            <DialogTitle>Log Transaction</DialogTitle>
+          </DialogHeader>
+          <div className="p-6">
+            {transactionFormType && (
+              <TransactionCaptureForm 
+                defaultType={transactionFormType}
+                onSuccess={() => {
+                  setTransactionFormType(null);
+                  window.location.reload();
+                }}
+                onCancel={() => setTransactionFormType(null)}
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
