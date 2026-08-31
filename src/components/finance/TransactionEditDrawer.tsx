@@ -88,6 +88,28 @@ export function TransactionEditDrawer({
     }
   };
 
+  const handleDelete = async () => {
+    if (!confirm('Are you sure you want to delete this transaction?')) return;
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/finance/transactions/${transaction.id}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        setSaved(true);
+        setTimeout(() => {
+          onSaved();
+          onOpenChange(false);
+          setSaved(false);
+        }, 700);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[460px] p-0 overflow-hidden border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]">
@@ -180,9 +202,10 @@ export function TransactionEditDrawer({
           )}
 
           <div className="flex gap-3 pt-2">
+            <Button type="button" variant="destructive" className="h-11 px-4" onClick={handleDelete} disabled={loading || saved}>Delete</Button>
             <Button type="button" variant="utility" className="flex-1 h-11" onClick={() => onOpenChange(false)}>Cancel</Button>
             <Button type="submit" variant="primary" className="flex-1 h-11 gap-2" disabled={loading || saved}>
-              {saved ? <><Check className="w-4 h-4" /> Saved!</> : loading ? 'Saving...' : 'Save changes'}
+              {saved ? <><Check className="w-4 h-4" /> Saved!</> : loading ? 'Saving...' : 'Save'}
             </Button>
           </div>
         </form>

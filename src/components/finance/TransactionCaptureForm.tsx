@@ -165,7 +165,7 @@ export function TransactionCaptureForm({ onSuccess, onCancel }: { onSuccess: () 
             key={t}
             type="button"
             variant={type === t ? 'primary' : 'utility'}
-            className="flex-shrink-0 px-3 whitespace-nowrap"
+            className={`flex-shrink-0 px-3 whitespace-nowrap ${type === t && t === 'INCOME' ? 'bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-600' : ''}`}
             onClick={() => { setType(t); setError(''); setIsCreatingCategory(false); }}
           >
             {t === 'CREDIT_CARD_PURCHASE' ? 'CC Purchase' : t === 'CREDIT_CARD_PAYMENT' ? 'CC Payment' : t.charAt(0) + t.slice(1).toLowerCase()}
@@ -179,7 +179,7 @@ export function TransactionCaptureForm({ onSuccess, onCancel }: { onSuccess: () 
           type="number" 
           value={amount} 
           onChange={(e) => setAmount(e.target.value)} 
-          placeholder="0.00" 
+          placeholder="0" 
           step="1"
           required 
           autoFocus 

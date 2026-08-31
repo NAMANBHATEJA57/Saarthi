@@ -216,10 +216,10 @@ export function AddAccountDialog({ open, onOpenChange, onSuccess }: AddAccountDi
                 <label className="text-sm font-medium">{type === 'BANK_ACCOUNT' ? 'Current Balance (₹)' : 'Outstanding (₹)'}</label>
                 <Input 
                   type="number" 
-                  step="0.01" 
+                  step="1" 
                   value={initialBalance} 
                   onChange={e => setInitialBalance(e.target.value)} 
-                  placeholder="0.00"
+                  placeholder="0"
                 />
               </div>
               <div className="space-y-1.5">
@@ -239,6 +239,7 @@ export function AddAccountDialog({ open, onOpenChange, onSuccess }: AddAccountDi
                   <label className="text-sm font-medium">Credit Limit (₹)</label>
                   <Input 
                     type="number" 
+                    step="1"
                     value={creditLimit} 
                     onChange={e => setCreditLimit(e.target.value)} 
                     placeholder="e.g. 500000"
