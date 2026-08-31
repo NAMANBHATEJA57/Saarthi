@@ -1,6 +1,6 @@
 import { db } from '../db';
 import { eq, and, desc, sql, ilike } from 'drizzle-orm';
-import { foodSearchCache, foodSourceRecords, foodNutrients, foodPortions, userFoods } from '../db/schema';
+import { foodSearchCache, foodSourceRecords, foodNutrients, foodPortions, userFoods, foodSources } from '../db/schema';
 import { USDAAdapter } from './adapters/usda';
 import { OpenFoodFactsAdapter } from './adapters/openFoodFacts';
 import { IFCTAdapter } from './adapters/ifct';
@@ -14,8 +14,27 @@ const adapters: Record<string, FoodSourceAdapter> = {
   curated: new CuratedIndianAdapter(),
 };
 
+const DEFAULT_SOURCES = [
+  { id: 'usda', displayName: 'USDA FoodData Central' },
+  { id: 'open_food_facts', displayName: 'Open Food Facts' },
+  { id: 'ifct', displayName: 'Indian Food Composition Tables' },
+  { id: 'curated', displayName: 'Curated Indian Foods' },
+];
+
+let sourcesEnsured = false;
+async function ensureFoodSources() {
+  if (sourcesEnsured) return;
+  try {
+    await db.insert(foodSources).values(DEFAULT_SOURCES).onConflictDoNothing();
+    sourcesEnsured = true;
+  } catch (e) {
+    console.error('Failed to ensure food sources:', e);
+  }
+}
+
 export class FoodService {
   async search(query: string, userId: string): Promise<SearchResult[]> {
+    await ensureFoodSources();
     const results: SearchResult[] = [];
     const normalizedQuery = query.toLowerCase().trim();
     if (!normalizedQuery) return [];
@@ -189,6 +208,7 @@ export class FoodService {
   }
 
   async searchExternal(query: string, sourceId: string): Promise<SearchResult[]> {
+    await ensureFoodSources();
     const normalizedQuery = query.toLowerCase().trim();
     if (!normalizedQuery) return [];
 
@@ -206,6 +226,7 @@ export class FoodService {
   }
 
   async resolveAndPersist(sourceId: string, externalId: string): Promise<string | null> {
+    await ensureFoodSources();
     const adapter = adapters[sourceId];
     if (!adapter) throw new Error(`Adapter ${sourceId} not found`);
 

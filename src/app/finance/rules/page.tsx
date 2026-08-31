@@ -12,23 +12,40 @@ import { ChevronLeft, Plus, Trash2 } from 'lucide-react';
 export default function RulesPage() {
   const router = useRouter();
   const [rules, setRules] = useState<any[]>([]);
+  const [accounts, setAccounts] = useState<any[]>([]);
+  const [baseAmount, setBaseAmount] = useState<number | ''>('');
+  const [baseAccountId, setBaseAccountId] = useState<string>('manual');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('/api/finance/allocation-rules')
-      .then(r => r.json())
-      .then(d => {
-        if (d.rules && d.rules.length > 0) {
-          setRules(d.rules);
+    Promise.all([
+      fetch('/api/finance/allocation-rules').then(r => r.json()),
+      fetch('/api/finance/accounts/balances').then(r => r.json())
+    ])
+      .then(([rulesData, accountsData]) => {
+        if (rulesData.rules && rulesData.rules.length > 0) {
+          setRules(rulesData.rules);
         } else {
           // Default empty rule to start
           setRules([{ id: Date.now(), label: '', purpose: 'SPENDING', percentageBasisPoints: 0 }]);
         }
+        if (accountsData.accounts) {
+          setAccounts(accountsData.accounts);
+        }
       })
       .finally(() => setLoading(false));
   }, []);
+
+  const handleBaseAccountChange = (id: string) => {
+    setBaseAccountId(id);
+    if (id === 'manual') return;
+    const acc = accounts.find(a => a.id === id);
+    if (acc) {
+      setBaseAmount(acc.balanceMinor / 100);
+    }
+  };
 
   const addRule = () => {
     setRules([...rules, { id: Date.now(), label: '', purpose: 'SPENDING', percentageBasisPoints: 0 }]);
@@ -96,6 +113,42 @@ export default function RulesPage() {
         Whenever you log Income, these rules determine how that money is split into your planned budgets, savings, or emergency fund.
       </p>
 
+      <Card className="bg-muted/30">
+        <CardContent className="p-4">
+          <div className="flex flex-col md:flex-row gap-4 items-center">
+            <div className="flex-1 space-y-1">
+              <Label className="text-sm font-semibold">Calculator Base Amount</Label>
+              <p className="text-xs text-muted-foreground">Used to auto-calculate percentages below.</p>
+            </div>
+            <div className="flex-1 space-y-2 w-full">
+              <Label>Source Account</Label>
+              <Select value={baseAccountId} onValueChange={handleBaseAccountChange}>
+                <SelectTrigger><SelectValue placeholder="Manual Entry" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="manual">Manual Entry</SelectItem>
+                  {accounts.map(a => (
+                    <SelectItem key={a.id} value={a.id}>
+                      {a.name} (Balance: {a.balanceMinor / 100})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex-1 space-y-2 w-full">
+              <Label>Base Amount</Label>
+              <Input 
+                type="number" min="0" step="0.01" 
+                value={baseAmount} 
+                onChange={e => {
+                  setBaseAmount(e.target.value ? Number(e.target.value) : '');
+                  setBaseAccountId('manual');
+                }} 
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       <div className="space-y-4">
         {rules.map((rule, index) => (
           <Card key={rule.id || index}>
@@ -117,6 +170,22 @@ export default function RulesPage() {
                 </Select>
               </div>
               <div className="flex items-end gap-4 w-full md:w-auto">
+                <div className="flex-1 md:w-32 space-y-2">
+                  <Label>Amount</Label>
+                  <Input 
+                    type="number" min="0" step="0.01" 
+                    value={baseAmount ? ((Number(rule.percentageBasisPoints || 0) / 10000) * Number(baseAmount)).toFixed(2) : ''} 
+                    onChange={e => {
+                      if (baseAmount) {
+                        const amount = Number(e.target.value);
+                        const pct = (amount / Number(baseAmount)) * 100;
+                        updateRule(index, 'percentageBasisPoints', Math.round(pct * 100));
+                      }
+                    }}
+                    disabled={!baseAmount}
+                    placeholder={!baseAmount ? 'Set base first' : '0.00'}
+                  />
+                </div>
                 <div className="flex-1 md:w-24 space-y-2">
                   <Label>%</Label>
                   <Input type="number" min="0" max="100" step="0.01" value={Number(rule.percentageBasisPoints || 0) / 100} onChange={e => updateRule(index, 'percentageBasisPoints', Math.round(Number(e.target.value) * 100))} />
