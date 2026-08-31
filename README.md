@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Personal OS - Phase 1
 
-## Getting Started
+This is Phase 1 of the Personal OS. It establishes the mobile-first shell, database foundations, single-owner authentication, global navigation, and the core command surface (`Cmd+K`).
 
-First, run the development server:
+## Setup Instructions
 
+### 1. Install
+Install dependencies using `pnpm`:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configure Neon
+1. Create a free account at [Neon](https://neon.tech).
+2. Create a new PostgreSQL project (e.g., `personal-os-dev`).
+3. Copy your connection string (make sure it includes `sslmode=require` or pooled connection if required).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Configure environment
+Copy the sample environment file:
+```bash
+cp .env.example .env
+```
+Update `.env` with your Neon `DATABASE_URL` and your email (`OWNER_EMAIL`).
+Optionally set up `AUTH_EMAIL_SERVER` if you want real emails to be sent, otherwise the local development server will just log the magic links to the terminal.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Run migrations
+Push the initial Phase 1 schema to your Neon database:
+```bash
+pnpm db:generate
+pnpm db:migrate
+```
 
-## Learn More
+### 5. Start development server
+```bash
+pnpm dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 6. Open local app
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+You will be redirected to the `/sign-in` page. Enter the email you configured as `OWNER_EMAIL` to receive a magic link (or view it in your terminal output) to log in.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Phase 1 Deliverables
+- **Auth:** Auth.js v5 with passwordless email links.
+- **Database:** Neon PostgreSQL with Drizzle ORM.
+- **Pages:** `/today`, `/overview`, `/settings`, `/search`, and a `/food` placeholder.
+- **UI:** Mobile-first layout with desktop sidebar, using standard shadcn/ui primitives.

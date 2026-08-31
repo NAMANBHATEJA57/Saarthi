@@ -1,0 +1,217 @@
+[
+  {
+    "sourceId": "curated",
+    "externalId": "curated-rajma-chawal",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Rajma Chawal",
+    "provenance": {
+      "brand": "Indian Curated MVP"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 616.27,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 18.61,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 11.62,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 106.23,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "label": "1 Katori Rice + 1 Katori Rajma",
+        "grams": 350,
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-08-31T10:06:46.502Z"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "curated-dal-chawal",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Dal Chawal",
+    "provenance": {
+      "brand": "Indian Curated MVP"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 580.28,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 19.27,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 6.44,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 108.31,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "label": "1 Katori Rice + 1 Katori Dal",
+        "grams": 350,
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-08-31T10:06:46.502Z"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "curated-khichdi",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Khichdi",
+    "provenance": {
+      "brand": "Indian Curated MVP"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 434.12,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 14.32,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 10.85,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 67.98,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "label": "1 Bowl",
+        "grams": 300,
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-08-31T10:06:46.502Z"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "curated-poha",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Poha",
+    "provenance": {
+      "brand": "Indian Curated MVP"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 387.39,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 6.4,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 10.98,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 64.27,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "label": "1 Plate",
+        "grams": 200,
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-08-31T10:06:46.502Z"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "curated-paneer-butter-masala",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Paneer Butter Masala",
+    "provenance": {
+      "brand": "Indian Curated MVP"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 417.1,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 19.76,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 30.09,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 16.63,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "label": "1 Katori",
+        "grams": 200,
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-08-31T10:06:46.502Z"
+  }
+]

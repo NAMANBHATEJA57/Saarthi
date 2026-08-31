@@ -1,0 +1,4880 @@
+[
+  {
+    "id": "ifct-A001",
+    "name": "Amaranth seed, black",
+    "calories": 1490,
+    "protein": 14.59,
+    "fat": 5.74,
+    "carbohydrates": 59.98,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A002",
+    "name": "Amaranth seed, pale brown",
+    "calories": 1489,
+    "protein": 13.27,
+    "fat": 5.56,
+    "carbohydrates": 61.46,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A003",
+    "name": "Bajra",
+    "calories": 1456,
+    "protein": 10.96,
+    "fat": 5.43,
+    "carbohydrates": 61.78,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A004",
+    "name": "Barley",
+    "calories": 1321,
+    "protein": 10.94,
+    "fat": 1.3,
+    "carbohydrates": 61.29,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A005",
+    "name": "Jowar",
+    "calories": 1398,
+    "protein": 9.97,
+    "fat": 1.73,
+    "carbohydrates": 67.68,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A006",
+    "name": "Maize, dry",
+    "calories": 1398,
+    "protein": 8.8,
+    "fat": 3.77,
+    "carbohydrates": 64.77,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A007",
+    "name": "Maize, tender, local",
+    "calories": 502,
+    "protein": 3.57,
+    "fat": 1.4,
+    "carbohydrates": 22.69,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A008",
+    "name": "Maize, tender, sweet",
+    "calories": 405,
+    "protein": 4.16,
+    "fat": 1.35,
+    "carbohydrates": 16.42,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A009",
+    "name": "Quinoa",
+    "calories": 1374,
+    "protein": 13.11,
+    "fat": 5.5,
+    "carbohydrates": 53.65,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A010",
+    "name": "Ragi",
+    "calories": 1342,
+    "protein": 7.16,
+    "fat": 1.92,
+    "carbohydrates": 66.82,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A011",
+    "name": "Rice, flakes",
+    "calories": 1480,
+    "protein": 7.44,
+    "fat": 1.14,
+    "carbohydrates": 76.75,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A012",
+    "name": "Rice, puffed",
+    "calories": 1514,
+    "protein": 7.47,
+    "fat": 1.62,
+    "carbohydrates": 77.68,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A013",
+    "name": "Rice, raw, brown",
+    "calories": 1480,
+    "protein": 9.16,
+    "fat": 1.24,
+    "carbohydrates": 74.8,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A014",
+    "name": "Rice, parboiled, milled",
+    "calories": 1471,
+    "protein": 7.81,
+    "fat": 0.55,
+    "carbohydrates": 77.16,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A015",
+    "name": "Rice, raw, milled",
+    "calories": 1491,
+    "protein": 7.94,
+    "fat": 0.52,
+    "carbohydrates": 78.24,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A016",
+    "name": "Samai",
+    "calories": 1449,
+    "protein": 10.13,
+    "fat": 3.89,
+    "carbohydrates": 65.55,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A017",
+    "name": "Varagu",
+    "calories": 1388,
+    "protein": 8.92,
+    "fat": 2.55,
+    "carbohydrates": 66.19,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A018",
+    "name": "Wheat flour, refined",
+    "calories": 1472,
+    "protein": 10.36,
+    "fat": 0.76,
+    "carbohydrates": 74.27,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A019",
+    "name": "Wheat flour, atta",
+    "calories": 1340,
+    "protein": 10.57,
+    "fat": 1.53,
+    "carbohydrates": 64.17,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A020",
+    "name": "Wheat, whole",
+    "calories": 1347,
+    "protein": 10.59,
+    "fat": 1.47,
+    "carbohydrates": 64.72,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A021",
+    "name": "Wheat, bulgur",
+    "calories": 1430,
+    "protein": 10.84,
+    "fat": 1.45,
+    "carbohydrates": 69.06,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A022",
+    "name": "Wheat, semolina",
+    "calories": 1396,
+    "protein": 11.38,
+    "fat": 0.74,
+    "carbohydrates": 68.43,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A023",
+    "name": "Wheat, vermicelli",
+    "calories": 1392,
+    "protein": 9.7,
+    "fat": 0.45,
+    "carbohydrates": 70.39,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-A024",
+    "name": "Wheat, vermicelli, roasted",
+    "calories": 1423,
+    "protein": 10.37,
+    "fat": 0.49,
+    "carbohydrates": 71.42,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B001",
+    "name": "Bengal gram, dal",
+    "calories": 1377,
+    "protein": 21.55,
+    "fat": 5.31,
+    "carbohydrates": 46.72,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B002",
+    "name": "Bengal gram, whole",
+    "calories": 1201,
+    "protein": 18.77,
+    "fat": 5.11,
+    "carbohydrates": 39.56,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B003",
+    "name": "Black gram, dal",
+    "calories": 1356,
+    "protein": 23.06,
+    "fat": 1.69,
+    "carbohydrates": 51,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B004",
+    "name": "Black gram, whole",
+    "calories": 1219,
+    "protein": 21.97,
+    "fat": 1.58,
+    "carbohydrates": 43.99,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B005",
+    "name": "Cowpea, brown",
+    "calories": 1340,
+    "protein": 20.36,
+    "fat": 1.15,
+    "carbohydrates": 54.62,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B006",
+    "name": "Cowpea, white",
+    "calories": 1340,
+    "protein": 21.25,
+    "fat": 1.14,
+    "carbohydrates": 53.77,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B007",
+    "name": "Field bean, black",
+    "calories": 1155,
+    "protein": 19.93,
+    "fat": 0.92,
+    "carbohydrates": 43.46,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B008",
+    "name": "Field bean, brown",
+    "calories": 1184,
+    "protein": 19.9,
+    "fat": 0.98,
+    "carbohydrates": 45.24,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B009",
+    "name": "Field bean, white",
+    "calories": 1173,
+    "protein": 19.84,
+    "fat": 0.94,
+    "carbohydrates": 44.53,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B010",
+    "name": "Green gram, dal",
+    "calories": 1363,
+    "protein": 23.88,
+    "fat": 1.35,
+    "carbohydrates": 52.59,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B011",
+    "name": "Green gram, whole",
+    "calories": 1229,
+    "protein": 22.53,
+    "fat": 1.14,
+    "carbohydrates": 46.13,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B012",
+    "name": "Horse gram, whole",
+    "calories": 1379,
+    "protein": 21.73,
+    "fat": 0.62,
+    "carbohydrates": 57.24,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B013",
+    "name": "Lentil, dal",
+    "calories": 1349,
+    "protein": 24.35,
+    "fat": 0.75,
+    "carbohydrates": 52.53,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B014",
+    "name": "Lentil, whole, brown",
+    "calories": 1251,
+    "protein": 22.49,
+    "fat": 0.64,
+    "carbohydrates": 48.47,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B015",
+    "name": "Lentil, whole, yellowish",
+    "calories": 1246,
+    "protein": 22.87,
+    "fat": 0.61,
+    "carbohydrates": 47.91,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B016",
+    "name": "Moth bean",
+    "calories": 1291,
+    "protein": 19.75,
+    "fat": 1.76,
+    "carbohydrates": 52.09,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B017",
+    "name": "Peas, dry",
+    "calories": 1269,
+    "protein": 20.43,
+    "fat": 1.89,
+    "carbohydrates": 48.93,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B018",
+    "name": "Rajmah, black",
+    "calories": 1247,
+    "protein": 19.01,
+    "fat": 1.62,
+    "carbohydrates": 49.59,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B019",
+    "name": "Rajmah, brown",
+    "calories": 1245,
+    "protein": 19.5,
+    "fat": 1.68,
+    "carbohydrates": 48.83,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B020",
+    "name": "Rajmah, red",
+    "calories": 1252,
+    "protein": 19.91,
+    "fat": 1.77,
+    "carbohydrates": 48.61,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B021",
+    "name": "Red gram, dal",
+    "calories": 1384,
+    "protein": 21.7,
+    "fat": 1.56,
+    "carbohydrates": 55.23,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B022",
+    "name": "Red gram, whole",
+    "calories": 1146,
+    "protein": 20.47,
+    "fat": 1.38,
+    "carbohydrates": 42.48,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B023",
+    "name": "Ricebean",
+    "calories": 1265,
+    "protein": 19.97,
+    "fat": 0.74,
+    "carbohydrates": 51.26,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B024",
+    "name": "Soya bean, brown",
+    "calories": 1596,
+    "protein": 35.58,
+    "fat": 19.82,
+    "carbohydrates": 12.79,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-B025",
+    "name": "Soya bean, white",
+    "calories": 1579,
+    "protein": 37.8,
+    "fat": 19.42,
+    "carbohydrates": 10.16,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C001",
+    "name": "Agathi leaves",
+    "calories": 295,
+    "protein": 8.01,
+    "fat": 1.35,
+    "carbohydrates": 5.21,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C002",
+    "name": "Amaranth leaves, green",
+    "calories": 128,
+    "protein": 3.29,
+    "fat": 0.65,
+    "carbohydrates": 2.28,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C003",
+    "name": "Amaranth leaves, red",
+    "calories": 140,
+    "protein": 3.93,
+    "fat": 0.63,
+    "carbohydrates": 2.37,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C004",
+    "name": "Amaranth leaves, red and green",
+    "calories": 132,
+    "protein": 3.09,
+    "fat": 0.53,
+    "carbohydrates": 2.87,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C005",
+    "name": "Amaranth, spinous, leaves, green",
+    "calories": 110,
+    "protein": 3.54,
+    "fat": 0.36,
+    "carbohydrates": 1.61,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C006",
+    "name": "Amaranth, spinous, leaves, red and green",
+    "calories": 99,
+    "protein": 2.8,
+    "fat": 0.34,
+    "carbohydrates": 1.45,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C007",
+    "name": "Basella leaves",
+    "calories": 82,
+    "protein": 1.57,
+    "fat": 0.45,
+    "carbohydrates": 2.01,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C008",
+    "name": "Bathua leaves",
+    "calories": 116,
+    "protein": 2.5,
+    "fat": 0.44,
+    "carbohydrates": 2.56,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C009",
+    "name": "Beetroot leaves",
+    "calories": 145,
+    "protein": 2.38,
+    "fat": 0.75,
+    "carbohydrates": 3.86,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C010",
+    "name": "Betel leaves, big (kolkata)",
+    "calories": 202,
+    "protein": 2.51,
+    "fat": 0.75,
+    "carbohydrates": 7.37,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C011",
+    "name": "Betel leaves, small",
+    "calories": 183,
+    "protein": 2.62,
+    "fat": 0.75,
+    "carbohydrates": 6.16,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C012",
+    "name": "Brussels sprouts",
+    "calories": 185,
+    "protein": 4.26,
+    "fat": 0.5,
+    "carbohydrates": 5.09,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C013",
+    "name": "Cabbage, Chinese",
+    "calories": 75,
+    "protein": 1.58,
+    "fat": 0.13,
+    "carbohydrates": 2.36,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C014",
+    "name": "Cabbage, collard greens",
+    "calories": 126,
+    "protein": 3.63,
+    "fat": 0.27,
+    "carbohydrates": 2.79,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C015",
+    "name": "Cabbage, green",
+    "calories": 90,
+    "protein": 1.36,
+    "fat": 0.12,
+    "carbohydrates": 3.25,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C016",
+    "name": "Cabbage, violet",
+    "calories": 97,
+    "protein": 1.39,
+    "fat": 0.21,
+    "carbohydrates": 3.54,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C017",
+    "name": "Cauliflower leaves",
+    "calories": 148,
+    "protein": 3.9,
+    "fat": 0.42,
+    "carbohydrates": 3.39,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C018",
+    "name": "Colocasia leaves, green",
+    "calories": 182,
+    "protein": 3.42,
+    "fat": 1.38,
+    "carbohydrates": 3.69,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C019",
+    "name": "Drumstick leaves",
+    "calories": 282,
+    "protein": 6.41,
+    "fat": 1.64,
+    "carbohydrates": 5.62,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C020",
+    "name": "Fenugreek leaves",
+    "calories": 144,
+    "protein": 3.68,
+    "fat": 0.83,
+    "carbohydrates": 2.17,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C021",
+    "name": "Garden cress",
+    "calories": 208,
+    "protein": 5.62,
+    "fat": 0.8,
+    "carbohydrates": 4.48,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C022",
+    "name": "Gogu leaves, green stem",
+    "calories": 152,
+    "protein": 1.86,
+    "fat": 1.09,
+    "carbohydrates": 4.06,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C023",
+    "name": "Gogu leaves, red stem",
+    "calories": 153,
+    "protein": 1.85,
+    "fat": 1.07,
+    "carbohydrates": 4.24,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C024",
+    "name": "Knol-Khol, leaves",
+    "calories": 178,
+    "protein": 3.12,
+    "fat": 0.35,
+    "carbohydrates": 6.16,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C025",
+    "name": "Lettuce",
+    "calories": 91,
+    "protein": 1.54,
+    "fat": 0.27,
+    "carbohydrates": 3.01,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C026",
+    "name": "Mustard leaves",
+    "calories": 127,
+    "protein": 3.52,
+    "fat": 0.51,
+    "carbohydrates": 2.41,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C027",
+    "name": "Pak Choi leaves",
+    "calories": 67,
+    "protein": 1.41,
+    "fat": 0.25,
+    "carbohydrates": 1.78,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C028",
+    "name": "Parsley",
+    "calories": 305,
+    "protein": 5.55,
+    "fat": 1.14,
+    "carbohydrates": 9.43,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C029",
+    "name": "Ponnaganni",
+    "calories": 213,
+    "protein": 5.29,
+    "fat": 0.71,
+    "carbohydrates": 5.17,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C030",
+    "name": "Pumpkin leaves, tender",
+    "calories": 185,
+    "protein": 4.21,
+    "fat": 0.74,
+    "carbohydrates": 4.75,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C031",
+    "name": "Radish leaves",
+    "calories": 109,
+    "protein": 2.22,
+    "fat": 0.51,
+    "carbohydrates": 2.77,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C032",
+    "name": "Rumex leaves",
+    "calories": 82,
+    "protein": 1.62,
+    "fat": 0.33,
+    "carbohydrates": 2.33,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C033",
+    "name": "Spinach",
+    "calories": 102,
+    "protein": 2.14,
+    "fat": 0.64,
+    "carbohydrates": 2.05,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-C034",
+    "name": "Tamarind leaves, tender",
+    "calories": 299,
+    "protein": 5.84,
+    "fat": 0.49,
+    "carbohydrates": 10.04,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D001",
+    "name": "Ash gourd",
+    "calories": 73,
+    "protein": 0.79,
+    "fat": 0.14,
+    "carbohydrates": 2.84,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D002",
+    "name": "Bamboo shoot, tender",
+    "calories": 68,
+    "protein": 1.33,
+    "fat": 0.35,
+    "carbohydrates": 1.67,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D003",
+    "name": "Bean scarlet, tender",
+    "calories": 179,
+    "protein": 2.86,
+    "fat": 0.99,
+    "carbohydrates": 5.16,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D004",
+    "name": "Bitter gourd, jagged, teeth ridges, elongate",
+    "calories": 87,
+    "protein": 1.44,
+    "fat": 0.24,
+    "carbohydrates": 2.82,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D005",
+    "name": "Bitter gourd, jagged, teeth ridges, short",
+    "calories": 79,
+    "protein": 1.34,
+    "fat": 0.24,
+    "carbohydrates": 2.53,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D006",
+    "name": "Bitter gourd, jagged, smooth ridges, elongate",
+    "calories": 81,
+    "protein": 1.61,
+    "fat": 0.26,
+    "carbohydrates": 2.29,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D007",
+    "name": "Bottle gourd, elongate, pale green",
+    "calories": 46,
+    "protein": 0.53,
+    "fat": 0.13,
+    "carbohydrates": 1.68,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D008",
+    "name": "Bottle gourd, round, pale green",
+    "calories": 57,
+    "protein": 0.42,
+    "fat": 0.12,
+    "carbohydrates": 2.53,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D009",
+    "name": "Bottle gourd, elongate, dark green",
+    "calories": 54,
+    "protein": 0.49,
+    "fat": 0.13,
+    "carbohydrates": 2.25,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D010",
+    "name": "Brinjal 1",
+    "calories": 114,
+    "protein": 1.77,
+    "fat": 0.39,
+    "carbohydrates": 3.49,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D011",
+    "name": "Brinjal 2",
+    "calories": 99,
+    "protein": 1.82,
+    "fat": 0.34,
+    "carbohydrates": 2.71,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D012",
+    "name": "Brinjal 3",
+    "calories": 102,
+    "protein": 1.36,
+    "fat": 0.33,
+    "carbohydrates": 3.38,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D013",
+    "name": "Brinjal 4",
+    "calories": 100,
+    "protein": 1.51,
+    "fat": 0.31,
+    "carbohydrates": 3.19,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D014",
+    "name": "Brinjal 5",
+    "calories": 111,
+    "protein": 1.38,
+    "fat": 0.29,
+    "carbohydrates": 4.02,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D015",
+    "name": "Brinjal 6",
+    "calories": 97,
+    "protein": 1.46,
+    "fat": 0.29,
+    "carbohydrates": 3.29,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D016",
+    "name": "Brinjal 7",
+    "calories": 98,
+    "protein": 1.4,
+    "fat": 0.37,
+    "carbohydrates": 3.1,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D017",
+    "name": "Brinjal 8",
+    "calories": 117,
+    "protein": 1.82,
+    "fat": 0.33,
+    "carbohydrates": 3.75,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D018",
+    "name": "Brinjal 9",
+    "calories": 106,
+    "protein": 1.47,
+    "fat": 0.35,
+    "carbohydrates": 3.52,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D019",
+    "name": "Brinjal 10",
+    "calories": 116,
+    "protein": 1.68,
+    "fat": 0.25,
+    "carbohydrates": 4.08,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D020",
+    "name": "Brinjal 11",
+    "calories": 105,
+    "protein": 1.43,
+    "fat": 0.31,
+    "carbohydrates": 3.53,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D021",
+    "name": "Brinjal 12",
+    "calories": 93,
+    "protein": 1.6,
+    "fat": 0.27,
+    "carbohydrates": 2.73,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D022",
+    "name": "Brinjal 13",
+    "calories": 124,
+    "protein": 1.49,
+    "fat": 0.31,
+    "carbohydrates": 4.51,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D023",
+    "name": "Brinjal 14",
+    "calories": 106,
+    "protein": 1.56,
+    "fat": 0.35,
+    "carbohydrates": 3.27,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D024",
+    "name": "Brinjal 15",
+    "calories": 114,
+    "protein": 1.58,
+    "fat": 0.29,
+    "carbohydrates": 3.96,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D025",
+    "name": "Brinjal 16",
+    "calories": 103,
+    "protein": 1.26,
+    "fat": 0.34,
+    "carbohydrates": 3.46,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D026",
+    "name": "Brinjal 17",
+    "calories": 91,
+    "protein": 1.18,
+    "fat": 0.36,
+    "carbohydrates": 2.89,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D027",
+    "name": "Brinjal 18",
+    "calories": 116,
+    "protein": 1.47,
+    "fat": 0.33,
+    "carbohydrates": 4.1,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D028",
+    "name": "Brinjal 19",
+    "calories": 100,
+    "protein": 1.26,
+    "fat": 0.31,
+    "carbohydrates": 3.39,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D029",
+    "name": "Brinjal 20",
+    "calories": 99,
+    "protein": 1.44,
+    "fat": 0.34,
+    "carbohydrates": 3.15,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D030",
+    "name": "Brinjal 21",
+    "calories": 113,
+    "protein": 1.36,
+    "fat": 0.35,
+    "carbohydrates": 3.93,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D031",
+    "name": "Brinjal - all varieties",
+    "calories": 106,
+    "protein": 1.48,
+    "fat": 0.32,
+    "carbohydrates": 3.52,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D032",
+    "name": "Broad beans",
+    "calories": 123,
+    "protein": 3.85,
+    "fat": 0.15,
+    "carbohydrates": 2.11,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D033",
+    "name": "Capsicum, green",
+    "calories": 68,
+    "protein": 1.11,
+    "fat": 0.34,
+    "carbohydrates": 1.84,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D034",
+    "name": "Capsicum, red",
+    "calories": 83,
+    "protein": 1.47,
+    "fat": 0.47,
+    "carbohydrates": 2.14,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D035",
+    "name": "Capsicum, yellow",
+    "calories": 78,
+    "protein": 1.35,
+    "fat": 0.41,
+    "carbohydrates": 1.95,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D036",
+    "name": "Cauliflower",
+    "calories": 96,
+    "protein": 2.15,
+    "fat": 0.44,
+    "carbohydrates": 2.03,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D037",
+    "name": "Celery stalk",
+    "calories": 69,
+    "protein": 0.98,
+    "fat": 0.24,
+    "carbohydrates": 2.33,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D038",
+    "name": "Cho-cho-marrow",
+    "calories": 79,
+    "protein": 0.66,
+    "fat": 0.15,
+    "carbohydrates": 3.47,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D039",
+    "name": "Cluster beans",
+    "calories": 168,
+    "protein": 3.55,
+    "fat": 0.37,
+    "carbohydrates": 4.91,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D040",
+    "name": "Colocasia, stem, black",
+    "calories": 100,
+    "protein": 0.76,
+    "fat": 0.34,
+    "carbohydrates": 3.83,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D041",
+    "name": "Colocasia, stem, green",
+    "calories": 81,
+    "protein": 0.91,
+    "fat": 0.22,
+    "carbohydrates": 2.86,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D042",
+    "name": "Corn, baby",
+    "calories": 306,
+    "protein": 2.69,
+    "fat": 1.33,
+    "carbohydrates": 11.66,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D043",
+    "name": "Cucumber, green, elongate",
+    "calories": 82,
+    "protein": 0.71,
+    "fat": 0.16,
+    "carbohydrates": 3.48,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D044",
+    "name": "Cucumber, green, short",
+    "calories": 73,
+    "protein": 0.83,
+    "fat": 0.18,
+    "carbohydrates": 2.82,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D045",
+    "name": "Cucumber, orange, round",
+    "calories": 82,
+    "protein": 0.98,
+    "fat": 0.24,
+    "carbohydrates": 3.01,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D046",
+    "name": "Drumstick",
+    "calories": 123,
+    "protein": 2.62,
+    "fat": 0.12,
+    "carbohydrates": 3.76,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D047",
+    "name": "Field beans, tender, broad",
+    "calories": 129,
+    "protein": 3.06,
+    "fat": 0.64,
+    "carbohydrates": 2.75,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D048",
+    "name": "Field beans, tender, lean",
+    "calories": 140,
+    "protein": 3.71,
+    "fat": 0.6,
+    "carbohydrates": 2.85,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D049",
+    "name": "French beans, country",
+    "calories": 102,
+    "protein": 2.49,
+    "fat": 0.26,
+    "carbohydrates": 2.68,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D050",
+    "name": "French beans, hybrid",
+    "calories": 93,
+    "protein": 2.12,
+    "fat": 0.19,
+    "carbohydrates": 2.63,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D051",
+    "name": "Jack fruit, raw",
+    "calories": 110,
+    "protein": 1.98,
+    "fat": 0.35,
+    "carbohydrates": 3.48,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D052",
+    "name": "Jack fruit, seeds, mature",
+    "calories": 322,
+    "protein": 5.79,
+    "fat": 0.44,
+    "carbohydrates": 11.81,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D053",
+    "name": "Knol - Khol",
+    "calories": 67,
+    "protein": 1.58,
+    "fat": 0.35,
+    "carbohydrates": 1.39,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D054",
+    "name": "Kovai, big",
+    "calories": 73,
+    "protein": 1.39,
+    "fat": 0.24,
+    "carbohydrates": 2.01,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D055",
+    "name": "Kovai, small",
+    "calories": 80,
+    "protein": 1.22,
+    "fat": 0.24,
+    "carbohydrates": 2.41,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D056",
+    "name": "Ladies finger",
+    "calories": 115,
+    "protein": 2.08,
+    "fat": 0.22,
+    "carbohydrates": 3.62,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D057",
+    "name": "Mango, green, raw",
+    "calories": 205,
+    "protein": 0.69,
+    "fat": 0.08,
+    "carbohydrates": 10.59,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D058",
+    "name": "Onion, stalk",
+    "calories": 107,
+    "protein": 2.07,
+    "fat": 0.26,
+    "carbohydrates": 2.99,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D059",
+    "name": "Papaya, raw",
+    "calories": 100,
+    "protein": 0.5,
+    "fat": 0.23,
+    "carbohydrates": 4.4,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D060",
+    "name": "Parwar",
+    "calories": 101,
+    "protein": 1.4,
+    "fat": 0.3,
+    "carbohydrates": 3.54,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D061",
+    "name": "Peas, fresh",
+    "calories": 340,
+    "protein": 7.25,
+    "fat": 0.13,
+    "carbohydrates": 11.88,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D062",
+    "name": "Plantain, flower",
+    "calories": 89,
+    "protein": 1.47,
+    "fat": 0.63,
+    "carbohydrates": 2.15,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D063",
+    "name": "Plantain, green",
+    "calories": 334,
+    "protein": 1.18,
+    "fat": 0.23,
+    "carbohydrates": 17.58,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D064",
+    "name": "Plantain, stem",
+    "calories": 165,
+    "protein": 0.35,
+    "fat": 0.16,
+    "carbohydrates": 8.64,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D065",
+    "name": "Pumpkin, green, cylindrical",
+    "calories": 103,
+    "protein": 0.87,
+    "fat": 0.18,
+    "carbohydrates": 4.22,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D066",
+    "name": "Pumpkin, orange, round",
+    "calories": 97,
+    "protein": 0.84,
+    "fat": 0.16,
+    "carbohydrates": 4,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D067",
+    "name": "Red gram, tender, fresh",
+    "calories": 520,
+    "protein": 8.09,
+    "fat": 0.92,
+    "carbohydrates": 19.46,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D068",
+    "name": "Ridge gourd",
+    "calories": 55,
+    "protein": 0.91,
+    "fat": 0.14,
+    "carbohydrates": 1.72,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D069",
+    "name": "Ridge gourd, smooth skin",
+    "calories": 64,
+    "protein": 0.98,
+    "fat": 0.13,
+    "carbohydrates": 2.24,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D070",
+    "name": "Snake gourd, long, pale green",
+    "calories": 52,
+    "protein": 0.98,
+    "fat": 0.25,
+    "carbohydrates": 1.27,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D071",
+    "name": "Snake gourd, long, dark green",
+    "calories": 50,
+    "protein": 0.89,
+    "fat": 0.25,
+    "carbohydrates": 1.23,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D072",
+    "name": "Snake gourd, short",
+    "calories": 61,
+    "protein": 0.54,
+    "fat": 0.26,
+    "carbohydrates": 2.15,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D073",
+    "name": "Tinda, tender",
+    "calories": 58,
+    "protein": 1.02,
+    "fat": 0.17,
+    "carbohydrates": 1.9,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D074",
+    "name": "Tomato, green",
+    "calories": 87,
+    "protein": 1.12,
+    "fat": 0.27,
+    "carbohydrates": 3.18,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D075",
+    "name": "Tomato, ripe, hybrid",
+    "calories": 79,
+    "protein": 0.76,
+    "fat": 0.25,
+    "carbohydrates": 3.2,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D076",
+    "name": "Tomato, ripe, local",
+    "calories": 82,
+    "protein": 0.9,
+    "fat": 0.47,
+    "carbohydrates": 2.71,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D077",
+    "name": "Zucchini, green",
+    "calories": 84,
+    "protein": 1.1,
+    "fat": 0.51,
+    "carbohydrates": 2.33,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-D078",
+    "name": "Zucchini, yellow",
+    "calories": 79,
+    "protein": 1.31,
+    "fat": 0.44,
+    "carbohydrates": 2.2,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E001",
+    "name": "Apple, big",
+    "calories": 261,
+    "protein": 0.29,
+    "fat": 0.64,
+    "carbohydrates": 13.11,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E002",
+    "name": "Apple, green",
+    "calories": 214,
+    "protein": 0.46,
+    "fat": 0.5,
+    "carbohydrates": 10.65,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E003",
+    "name": "Apple, small",
+    "calories": 267,
+    "protein": 0.31,
+    "fat": 0.53,
+    "carbohydrates": 13.95,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E004",
+    "name": "Apple, small, Kashmir",
+    "calories": 269,
+    "protein": 0.27,
+    "fat": 0.6,
+    "carbohydrates": 13.99,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E005",
+    "name": "Apricot, dried",
+    "calories": 1321,
+    "protein": 3.17,
+    "fat": 0.74,
+    "carbohydrates": 72.63,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E006",
+    "name": "Apricot, processed",
+    "calories": 236,
+    "protein": 1.47,
+    "fat": 0.64,
+    "carbohydrates": 10.93,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E007",
+    "name": "Avocado fruit",
+    "calories": 604,
+    "protein": 2.95,
+    "fat": 13.86,
+    "carbohydrates": 1.75,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E008",
+    "name": "Bael fruit",
+    "calories": 569,
+    "protein": 2.63,
+    "fat": 0.57,
+    "carbohydrates": 28.21,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E009",
+    "name": "Banana, ripe, montham",
+    "calories": 463,
+    "protein": 1.25,
+    "fat": 0.32,
+    "carbohydrates": 24.95,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E010",
+    "name": "Banana, ripe, poovam",
+    "calories": 445,
+    "protein": 1.49,
+    "fat": 0.35,
+    "carbohydrates": 23.41,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E011",
+    "name": "Banana, ripe, red",
+    "calories": 467,
+    "protein": 1.29,
+    "fat": 0.29,
+    "carbohydrates": 25.21,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E012",
+    "name": "Banana, ripe, robusta",
+    "calories": 440,
+    "protein": 1.23,
+    "fat": 0.33,
+    "carbohydrates": 23.63,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E013",
+    "name": "Black berry",
+    "calories": 227,
+    "protein": 0.92,
+    "fat": 0.63,
+    "carbohydrates": 10.64,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E014",
+    "name": "Cherries, red",
+    "calories": 250,
+    "protein": 1.49,
+    "fat": 0.46,
+    "carbohydrates": 11.87,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E015",
+    "name": "Currants, black",
+    "calories": 227,
+    "protein": 1.51,
+    "fat": 0.53,
+    "carbohydrates": 9.93,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E016",
+    "name": "Custard apple",
+    "calories": 414,
+    "protein": 1.62,
+    "fat": 0.67,
+    "carbohydrates": 20.38,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E017",
+    "name": "Dates, dry, pale brown",
+    "calories": 1340,
+    "protein": 2.45,
+    "fat": 0.35,
+    "carbohydrates": 74.91,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E018",
+    "name": "Dates, dry, dark brown",
+    "calories": 1301,
+    "protein": 2.38,
+    "fat": 0.35,
+    "carbohydrates": 72.67,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E019",
+    "name": "Dates, processed",
+    "calories": 1197,
+    "protein": 1.18,
+    "fat": 0.41,
+    "carbohydrates": 67.95,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E020",
+    "name": "Fig",
+    "calories": 341,
+    "protein": 2.03,
+    "fat": 0.37,
+    "carbohydrates": 16.28,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E021",
+    "name": "Goosberry",
+    "calories": 99,
+    "protein": 0.34,
+    "fat": 0.16,
+    "carbohydrates": 4.39,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E022",
+    "name": "Grapes, seeded, round, black",
+    "calories": 254,
+    "protein": 0.76,
+    "fat": 0.32,
+    "carbohydrates": 13.23,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E023",
+    "name": "Grapes, seeded, round, green",
+    "calories": 235,
+    "protein": 0.77,
+    "fat": 0.29,
+    "carbohydrates": 12.19,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E024",
+    "name": "Grapes, seeded, round, red",
+    "calories": 244,
+    "protein": 0.95,
+    "fat": 0.29,
+    "carbohydrates": 12.55,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E025",
+    "name": "Grapes, seedless, oval, black",
+    "calories": 395,
+    "protein": 1.41,
+    "fat": 0.46,
+    "carbohydrates": 20.48,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E026",
+    "name": "Grapes, seedless, round, green",
+    "calories": 224,
+    "protein": 0.62,
+    "fat": 0.26,
+    "carbohydrates": 11.81,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E027",
+    "name": "Grapes, seedless, round, black",
+    "calories": 374,
+    "protein": 1.24,
+    "fat": 0.35,
+    "carbohydrates": 19.86,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E028",
+    "name": "Guava, white flesh",
+    "calories": 135,
+    "protein": 1.44,
+    "fat": 0.32,
+    "carbohydrates": 5.13,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E029",
+    "name": "Guava, pink flesh",
+    "calories": 195,
+    "protein": 1.19,
+    "fat": 0.25,
+    "carbohydrates": 9.14,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E030",
+    "name": "Jack fruit, ripe",
+    "calories": 302,
+    "protein": 2.74,
+    "fat": 0.15,
+    "carbohydrates": 14.01,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E031",
+    "name": "Jambu fruit, ripe",
+    "calories": 235,
+    "protein": 0.82,
+    "fat": 0.17,
+    "carbohydrates": 12.3,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E032",
+    "name": "Karonda fruit",
+    "calories": 141,
+    "protein": 1.15,
+    "fat": 1.67,
+    "carbohydrates": 2.87,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E033",
+    "name": "Lemon, juice",
+    "calories": 153,
+    "protein": 0.41,
+    "fat": 0.75,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E034",
+    "name": "Lime, sweet, pulp",
+    "calories": 114,
+    "protein": 0.76,
+    "fat": 0.2,
+    "carbohydrates": 5.18,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E035",
+    "name": "Litchi",
+    "calories": 225,
+    "protein": 0.99,
+    "fat": 0.26,
+    "carbohydrates": 11.41,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E036",
+    "name": "Mango, ripe, banganapalli",
+    "calories": 175,
+    "protein": 0.54,
+    "fat": 0.55,
+    "carbohydrates": 8.18,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E037",
+    "name": "Mango, ripe, gulabkhas",
+    "calories": 209,
+    "protein": 0.52,
+    "fat": 0.53,
+    "carbohydrates": 10.32,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E038",
+    "name": "Mango, ripe, himsagar",
+    "calories": 187,
+    "protein": 0.46,
+    "fat": 0.54,
+    "carbohydrates": 9.03,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E039",
+    "name": "Mango, ripe, kesar",
+    "calories": 231,
+    "protein": 0.54,
+    "fat": 0.57,
+    "carbohydrates": 11.36,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E040",
+    "name": "Mango, ripe, neelam",
+    "calories": 178,
+    "protein": 0.68,
+    "fat": 0.55,
+    "carbohydrates": 8.21,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E041",
+    "name": "Mango, ripe, paheri",
+    "calories": 188,
+    "protein": 0.68,
+    "fat": 0.58,
+    "carbohydrates": 8.67,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E042",
+    "name": "Mango, ripe, totapari",
+    "calories": 248,
+    "protein": 0.41,
+    "fat": 0.49,
+    "carbohydrates": 12.75,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E043",
+    "name": "Mangosteen",
+    "calories": 219,
+    "protein": 0.63,
+    "fat": 0.24,
+    "carbohydrates": 11.41,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E044",
+    "name": "Manila tamarind",
+    "calories": 342,
+    "protein": 3.56,
+    "fat": 1.14,
+    "carbohydrates": 13.54,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E045",
+    "name": "Musk melon, orange flesh",
+    "calories": 97,
+    "protein": 0.42,
+    "fat": 0.35,
+    "carbohydrates": 4.24,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E046",
+    "name": "Musk melon, yellow flesh",
+    "calories": 116,
+    "protein": 0.53,
+    "fat": 0.26,
+    "carbohydrates": 5.4,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E047",
+    "name": "Orange, pulp",
+    "calories": 156,
+    "protein": 0.7,
+    "fat": 0.13,
+    "carbohydrates": 7.92,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E048",
+    "name": "Palm fruit, tender",
+    "calories": 101,
+    "protein": 0.5,
+    "fat": 0.12,
+    "carbohydrates": 4.92,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E049",
+    "name": "Papaya, ripe",
+    "calories": 100,
+    "protein": 0.42,
+    "fat": 0.16,
+    "carbohydrates": 4.61,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E050",
+    "name": "Peach",
+    "calories": 168,
+    "protein": 0.86,
+    "fat": 0.37,
+    "carbohydrates": 7.82,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E051",
+    "name": "Pear",
+    "calories": 157,
+    "protein": 0.36,
+    "fat": 0.27,
+    "carbohydrates": 8.09,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E052",
+    "name": "Phalsa",
+    "calories": 299,
+    "protein": 1.66,
+    "fat": 0.14,
+    "carbohydrates": 15.09,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E053",
+    "name": "Pineapple",
+    "calories": 180,
+    "protein": 0.52,
+    "fat": 0.16,
+    "carbohydrates": 9.42,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E054",
+    "name": "Plum",
+    "calories": 238,
+    "protein": 0.64,
+    "fat": 0.4,
+    "carbohydrates": 12.1,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E055",
+    "name": "Pomegranate, maroon seeds",
+    "calories": 229,
+    "protein": 1.33,
+    "fat": 0.15,
+    "carbohydrates": 11.58,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E056",
+    "name": "Pummelo",
+    "calories": 210,
+    "protein": 0.68,
+    "fat": 0.42,
+    "carbohydrates": 10.64,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E057",
+    "name": "Raisins, dried, black",
+    "calories": 1279,
+    "protein": 2.57,
+    "fat": 0.34,
+    "carbohydrates": 71.29,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E058",
+    "name": "Raisins, dried, golden",
+    "calories": 1241,
+    "protein": 2.76,
+    "fat": 0.35,
+    "carbohydrates": 68.79,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E059",
+    "name": "Rambutan",
+    "calories": 306,
+    "protein": 0.68,
+    "fat": 0.16,
+    "carbohydrates": 16.84,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E060",
+    "name": "Sapota",
+    "calories": 307,
+    "protein": 0.92,
+    "fat": 1.26,
+    "carbohydrates": 13.9,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E061",
+    "name": "Soursop",
+    "calories": 260,
+    "protein": 0.74,
+    "fat": 0.94,
+    "carbohydrates": 11.94,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E062",
+    "name": "Star fruit",
+    "calories": 110,
+    "protein": 0.79,
+    "fat": 0.39,
+    "carbohydrates": 4.51,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E063",
+    "name": "Strawberry",
+    "calories": 103,
+    "protein": 0.97,
+    "fat": 0.56,
+    "carbohydrates": 3.4,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E064",
+    "name": "Tamarind, pulp",
+    "calories": 1207,
+    "protein": 2.92,
+    "fat": 0.15,
+    "carbohydrates": 67.35,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E065",
+    "name": "Water melon, dark green (sugar baby)",
+    "calories": 85,
+    "protein": 0.6,
+    "fat": 0.16,
+    "carbohydrates": 3.86,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E066",
+    "name": "Water melon, pale green",
+    "calories": 70,
+    "protein": 0.59,
+    "fat": 0.16,
+    "carbohydrates": 3.02,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E067",
+    "name": "Wood apple",
+    "calories": 327,
+    "protein": 3.14,
+    "fat": 3.62,
+    "carbohydrates": 7.52,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-E068",
+    "name": "Zizyphus",
+    "calories": 204,
+    "protein": 1.34,
+    "fat": 0.35,
+    "carbohydrates": 9.4,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F001",
+    "name": "Beetroot",
+    "calories": 149,
+    "protein": 1.95,
+    "fat": 0.14,
+    "carbohydrates": 6.18,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F002",
+    "name": "Carrot, orange",
+    "calories": 139,
+    "protein": 0.95,
+    "fat": 0.47,
+    "carbohydrates": 5.55,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F003",
+    "name": "Carrot, red",
+    "calories": 160,
+    "protein": 1.04,
+    "fat": 0.47,
+    "carbohydrates": 6.71,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F004",
+    "name": "Colocasia",
+    "calories": 372,
+    "protein": 3.31,
+    "fat": 0.17,
+    "carbohydrates": 17.85,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F005",
+    "name": "Lotus root",
+    "calories": 332,
+    "protein": 1.94,
+    "fat": 0.93,
+    "carbohydrates": 14.67,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F006",
+    "name": "Potato, brown skin, big",
+    "calories": 292,
+    "protein": 1.54,
+    "fat": 0.23,
+    "carbohydrates": 14.89,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F007",
+    "name": "Potato, brown skin, small",
+    "calories": 255,
+    "protein": 1.35,
+    "fat": 0.22,
+    "carbohydrates": 12.9,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F008",
+    "name": "Potato, red skin",
+    "calories": 306,
+    "protein": 1.83,
+    "fat": 0.22,
+    "carbohydrates": 15.43,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F009",
+    "name": "Radish, elongate, red skin",
+    "calories": 134,
+    "protein": 0.67,
+    "fat": 0.13,
+    "carbohydrates": 6.71,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F010",
+    "name": "Radish, elongate, white skin",
+    "calories": 135,
+    "protein": 0.77,
+    "fat": 0.15,
+    "carbohydrates": 6.56,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F011",
+    "name": "Radish, round, red skin",
+    "calories": 130,
+    "protein": 0.89,
+    "fat": 0.16,
+    "carbohydrates": 6.07,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F012",
+    "name": "Radish, round, white skin",
+    "calories": 129,
+    "protein": 0.8,
+    "fat": 0.14,
+    "carbohydrates": 6.13,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F013",
+    "name": "Sweet potato, brown skin",
+    "calories": 456,
+    "protein": 1.33,
+    "fat": 0.26,
+    "carbohydrates": 24.25,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F014",
+    "name": "Sweet potato, pink skin",
+    "calories": 452,
+    "protein": 1.27,
+    "fat": 0.33,
+    "carbohydrates": 23.93,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F015",
+    "name": "Tapioca",
+    "calories": 334,
+    "protein": 1.03,
+    "fat": 0.2,
+    "carbohydrates": 17.81,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F016",
+    "name": "Water Chestnut",
+    "calories": 400,
+    "protein": 0.86,
+    "fat": 0.37,
+    "carbohydrates": 21.46,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F017",
+    "name": "Yam, elephant",
+    "calories": 353,
+    "protein": 2.56,
+    "fat": 0.14,
+    "carbohydrates": 17.46,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F018",
+    "name": "Yam, ordinary",
+    "calories": 349,
+    "protein": 2.18,
+    "fat": 0.17,
+    "carbohydrates": 17.65,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-F019",
+    "name": "Yam, wild",
+    "calories": 430,
+    "protein": 3.07,
+    "fat": 0.3,
+    "carbohydrates": 20.95,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G001",
+    "name": "Chillies, green-1",
+    "calories": 191,
+    "protein": 2.62,
+    "fat": 0.73,
+    "carbohydrates": 6.32,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G002",
+    "name": "Chillies, green-2",
+    "calories": 167,
+    "protein": 2.28,
+    "fat": 0.75,
+    "carbohydrates": 5.27,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G003",
+    "name": "Chillies, green-3",
+    "calories": 169,
+    "protein": 2.38,
+    "fat": 0.75,
+    "carbohydrates": 5.23,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G004",
+    "name": "Chillies, green-4",
+    "calories": 190,
+    "protein": 2.33,
+    "fat": 0.74,
+    "carbohydrates": 6.63,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G005",
+    "name": "Chillies, green-5",
+    "calories": 180,
+    "protein": 2.01,
+    "fat": 0.65,
+    "carbohydrates": 6.64,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G006",
+    "name": "Chillies, green-6",
+    "calories": 175,
+    "protein": 3.01,
+    "fat": 0.64,
+    "carbohydrates": 5.31,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G007",
+    "name": "Chillies, green-7",
+    "calories": 163,
+    "protein": 2.12,
+    "fat": 0.6,
+    "carbohydrates": 5.61,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G008",
+    "name": "Chillies, green - all varieties",
+    "calories": 177,
+    "protein": 2.36,
+    "fat": 0.72,
+    "carbohydrates": 5.86,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G009",
+    "name": "Coriander leaves",
+    "calories": 130,
+    "protein": 3.52,
+    "fat": 0.7,
+    "carbohydrates": 1.93,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G010",
+    "name": "Curry leaves",
+    "calories": 266,
+    "protein": 7.41,
+    "fat": 1.06,
+    "carbohydrates": 4.51,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G011",
+    "name": "Garlic, big cloves",
+    "calories": 518,
+    "protein": 6.92,
+    "fat": 0.16,
+    "carbohydrates": 21.93,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G012",
+    "name": "Garlic, small cloves",
+    "calories": 514,
+    "protein": 6.75,
+    "fat": 0.14,
+    "carbohydrates": 21.84,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G013",
+    "name": "Garlic, single clove, Kashmir",
+    "calories": 523,
+    "protein": 6.12,
+    "fat": 0.16,
+    "carbohydrates": 23.46,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G014",
+    "name": "Ginger, fresh",
+    "calories": 230,
+    "protein": 2.22,
+    "fat": 0.85,
+    "carbohydrates": 8.97,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G015",
+    "name": "Mango ginger",
+    "calories": 177,
+    "protein": 1.45,
+    "fat": 0.7,
+    "carbohydrates": 6.98,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G016",
+    "name": "Mint leaves",
+    "calories": 155,
+    "protein": 4.66,
+    "fat": 0.65,
+    "carbohydrates": 2.39,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G017",
+    "name": "Onion, big",
+    "calories": 201,
+    "protein": 1.5,
+    "fat": 0.24,
+    "carbohydrates": 9.56,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G018",
+    "name": "Onion, small",
+    "calories": 237,
+    "protein": 1.82,
+    "fat": 0.16,
+    "carbohydrates": 11.58,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G019",
+    "name": "Asafoetida",
+    "calories": 1387,
+    "protein": 6.34,
+    "fat": 1.26,
+    "carbohydrates": 71.95,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G020",
+    "name": "Cardamom, green",
+    "calories": 1067,
+    "protein": 8.1,
+    "fat": 2.6,
+    "carbohydrates": 47.76,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G021",
+    "name": "Cardamom, black",
+    "calories": 1132,
+    "protein": 6.69,
+    "fat": 2.8,
+    "carbohydrates": 52.53,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G022",
+    "name": "Chillies, red",
+    "calories": 990,
+    "protein": 12.69,
+    "fat": 6.4,
+    "carbohydrates": 29.46,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G023",
+    "name": "Cloves",
+    "calories": 781,
+    "protein": 5.86,
+    "fat": 8.41,
+    "carbohydrates": 18.73,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G024",
+    "name": "Coriander seeds",
+    "calories": 1125,
+    "protein": 10.66,
+    "fat": 17.47,
+    "carbohydrates": 12.98,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G025",
+    "name": "Cumin seeds",
+    "calories": 1274,
+    "protein": 13.91,
+    "fat": 16.64,
+    "carbohydrates": 22.62,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G026",
+    "name": "Fenugreek seeds",
+    "calories": 983,
+    "protein": 25.41,
+    "fat": 5.72,
+    "carbohydrates": 10.57,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G027",
+    "name": "Mace",
+    "calories": 1488,
+    "protein": 6.24,
+    "fat": 24.41,
+    "carbohydrates": 26.51,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G028",
+    "name": "Nutmeg",
+    "calories": 1940,
+    "protein": 6.3,
+    "fat": 36.52,
+    "carbohydrates": 27.64,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G029",
+    "name": "Omum",
+    "calories": 1495,
+    "protein": 15.89,
+    "fat": 21.11,
+    "carbohydrates": 24.53,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G030",
+    "name": "Pippali",
+    "calories": 906,
+    "protein": 10.53,
+    "fat": 2.27,
+    "carbohydrates": 35.7,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G031",
+    "name": "Pepper, black",
+    "calories": 910,
+    "protein": 10.12,
+    "fat": 2.74,
+    "carbohydrates": 36.22,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G032",
+    "name": "Poppy seeds",
+    "calories": 1768,
+    "protein": 20.31,
+    "fat": 30.38,
+    "carbohydrates": 12.37,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-G033",
+    "name": "Turmeric powder",
+    "calories": 1174,
+    "protein": 7.66,
+    "fat": 5.03,
+    "carbohydrates": 49.22,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H001",
+    "name": "Almond",
+    "calories": 2549,
+    "protein": 18.41,
+    "fat": 58.49,
+    "carbohydrates": 3.04,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H002",
+    "name": "Arecanut, dried, brown",
+    "calories": 1467,
+    "protein": 5.78,
+    "fat": 4.35,
+    "carbohydrates": 70.42,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H003",
+    "name": "Arecanut, dried, red color",
+    "calories": 1477,
+    "protein": 6.46,
+    "fat": 4.46,
+    "carbohydrates": 70.27,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H004",
+    "name": "Arecanut, fresh",
+    "calories": 1024,
+    "protein": 2.73,
+    "fat": 5.51,
+    "carbohydrates": 45,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H005",
+    "name": "Cashew nut",
+    "calories": 2438,
+    "protein": 18.78,
+    "fat": 45.2,
+    "carbohydrates": 25.46,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H006",
+    "name": "Coconut, kernel, dry",
+    "calories": 2611,
+    "protein": 7.27,
+    "fat": 63.26,
+    "carbohydrates": 8.01,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H007",
+    "name": "Coconut, kernel, fresh",
+    "calories": 1711,
+    "protein": 3.84,
+    "fat": 41.38,
+    "carbohydrates": 6.3,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H008",
+    "name": "Garden cress, seeds",
+    "calories": 1863,
+    "protein": 23.36,
+    "fat": 23.74,
+    "carbohydrates": 33.66,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H009",
+    "name": "Gingelly seeds, black",
+    "calories": 2124,
+    "protein": 19.17,
+    "fat": 43.1,
+    "carbohydrates": 10.29,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H010",
+    "name": "Gingelly seeds, brown",
+    "calories": 2161,
+    "protein": 21.61,
+    "fat": 43.22,
+    "carbohydrates": 9.76,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H011",
+    "name": "Gingelly seeds, white",
+    "calories": 2174,
+    "protein": 21.7,
+    "fat": 43.05,
+    "carbohydrates": 10.83,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H012",
+    "name": "Ground nut",
+    "calories": 2176,
+    "protein": 23.65,
+    "fat": 39.63,
+    "carbohydrates": 17.27,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H013",
+    "name": "Mustard seeds",
+    "calories": 2132,
+    "protein": 19.51,
+    "fat": 40.19,
+    "carbohydrates": 16.8,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H014",
+    "name": "Linseeds",
+    "calories": 1857,
+    "protein": 18.55,
+    "fat": 35.67,
+    "carbohydrates": 10.99,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H015",
+    "name": "Niger seeds, black",
+    "calories": 2144,
+    "protein": 18.92,
+    "fat": 38.61,
+    "carbohydrates": 22.98,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H016",
+    "name": "Niger seeds, grey",
+    "calories": 2128,
+    "protein": 18.34,
+    "fat": 39.53,
+    "carbohydrates": 20.59,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H017",
+    "name": "Pine seeds",
+    "calories": 2486,
+    "protein": 12.55,
+    "fat": 48.79,
+    "carbohydrates": 26.77,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H018",
+    "name": "Pistachio nuts",
+    "calories": 2257,
+    "protein": 23.35,
+    "fat": 42.49,
+    "carbohydrates": 15.82,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H019",
+    "name": "Safflower seeds",
+    "calories": 1981,
+    "protein": 17.66,
+    "fat": 30.87,
+    "carbohydrates": 30.18,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H020",
+    "name": "Sunflower seeds",
+    "calories": 2453,
+    "protein": 23.53,
+    "fat": 51.85,
+    "carbohydrates": 6.85,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-H021",
+    "name": "Walnut",
+    "calories": 2809,
+    "protein": 14.92,
+    "fat": 64.27,
+    "carbohydrates": 10.14,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-I001",
+    "name": "Jaggery, cane",
+    "calories": 1480,
+    "protein": 1.85,
+    "fat": 0.16,
+    "carbohydrates": 84.87,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-I002",
+    "name": "Sugarcane, juice",
+    "calories": 242,
+    "protein": 0.16,
+    "fat": 0.4,
+    "carbohydrates": 13.11,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-J001",
+    "name": "Button mushroom, fresh",
+    "calories": 115,
+    "protein": 3.68,
+    "fat": 0.42,
+    "carbohydrates": 1.98,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-J002",
+    "name": "Chicken mushroom, fresh",
+    "calories": 89,
+    "protein": 1.84,
+    "fat": 0.25,
+    "carbohydrates": 2.76,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-J003",
+    "name": "Shiitake mushroom, fresh",
+    "calories": 243,
+    "protein": 3.19,
+    "fat": 0.76,
+    "carbohydrates": 8.98,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-J004",
+    "name": "Oyster mushroom, dried",
+    "calories": 1019,
+    "protein": 19.04,
+    "fat": 2.86,
+    "carbohydrates": 33.07,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-K001",
+    "name": "Toddy",
+    "calories": 101,
+    "protein": 0.18,
+    "fat": 0.03,
+    "carbohydrates": 5.72,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-K002",
+    "name": "Coconut water",
+    "calories": 64,
+    "protein": 0.26,
+    "fat": 0.16,
+    "carbohydrates": 3.16,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-L001",
+    "name": "Milk, whole, Buffalo",
+    "calories": 449,
+    "protein": 3.68,
+    "fat": 6.58,
+    "carbohydrates": 8.39,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-L002",
+    "name": "Milk, whole, Cow",
+    "calories": 305,
+    "protein": 3.26,
+    "fat": 4.48,
+    "carbohydrates": 4.94,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-L003",
+    "name": "Paneer",
+    "calories": 1079,
+    "protein": 18.86,
+    "fat": 14.78,
+    "carbohydrates": 12.41,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-L004",
+    "name": "Khoa",
+    "calories": 1322,
+    "protein": 16.34,
+    "fat": 20.62,
+    "carbohydrates": 16.53,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-M001",
+    "name": "Egg, poultry, whole, raw",
+    "calories": 564,
+    "protein": 13.28,
+    "fat": 9.15,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-M002",
+    "name": "Egg, poultry, white, raw",
+    "calories": 187,
+    "protein": 10.84,
+    "fat": 0.06,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-M003",
+    "name": "Egg, poultry, yolk, raw",
+    "calories": 1242,
+    "protein": 15.74,
+    "fat": 26.34,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-M004",
+    "name": "Egg, poultry, whole, boiled",
+    "calories": 618,
+    "protein": 13.43,
+    "fat": 10.54,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-M005",
+    "name": "Egg, poultry, white, boiled",
+    "calories": 220,
+    "protein": 12.37,
+    "fat": 0.26,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-M006",
+    "name": "Egg, poultry, yolk, boiled",
+    "calories": 1290,
+    "protein": 16.13,
+    "fat": 27.46,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-M007",
+    "name": "Egg, poultry, omlet",
+    "calories": 710,
+    "protein": 16.53,
+    "fat": 11.6,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-M008",
+    "name": "Egg, country hen, whole, raw",
+    "calories": 704,
+    "protein": 13.14,
+    "fat": 13,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-M009",
+    "name": "Egg, country hen, whole, boiled",
+    "calories": 767,
+    "protein": 14.43,
+    "fat": 14.1,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-M010",
+    "name": "Egg, country hen, omlet",
+    "calories": 855,
+    "protein": 14.8,
+    "fat": 16.3,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-M011",
+    "name": "Egg, duck, whole, boiled",
+    "calories": 738,
+    "protein": 13.8,
+    "fat": 13.61,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-M012",
+    "name": "Egg, duck, whole, raw",
+    "calories": 760,
+    "protein": 14.6,
+    "fat": 13.83,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-M013",
+    "name": "Egg, duck, whole, omlet",
+    "calories": 804,
+    "protein": 15.1,
+    "fat": 14.8,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-M014",
+    "name": "Egg, quial, whole, raw",
+    "calories": 635,
+    "protein": 12.39,
+    "fat": 11.46,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-M015",
+    "name": "Egg, quial, whole, boiled",
+    "calories": 647,
+    "protein": 13.03,
+    "fat": 11.5,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N001",
+    "name": "Chicken, poultry, leg, skinless",
+    "calories": 1605,
+    "protein": 19.44,
+    "fat": 12.64,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N002",
+    "name": "Chicken, poultry, thigh, skinless",
+    "calories": 836,
+    "protein": 18.18,
+    "fat": 14.23,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N003",
+    "name": "Chicken, poultry, breast, skinless",
+    "calories": 704,
+    "protein": 21.81,
+    "fat": 9,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N004",
+    "name": "Chicken, poultry, wing, skinless",
+    "calories": 807,
+    "protein": 17.42,
+    "fat": 13.81,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N005",
+    "name": "Poultry, chicken, liver",
+    "calories": 518,
+    "protein": 21.57,
+    "fat": 4.08,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N006",
+    "name": "Poultry, chicken, gizzard",
+    "calories": 386,
+    "protein": 18.22,
+    "fat": 2.07,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N007",
+    "name": "Country hen, leg, with skin",
+    "calories": 723,
+    "protein": 17.01,
+    "fat": 11.73,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N008",
+    "name": "Country hen, thigh, with skin",
+    "calories": 785,
+    "protein": 18.29,
+    "fat": 12.82,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N009",
+    "name": "Country hen, breast, with skin",
+    "calories": 753,
+    "protein": 22.08,
+    "fat": 10.2,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N010",
+    "name": "Country hen, wing, with skin",
+    "calories": 764,
+    "protein": 18.65,
+    "fat": 12.09,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N011",
+    "name": "Duck, meat, with skin",
+    "calories": 547,
+    "protein": 19.07,
+    "fat": 6.03,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N012",
+    "name": "Emu, meat, skinless",
+    "calories": 556,
+    "protein": 22.65,
+    "fat": 4.62,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N013",
+    "name": "Guinea fowl, meat, with skin",
+    "calories": 469,
+    "protein": 20.52,
+    "fat": 3.24,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N014",
+    "name": "Pigeon, meat, with skin",
+    "calories": 528,
+    "protein": 17.94,
+    "fat": 6.03,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N015",
+    "name": "Quail, meat, skinless",
+    "calories": 576,
+    "protein": 20.92,
+    "fat": 5.95,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N016",
+    "name": "Turkey, leg, with skin",
+    "calories": 647,
+    "protein": 20.3,
+    "fat": 8.15,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N017",
+    "name": "Turkey, thigh, with skin",
+    "calories": 581,
+    "protein": 20.46,
+    "fat": 6.31,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N018",
+    "name": "Turkey, breast, with skin",
+    "calories": 671,
+    "protein": 21.96,
+    "fat": 8.04,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-N019",
+    "name": "Turkey, wing, with skin",
+    "calories": 771,
+    "protein": 21.91,
+    "fat": 10.77,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O001",
+    "name": "Goat, shoulder, meat",
+    "calories": 787,
+    "protein": 20.33,
+    "fat": 11.94,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O002",
+    "name": "Goat, chops",
+    "calories": 568,
+    "protein": 20.39,
+    "fat": 5.98,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O003",
+    "name": "Goat, legs",
+    "calories": 669,
+    "protein": 22.07,
+    "fat": 7.94,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O004",
+    "name": "Goat, brain",
+    "calories": 533,
+    "protein": 13.82,
+    "fat": 8.06,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O005",
+    "name": "Goat, tongue",
+    "calories": 789,
+    "protein": 16.63,
+    "fat": 13.68,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O006",
+    "name": "Goat, lungs",
+    "calories": 401,
+    "protein": 16.86,
+    "fat": 3.09,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O007",
+    "name": "Goat, heart",
+    "calories": 492,
+    "protein": 19.38,
+    "fat": 4.4,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O008",
+    "name": "Goat, liver",
+    "calories": 526,
+    "protein": 20.32,
+    "fat": 4.88,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O009",
+    "name": "Goat, tripe",
+    "calories": 386,
+    "protein": 15.36,
+    "fat": 3.36,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O010",
+    "name": "Goat, spleen",
+    "calories": 401,
+    "protein": 18.45,
+    "fat": 2.37,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O011",
+    "name": "Goat, kidneys",
+    "calories": 374,
+    "protein": 15.6,
+    "fat": 2.93,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O012",
+    "name": "Goat, tube (small intestine)",
+    "calories": 525,
+    "protein": 12.92,
+    "fat": 8.26,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O013",
+    "name": "Goat, testis",
+    "calories": 298,
+    "protein": 12.32,
+    "fat": 2.39,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O014",
+    "name": "Sheep, shoulder",
+    "calories": 840,
+    "protein": 18.24,
+    "fat": 14.31,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O015",
+    "name": "Sheep, chops",
+    "calories": 496,
+    "protein": 18,
+    "fat": 5.15,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O016",
+    "name": "Sheep, leg",
+    "calories": 686,
+    "protein": 21.42,
+    "fat": 8.69,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O017",
+    "name": "Sheep, brain",
+    "calories": 492,
+    "protein": 13.05,
+    "fat": 7.29,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O018",
+    "name": "Sheep, tongue",
+    "calories": 783,
+    "protein": 16.61,
+    "fat": 13.53,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O019",
+    "name": "Sheep, lungs",
+    "calories": 363,
+    "protein": 16.12,
+    "fat": 2.41,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O020",
+    "name": "Sheep, heart",
+    "calories": 445,
+    "protein": 18.19,
+    "fat": 3.66,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O021",
+    "name": "Sheep, liver",
+    "calories": 559,
+    "protein": 22.26,
+    "fat": 4.87,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O022",
+    "name": "Sheep, tripe",
+    "calories": 435,
+    "protein": 16.76,
+    "fat": 4.05,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O023",
+    "name": "Sheep, spleen",
+    "calories": 384,
+    "protein": 16.02,
+    "fat": 3.02,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O024",
+    "name": "Sheep, kidneys",
+    "calories": 384,
+    "protein": 16.22,
+    "fat": 2.92,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O025",
+    "name": "Beef, shoulder",
+    "calories": 889,
+    "protein": 20.56,
+    "fat": 14.59,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O026",
+    "name": "Beef, chops",
+    "calories": 585,
+    "protein": 19.82,
+    "fat": 6.71,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O027",
+    "name": "Beef, round (leg)",
+    "calories": 658,
+    "protein": 22.64,
+    "fat": 7.38,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O028",
+    "name": "Beef, brain",
+    "calories": 523,
+    "protein": 10.55,
+    "fat": 9.28,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O029",
+    "name": "Beef, tongue",
+    "calories": 731,
+    "protein": 15.63,
+    "fat": 12.57,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O030",
+    "name": "Beef, lungs",
+    "calories": 351,
+    "protein": 15.66,
+    "fat": 2.28,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O031",
+    "name": "Beef, heart",
+    "calories": 433,
+    "protein": 17.68,
+    "fat": 3.57,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O032",
+    "name": "Beef, liver",
+    "calories": 499,
+    "protein": 20.73,
+    "fat": 3.96,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O033",
+    "name": "Beef, tripe",
+    "calories": 316,
+    "protein": 13.1,
+    "fat": 2.51,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O034",
+    "name": "Beef, spleen",
+    "calories": 378,
+    "protein": 17.42,
+    "fat": 2.22,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O035",
+    "name": "Beef, kidneys",
+    "calories": 439,
+    "protein": 17.09,
+    "fat": 4.01,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O036",
+    "name": "Calf, shoulder",
+    "calories": 633,
+    "protein": 20.98,
+    "fat": 7.47,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O037",
+    "name": "Calf, chops",
+    "calories": 524,
+    "protein": 22.47,
+    "fat": 3.85,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O038",
+    "name": "Calf, round (leg)",
+    "calories": 615,
+    "protein": 21.1,
+    "fat": 6.92,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O039",
+    "name": "Calf, brain",
+    "calories": 448,
+    "protein": 9.84,
+    "fat": 7.6,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O040",
+    "name": "Calf, tongue",
+    "calories": 737,
+    "protein": 17.78,
+    "fat": 11.76,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O041",
+    "name": "Calf, heart",
+    "calories": 459,
+    "protein": 18.84,
+    "fat": 3.75,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O042",
+    "name": "Calf, liver",
+    "calories": 503,
+    "protein": 21.02,
+    "fat": 3.95,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O043",
+    "name": "Calf, spleen",
+    "calories": 379,
+    "protein": 17.71,
+    "fat": 2.12,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O044",
+    "name": "Calf, kidneys",
+    "calories": 387,
+    "protein": 15.16,
+    "fat": 3.5,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O045",
+    "name": "Mithun, shoulder",
+    "calories": 736,
+    "protein": 19.05,
+    "fat": 11.14,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O046",
+    "name": "Mithun, chops",
+    "calories": 536,
+    "protein": 18.19,
+    "fat": 6.12,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O047",
+    "name": "Mithun, round (leg)",
+    "calories": 485,
+    "protein": 19.61,
+    "fat": 4.1,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O048",
+    "name": "Pork, shoulder",
+    "calories": 993,
+    "protein": 17.41,
+    "fat": 18.83,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O049",
+    "name": "Pork, chops",
+    "calories": 748,
+    "protein": 19.41,
+    "fat": 11.3,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O050",
+    "name": "Pork, ham",
+    "calories": 1006,
+    "protein": 18.83,
+    "fat": 18.55,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O051",
+    "name": "Pork, lungs",
+    "calories": 358,
+    "protein": 15.13,
+    "fat": 2.74,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O052",
+    "name": "Pork, heart",
+    "calories": 457,
+    "protein": 16.31,
+    "fat": 4.87,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O053",
+    "name": "Pork, liver",
+    "calories": 484,
+    "protein": 19.89,
+    "fat": 3.94,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O054",
+    "name": "Pork, stomach",
+    "calories": 550,
+    "protein": 15.36,
+    "fat": 7.81,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O055",
+    "name": "Pork, spleen",
+    "calories": 357,
+    "protein": 15.13,
+    "fat": 2.71,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O056",
+    "name": "Pork, kidneys",
+    "calories": 379,
+    "protein": 14.35,
+    "fat": 3.65,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O057",
+    "name": "Pork, tube (small intestine)",
+    "calories": 587,
+    "protein": 14.96,
+    "fat": 8.98,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O058",
+    "name": "Hare, shoulder",
+    "calories": 603,
+    "protein": 21.13,
+    "fat": 6.58,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O059",
+    "name": "Hare, chops",
+    "calories": 445,
+    "protein": 20.62,
+    "fat": 2.55,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O060",
+    "name": "Hare, leg",
+    "calories": 503,
+    "protein": 20.52,
+    "fat": 4.16,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O061",
+    "name": "Rabbit, shoulder",
+    "calories": 635,
+    "protein": 20.01,
+    "fat": 7.96,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O062",
+    "name": "Rabbit, chops",
+    "calories": 565,
+    "protein": 22.61,
+    "fat": 4.88,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-O063",
+    "name": "Rabbit, leg",
+    "calories": 584,
+    "protein": 21.31,
+    "fat": 5.99,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P001",
+    "name": "Allathi",
+    "calories": 406,
+    "protein": 21.77,
+    "fat": 0.98,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P002",
+    "name": "Aluva",
+    "calories": 434,
+    "protein": 21.63,
+    "fat": 1.8,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P003",
+    "name": "Anchovy",
+    "calories": 367,
+    "protein": 19.88,
+    "fat": 0.78,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P004",
+    "name": "Ari fish",
+    "calories": 415,
+    "protein": 22.01,
+    "fat": 1.11,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P005",
+    "name": "Betki",
+    "calories": 284,
+    "protein": 15.28,
+    "fat": 0.29,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P006",
+    "name": "Black snapper",
+    "calories": 377,
+    "protein": 19.5,
+    "fat": 1.24,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P007",
+    "name": "Bombay duck",
+    "calories": 287,
+    "protein": 13.53,
+    "fat": 1.03,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P008",
+    "name": "Bommuralu",
+    "calories": 485,
+    "protein": 22.3,
+    "fat": 2.87,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P009",
+    "name": "Cat fish",
+    "calories": 456,
+    "protein": 22.18,
+    "fat": 2.13,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P010",
+    "name": "Chakla",
+    "calories": 406,
+    "protein": 20.21,
+    "fat": 1.68,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P011",
+    "name": "Chappal",
+    "calories": 317,
+    "protein": 17.17,
+    "fat": 0.67,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P012",
+    "name": "Chelu",
+    "calories": 366,
+    "protein": 20.02,
+    "fat": 0.7,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P013",
+    "name": "Chembali",
+    "calories": 406,
+    "protein": 20.06,
+    "fat": 1.77,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P014",
+    "name": "Eri meen",
+    "calories": 454,
+    "protein": 22.3,
+    "fat": 2.02,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P015",
+    "name": "Gobro",
+    "calories": 362,
+    "protein": 19.37,
+    "fat": 0.88,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P016",
+    "name": "Guitar fish",
+    "calories": 400,
+    "protein": 22.56,
+    "fat": 0.44,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P017",
+    "name": "Hilsa",
+    "calories": 1083,
+    "protein": 21.8,
+    "fat": 18.49,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P018",
+    "name": "Jallal",
+    "calories": 420,
+    "protein": 21.55,
+    "fat": 1.46,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P019",
+    "name": "Jathi vela meen",
+    "calories": 453,
+    "protein": 22.45,
+    "fat": 1.92,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P020",
+    "name": "Kadal bral",
+    "calories": 368,
+    "protein": 18.72,
+    "fat": 1.34,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P021",
+    "name": "Kadali",
+    "calories": 530,
+    "protein": 22.07,
+    "fat": 4.2,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P022",
+    "name": "Kalamaara",
+    "calories": 523,
+    "protein": 20.89,
+    "fat": 4.54,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P023",
+    "name": "Kalava",
+    "calories": 374,
+    "protein": 19.38,
+    "fat": 1.2,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P024",
+    "name": "Kanamayya",
+    "calories": 367,
+    "protein": 20.19,
+    "fat": 0.65,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P025",
+    "name": "Kannadi paarai",
+    "calories": 423,
+    "protein": 22.09,
+    "fat": 1.27,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P026",
+    "name": "Karimeen",
+    "calories": 386,
+    "protein": 19.68,
+    "fat": 1.38,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P027",
+    "name": "Karnagawala",
+    "calories": 363,
+    "protein": 19.52,
+    "fat": 0.84,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P028",
+    "name": "Kayrai",
+    "calories": 454,
+    "protein": 20.15,
+    "fat": 3,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P029",
+    "name": "Kiriyan",
+    "calories": 556,
+    "protein": 22.49,
+    "fat": 4.7,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P030",
+    "name": "Kite fish",
+    "calories": 413,
+    "protein": 23.07,
+    "fat": 0.56,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P031",
+    "name": "Korka",
+    "calories": 528,
+    "protein": 23.72,
+    "fat": 3.36,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P032",
+    "name": "Kulam paarai",
+    "calories": 501,
+    "protein": 21.62,
+    "fat": 3.6,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P033",
+    "name": "Maagaa",
+    "calories": 366,
+    "protein": 20.11,
+    "fat": 0.67,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P034",
+    "name": "Mackerel",
+    "calories": 423,
+    "protein": 21.51,
+    "fat": 1.53,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P035",
+    "name": "Manda clathi",
+    "calories": 398,
+    "protein": 21.27,
+    "fat": 1,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P036",
+    "name": "Matha",
+    "calories": 389,
+    "protein": 21.17,
+    "fat": 0.79,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P037",
+    "name": "Milk fish",
+    "calories": 442,
+    "protein": 23.66,
+    "fat": 1.09,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P038",
+    "name": "Moon fish",
+    "calories": 526,
+    "protein": 20.74,
+    "fat": 4.69,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P039",
+    "name": "Mullet",
+    "calories": 393,
+    "protein": 20.23,
+    "fat": 1.32,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P040",
+    "name": "Mural",
+    "calories": 345,
+    "protein": 19.04,
+    "fat": 0.58,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P041",
+    "name": "Myil meen",
+    "calories": 410,
+    "protein": 22.89,
+    "fat": 0.56,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P042",
+    "name": "Nalla bontha",
+    "calories": 364,
+    "protein": 19.82,
+    "fat": 0.72,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P043",
+    "name": "Narba",
+    "calories": 432,
+    "protein": 21.95,
+    "fat": 1.6,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P044",
+    "name": "Paarai",
+    "calories": 435,
+    "protein": 21.58,
+    "fat": 1.84,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P045",
+    "name": "Padayappa",
+    "calories": 360,
+    "protein": 19.7,
+    "fat": 0.69,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P046",
+    "name": "Pali kora",
+    "calories": 394,
+    "protein": 19.25,
+    "fat": 1.81,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P047",
+    "name": "Pambada",
+    "calories": 537,
+    "protein": 21.95,
+    "fat": 4.44,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P048",
+    "name": "Pandukopa",
+    "calories": 360,
+    "protein": 19.73,
+    "fat": 0.65,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P049",
+    "name": "Parava",
+    "calories": 467,
+    "protein": 21.5,
+    "fat": 2.74,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P050",
+    "name": "Parcus",
+    "calories": 361,
+    "protein": 19.87,
+    "fat": 0.62,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P051",
+    "name": "Parrot fish",
+    "calories": 375,
+    "protein": 20.82,
+    "fat": 0.57,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P052",
+    "name": "Perinkilichai",
+    "calories": 387,
+    "protein": 20.89,
+    "fat": 0.87,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P053",
+    "name": "Phopat",
+    "calories": 424,
+    "protein": 22.05,
+    "fat": 1.33,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P054",
+    "name": "Piranha",
+    "calories": 549,
+    "protein": 20.46,
+    "fat": 5.43,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P055",
+    "name": "Pomfret, black",
+    "calories": 515,
+    "protein": 18.91,
+    "fat": 4.83,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P056",
+    "name": "Pomfret, snub nose",
+    "calories": 375,
+    "protein": 21.05,
+    "fat": 0.46,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P057",
+    "name": "Pomfret, white",
+    "calories": 513,
+    "protein": 19.02,
+    "fat": 5.12,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P058",
+    "name": "Pranel",
+    "calories": 405,
+    "protein": 19.69,
+    "fat": 1.89,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P059",
+    "name": "Pulli paarai",
+    "calories": 399,
+    "protein": 20.06,
+    "fat": 1.55,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P060",
+    "name": "Queen fish",
+    "calories": 400,
+    "protein": 20.97,
+    "fat": 1.17,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P061",
+    "name": "Raai fish",
+    "calories": 430,
+    "protein": 21.61,
+    "fat": 1.69,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P062",
+    "name": "Raai vanthu",
+    "calories": 410,
+    "protein": 19.39,
+    "fat": 2.17,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P063",
+    "name": "Rani",
+    "calories": 377,
+    "protein": 18.83,
+    "fat": 1.49,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P064",
+    "name": "Ray fish, bow head, spotted",
+    "calories": 349,
+    "protein": 19.03,
+    "fat": 0.7,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P065",
+    "name": "Red snapper",
+    "calories": 437,
+    "protein": 22.79,
+    "fat": 1.34,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P066",
+    "name": "Red snapper, small",
+    "calories": 451,
+    "protein": 21.5,
+    "fat": 2.3,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P067",
+    "name": "Sadaya",
+    "calories": 462,
+    "protein": 20.68,
+    "fat": 2.97,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P068",
+    "name": "Salmon",
+    "calories": 721,
+    "protein": 20.97,
+    "fat": 9.86,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P069",
+    "name": "Sangada",
+    "calories": 443,
+    "protein": 20.26,
+    "fat": 2.67,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P070",
+    "name": "Sankata parai",
+    "calories": 434,
+    "protein": 21.87,
+    "fat": 1.68,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P071",
+    "name": "Sardine",
+    "calories": 637,
+    "protein": 17.91,
+    "fat": 8.99,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P072",
+    "name": "Shark",
+    "calories": 398,
+    "protein": 21.6,
+    "fat": 0.83,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P073",
+    "name": "Shark, hammer head",
+    "calories": 432,
+    "protein": 23.4,
+    "fat": 0.8,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P074",
+    "name": "Shark, spotted",
+    "calories": 384,
+    "protein": 20.95,
+    "fat": 0.75,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P075",
+    "name": "Shelavu",
+    "calories": 446,
+    "protein": 22.46,
+    "fat": 1.74,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P076",
+    "name": "Silan",
+    "calories": 633,
+    "protein": 22.72,
+    "fat": 6.68,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P077",
+    "name": "Silk fish",
+    "calories": 408,
+    "protein": 20.65,
+    "fat": 1.53,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P078",
+    "name": "Silver carp",
+    "calories": 555,
+    "protein": 21.71,
+    "fat": 5.17,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P079",
+    "name": "Sole fish",
+    "calories": 367,
+    "protein": 19.05,
+    "fat": 1.18,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P080",
+    "name": "Stingray",
+    "calories": 408,
+    "protein": 23.98,
+    "fat": 0.68,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P081",
+    "name": "Tarlava",
+    "calories": 414,
+    "protein": 21.72,
+    "fat": 1.2,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P082",
+    "name": "Tholam",
+    "calories": 432,
+    "protein": 20.78,
+    "fat": 2.13,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P083",
+    "name": "Tilapia",
+    "calories": 349,
+    "protein": 18.48,
+    "fat": 1.08,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P084",
+    "name": "Tuna",
+    "calories": 470,
+    "protein": 24.5,
+    "fat": 1.44,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P085",
+    "name": "Tuna, striped",
+    "calories": 403,
+    "protein": 21.28,
+    "fat": 1.12,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P086",
+    "name": "Valava",
+    "calories": 410,
+    "protein": 21.8,
+    "fat": 1.06,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P087",
+    "name": "Vanjaram",
+    "calories": 570,
+    "protein": 22.28,
+    "fat": 5.18,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P088",
+    "name": "Vela meen",
+    "calories": 537,
+    "protein": 22.16,
+    "fat": 4.34,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P089",
+    "name": "Vora",
+    "calories": 422,
+    "protein": 20.14,
+    "fat": 2.14,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P090",
+    "name": "Whale shark",
+    "calories": 401,
+    "protein": 21.83,
+    "fat": 0.82,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P091",
+    "name": "Xiphinis",
+    "calories": 370,
+    "protein": 19.82,
+    "fat": 0.88,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-P092",
+    "name": "Eggs, cat fish",
+    "calories": 600,
+    "protein": 24.68,
+    "fat": 5.28,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-Q001",
+    "name": "Crab",
+    "calories": 343,
+    "protein": 10.23,
+    "fat": 1.41,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-Q002",
+    "name": "Crab, sea",
+    "calories": 283,
+    "protein": 15.36,
+    "fat": 0.6,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-Q003",
+    "name": "Lobster, brown",
+    "calories": 292,
+    "protein": 15.96,
+    "fat": 0.56,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-Q004",
+    "name": "Lobster, king size",
+    "calories": 375,
+    "protein": 18.54,
+    "fat": 0.78,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-Q005",
+    "name": "Mud crab",
+    "calories": 190,
+    "protein": 10,
+    "fat": 0.55,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-Q006",
+    "name": "Oyster",
+    "calories": 252,
+    "protein": 9.51,
+    "fat": 2.44,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-Q007",
+    "name": "Tiger prawns, brown",
+    "calories": 273,
+    "protein": 14.85,
+    "fat": 0.56,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-Q008",
+    "name": "Tiger Prawns, orange",
+    "calories": 270,
+    "protein": 14.25,
+    "fat": 0.74,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-R001",
+    "name": "Clam, green shell",
+    "calories": 243,
+    "protein": 12.14,
+    "fat": 0.98,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-R002",
+    "name": "Clam, white shell, ribbed",
+    "calories": 250,
+    "protein": 11.82,
+    "fat": 1.34,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-R003",
+    "name": "Octopus",
+    "calories": 334,
+    "protein": 14.71,
+    "fat": 1.12,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-R004",
+    "name": "Squid, black",
+    "calories": 335,
+    "protein": 16.1,
+    "fat": 1.07,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-R005",
+    "name": "Squid, hard shell",
+    "calories": 320,
+    "protein": 16.82,
+    "fat": 0.93,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-R006",
+    "name": "Squid, red",
+    "calories": 329,
+    "protein": 16.25,
+    "fat": 1.44,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-R007",
+    "name": "Squid, white, small",
+    "calories": 353,
+    "protein": 17.41,
+    "fat": 1.15,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-S001",
+    "name": "Cat fish",
+    "calories": 518,
+    "protein": 15.86,
+    "fat": 6.24,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-S002",
+    "name": "Catla",
+    "calories": 394,
+    "protein": 17.94,
+    "fat": 2.15,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-S003",
+    "name": "Fresh water Eel",
+    "calories": 451,
+    "protein": 20.41,
+    "fat": 2.63,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-S004",
+    "name": "Gold fish",
+    "calories": 396,
+    "protein": 16.91,
+    "fat": 2.94,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-S005",
+    "name": "Pangas",
+    "calories": 852,
+    "protein": 17.12,
+    "fat": 16.77,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-S006",
+    "name": "Rohu",
+    "calories": 428,
+    "protein": 19.71,
+    "fat": 2.39,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-S007",
+    "name": "Crab",
+    "calories": 327,
+    "protein": 13.23,
+    "fat": 0.89,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-S008",
+    "name": "Prawns, big",
+    "calories": 380,
+    "protein": 19.24,
+    "fat": 0.52,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-S009",
+    "name": "Prawns, small",
+    "calories": 297,
+    "protein": 13.07,
+    "fat": 0.78,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-S010",
+    "name": "Tiger prawns",
+    "calories": 284,
+    "protein": 14.24,
+    "fat": 0.66,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-T001",
+    "name": "Coconut oil",
+    "calories": 0,
+    "protein": 0,
+    "fat": 100,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-T002",
+    "name": "Corn oil",
+    "calories": 0,
+    "protein": 0,
+    "fat": 100.01,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-T003",
+    "name": "Cotton seed oil",
+    "calories": 0,
+    "protein": 0,
+    "fat": 99.99,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-T004",
+    "name": "Gingelly oil",
+    "calories": 0,
+    "protein": 0,
+    "fat": 100,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-T005",
+    "name": "Groundnut oil",
+    "calories": 0,
+    "protein": 0,
+    "fat": 100,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-T006",
+    "name": "Mustard oil",
+    "calories": 0,
+    "protein": 0,
+    "fat": 100,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-T007",
+    "name": "Palm oil",
+    "calories": 0,
+    "protein": 0,
+    "fat": 100,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-T008",
+    "name": "Rice bran oil",
+    "calories": 0,
+    "protein": 0,
+    "fat": 100,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-T009",
+    "name": "Safflower oil",
+    "calories": 0,
+    "protein": 0,
+    "fat": 100.01,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-T010",
+    "name": "Safflower oil (blended)",
+    "calories": 0,
+    "protein": 0,
+    "fat": 100,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-T011",
+    "name": "Soyabean oil",
+    "calories": 0,
+    "protein": 0,
+    "fat": 100,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-T012",
+    "name": "Sunflower oil",
+    "calories": 0,
+    "protein": 0,
+    "fat": 100,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-T013",
+    "name": "Ghee",
+    "calories": 0,
+    "protein": 0,
+    "fat": 100,
+    "carbohydrates": 0,
+    "source": "ifct"
+  },
+  {
+    "id": "ifct-T014",
+    "name": "Vanaspati",
+    "calories": 0,
+    "protein": 0,
+    "fat": 100,
+    "carbohydrates": 0,
+    "source": "ifct"
+  }
+]

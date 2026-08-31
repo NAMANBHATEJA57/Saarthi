@@ -1,26 +1,53 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --primary: 211 100% 50%; /* #007fff - brightened for dark mode */
+    --primary-active: 211 100% 45%; 
+    
+    /* Notion Dark Mode Palette */
+    --canvas: 0 0% 10%; /* #191919 */
+    --canvas-soft: 0 0% 10%; /* #191919 */
+    --surface: 0 0% 13%; /* #202020 */
+    --surface-elevated: 0 0% 15%; /* #262626 */
+    
+    --ink: 0 0% 100%; /* #ffffff */
+    --ink-secondary: 0 0% 64%; /* #a3a3a3 */
+    --ink-muted: 0 0% 45%; /* #737373 */
+    
+    --hairline: 0 0% 18%; /* #2e2e2e */
+    
+    --radius: 0.5rem;
+    --background: var(--canvas-soft);
+    --foreground: var(--ink);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    border-color: hsl(var(--hairline));
+  }
+  body {
+    background-color: hsl(var(--canvas-soft));
+    color: hsl(var(--ink));
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Typography Scale from DESIGN.md */
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.02em;
+    color: hsl(var(--ink));
+  }
+  
+  p, span, div {
+    letter-spacing: 0em;
+  }
+
+  /* Smooth Focus Defaults */
+  *:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px hsl(var(--canvas-soft)), 0 0 0 4px hsl(var(--primary));
+  }
 }
