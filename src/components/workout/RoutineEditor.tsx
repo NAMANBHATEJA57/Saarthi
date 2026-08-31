@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2, Trash2, ArrowUp, ArrowDown, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { RelationshipManager } from "@/components/relationships/RelationshipManager";
 
 export interface RoutineExercise {
   id?: string;
@@ -254,6 +255,12 @@ export function RoutineEditor({ initialRoutine, onSuccess, onCancel }: RoutineEd
           )}
         </div>
       </form>
+
+      {initialRoutine?.id && (
+        <div className="pt-6 border-t border-[hsl(var(--hairline))]">
+          <RelationshipManager sourceType="workout" sourceId={initialRoutine.id} />
+        </div>
+      )}
     </div>
   );
 }

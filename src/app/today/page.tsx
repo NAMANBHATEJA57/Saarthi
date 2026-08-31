@@ -9,6 +9,7 @@ import { IndianRupee, CheckSquare } from "lucide-react";
 import { getMonthlySummary } from "@/lib/finance/service";
 import { getTodayTasksSummary } from "@/lib/tasks/service";
 import { CalendarTodayWidget } from "@/components/calendar/CalendarTodayWidget";
+import { RelationshipService } from "@/lib/relationships/service";
 
 export default async function TodayPage() {
   const session = await auth();
@@ -48,7 +49,13 @@ export default async function TodayPage() {
   if (userId) {
     const currentMonthStr = todayDateString.substring(0, 7);
     financeSummary = await getMonthlySummary(userId, currentMonthStr);
-    todayTasks = await getTodayTasksSummary(userId, todayDateString);
+    
+    // Fetch tasks and their relationships
+    const rawTasks = await getTodayTasksSummary(userId, todayDateString);
+    todayTasks = await Promise.all(rawTasks.map(async (task) => {
+      const related = await RelationshipService.getRelatedObjects(userId, 'task', task.id);
+      return { ...task, related };
+    }));
     recentNotes = await db.select().from(notes)
       .where(and(eq(notes.userId, userId), isNull(notes.deletedAt)))
       .orderBy(desc(notes.updatedAt))
@@ -76,9 +83,12 @@ export default async function TodayPage() {
           .where(eq(workoutExercises.routineId, routineId))
           .orderBy(workoutExercises.position);
           
+        const related = await RelationshipService.getRelatedObjects(userId, 'workout', routineId);
+
         todayRoutine = {
           ...routines[0],
           exercises,
+          related,
         };
 
         const states = await db
@@ -214,6 +224,15 @@ export default async function TodayPage() {
                     )}
                     {task.dueDate && task.dueDate < todayDateString && <span className="text-red-500 font-semibold">OVERDUE</span>}
                   </div>
+                  {task.related && task.related.length > 0 && (
+                    <div className="mt-2 pt-2 border-t border-[hsl(var(--hairline))] flex flex-wrap gap-2">
+                      {task.related.map((rel: any) => (
+                        <Link href={`/search?q=${encodeURIComponent(rel.title)}`} key={`${rel._type}-${rel.id}`} className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-[hsl(var(--surface))] rounded text-[10px] font-medium text-[hsl(var(--ink-secondary))]">
+                          Related: {rel.title}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             ))}

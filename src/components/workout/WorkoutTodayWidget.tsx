@@ -14,6 +14,7 @@ export interface WorkoutRoutine {
   id: string;
   name: string;
   exercises: RoutineExercise[];
+  related?: any[];
 }
 
 export interface WorkoutDisplayState {
@@ -121,8 +122,18 @@ export function WorkoutTodayWidget({ routine, localDate, initialDisplayState }: 
           );
         })}
       </div>
+
+      {routine.related && routine.related.length > 0 && (
+        <div className="mt-4 pt-3 border-t border-[hsl(var(--hairline))] flex flex-wrap gap-2">
+          {routine.related.map((rel: any) => (
+            <Link href={`/search?q=${encodeURIComponent(rel.title)}`} key={`${rel._type}-${rel.id}`} className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-[hsl(var(--canvas))] rounded text-[10px] font-medium text-[hsl(var(--ink-secondary))]">
+              Related: {rel.title}
+            </Link>
+          ))}
+        </div>
+      )}
       
-      <div className="mt-6 pt-4 border-t border-[hsl(var(--hairline))]">
+      <div className="mt-4 pt-4 border-t border-[hsl(var(--hairline))]">
         <button 
           disabled={starting}
           onClick={async () => {

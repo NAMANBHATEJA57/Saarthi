@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { RelationshipManager } from '@/components/relationships/RelationshipManager';
 
 export function NoteCaptureForm({ 
   initialTitle = '', 
@@ -85,6 +86,12 @@ export function NoteCaptureForm({
       </div>
 
       {error && <div className="text-destructive text-sm font-medium">{error}</div>}
+
+      {noteId && (
+        <div className="pt-4 border-t border-[hsl(var(--hairline))]">
+          <RelationshipManager sourceType="note" sourceId={noteId} />
+        </div>
+      )}
 
       <div className="flex gap-2 pt-4 border-t border-[hsl(var(--hairline))]">
         <Button type="button" variant="utility" className="flex-1" onClick={onCancel}>

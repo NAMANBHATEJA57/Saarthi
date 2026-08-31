@@ -57,6 +57,13 @@
       "when": 1788159589361,
       "tag": "0007_slippery_cammi",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1788177995488,
+      "tag": "0008_uneven_dark_beast",
+      "breakpoints": true
     }
   ]
 }

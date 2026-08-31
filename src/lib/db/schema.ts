@@ -516,3 +516,22 @@ export const notes = pgTable('notes', {
   activeUserIdx: index('notes_active_user_idx').on(table.userId, table.updatedAt, table.id).where(sql`${table.deletedAt} IS NULL`),
   trashIdx: index('notes_trash_idx').on(table.userId, table.deletedAt),
 }));
+
+// ==========================================
+// 10. RELATIONSHIPS (Phase 9)
+// ==========================================
+
+export const objectRelationships = pgTable('object_relationships', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  sourceType: text('source_type').notNull(),
+  sourceId: text('source_id').notNull(),
+  targetType: text('target_type').notNull(),
+  targetId: text('target_id').notNull(),
+  relationshipType: text('relationship_type').default('RELATED').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+  sourceIdx: index('rel_source_idx').on(table.userId, table.sourceType, table.sourceId),
+  targetIdx: index('rel_target_idx').on(table.userId, table.targetType, table.targetId),
+  uniqueRelIdx: uniqueIndex('rel_unique_idx').on(table.userId, table.sourceType, table.sourceId, table.targetType, table.targetId),
+}));

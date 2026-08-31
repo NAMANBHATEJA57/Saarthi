@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, ChevronRight, CheckSquare, Edit, Trash2 } from 'lucide-react';
+import { RelationshipManager } from '@/components/relationships/RelationshipManager';
 
 export function TasksClient({ initialOpenTasks, initialCompletedTasks }: { initialOpenTasks: any[], initialCompletedTasks: any[] }) {
   const [openTasks, setOpenTasks] = useState(initialOpenTasks);
@@ -80,6 +81,9 @@ export function TasksClient({ initialOpenTasks, initialCompletedTasks }: { initi
           )}
           {task.dueDate && <span>Due: {task.dueDate}</span>}
           {task.remark && <span className="truncate max-w-[200px] block">{task.remark}</span>}
+        </div>
+        <div className="mt-3 pt-3 border-t border-[hsl(var(--hairline))]">
+          <RelationshipManager sourceType="task" sourceId={task.id} />
         </div>
       </div>
       <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">

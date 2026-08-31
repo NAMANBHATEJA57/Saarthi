@@ -1,7 +1,7 @@
 import { getTodayEvents, getCalendarConnection } from "@/lib/calendar/service";
 import { Calendar as CalendarIcon, Clock, Settings } from "lucide-react";
-import Link from "next/link";
 import { Suspense } from "react";
+import { RelationshipService } from "@/lib/relationships/service";
 
 async function CalendarEventsList({ userId, localDateStr }: { userId: string, localDateStr: string }) {
   const connection = await getCalendarConnection(userId);
@@ -31,9 +31,15 @@ async function CalendarEventsList({ userId, localDateStr }: { userId: string, lo
     );
   }
 
+  // Fetch relationships for events
+  const eventsWithRelations = await Promise.all(events.map(async (event) => {
+    const related = await RelationshipService.getRelatedObjects(userId, 'calendar', event.id);
+    return { ...event, related };
+  }));
+
   return (
     <div className="space-y-3">
-      {events.map((event) => (
+      {eventsWithRelations.map((event) => (
         <a 
           key={event.id}
           href={event.htmlLink}
@@ -54,6 +60,15 @@ async function CalendarEventsList({ userId, localDateStr }: { userId: string, lo
           {event.location && (
             <p className="text-xs text-[hsl(var(--ink-muted))] truncate">{event.location}</p>
           )}
+          {event.related && event.related.length > 0 && (
+            <div className="mt-2 pt-2 border-t border-[hsl(var(--hairline))] flex flex-wrap gap-2">
+              {event.related.map((rel: any) => (
+                <div key={`${rel._type}-${rel.id}`} className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-[hsl(var(--canvas))] rounded text-[10px] font-medium text-[hsl(var(--ink-secondary))]">
+                  Related: {rel.title}
+                </div>
+              ))}
+            </div>
+          )}
         </a>
       ))}
     </div>
@@ -65,7 +80,7 @@ export function CalendarTodayWidget({ userId, localDateStr }: { userId: string, 
     <section>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xs font-semibold text-[hsl(var(--ink-muted))] tracking-wider">CALENDAR</h2>
-        <Link href="/settings" className="text-xs font-medium text-[hsl(var(--ink-muted))] hover:text-[hsl(var(--primary))]"><Settings className="w-4 h-4" /></Link>
+        <a href="/settings" className="text-xs font-medium text-[hsl(var(--ink-muted))] hover:text-[hsl(var(--primary))]"><Settings className="w-4 h-4" /></a>
       </div>
       <div className="min-h-[120px] rounded-lg border border-[hsl(var(--hairline))] p-4 bg-[hsl(var(--surface))]">
         <Suspense fallback={<div className="flex justify-center py-6 text-[hsl(var(--ink-muted))]"><Clock className="w-5 h-5 animate-pulse opacity-50" /></div>}>
