@@ -434,7 +434,10 @@ export const financeTransactions = pgTable('finance_transactions', {
   destinationAccountId: uuid('destination_account_id').references(() => financeAccounts.id), // For transfers
   categoryId: uuid('category_id').references(() => financeCategories.id), // Make nullable since transfers/payments don't need categories
   remark: text('remark'),
-  source: text('source').notNull(), // 'MANUAL' or 'RECURRING'
+  source: text('source').notNull(), // 'MANUAL' or 'RECURRING' or 'IMPORT'
+  originalDescription: text('original_description'),
+  originalAmountMinor: integer('original_amount_minor'),
+  providerTransactionId: text('provider_transaction_id'),
   recurringRuleId: uuid('recurring_rule_id'), // nullable, references financeRecurringRules.id later
   status: text('status').default('POSTED').notNull(), // 'POSTED' or 'VOIDED'
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
@@ -509,16 +512,36 @@ export const tasks = pgTable('tasks', {
   userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
   title: text('title').notNull(),
   remark: text('remark'),
+  status: text('status').default('todo').notNull(), // 'todo', 'in_progress', 'completed', 'cancelled'
   priority: text('priority').default('normal').notNull(), // 'low', 'normal', 'high'
-  dueDate: date('due_date', { mode: 'string' }), // nullable
-  position: integer('position').default(0).notNull(), // for manual ordering within priority
+  
+  // Time & Calendar
+  dueDate: date('due_date', { mode: 'string' }),
+  startTime: timestamp('start_time', { withTimezone: true }),
+  endTime: timestamp('end_time', { withTimezone: true }),
+  allDay: boolean('all_day').default(false).notNull(),
+  timezone: text('timezone'),
+  reminderMinutes: integer('reminder_minutes'),
+  recurrenceRule: text('recurrence_rule'),
+  
+  position: integer('position').default(0).notNull(),
+  
+  // External Sync
+  externalProvider: text('external_provider'), // e.g. 'google'
+  externalAccountId: text('external_account_id'), // map to calendarConnections
+  externalCalendarId: text('external_calendar_id'),
+  externalEventId: text('external_event_id'),
+  lastSyncedAt: timestamp('last_synced_at', { withTimezone: true }),
+  syncHash: text('sync_hash'),
+
   completedAt: timestamp('completed_at', { withTimezone: true }),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
-  deletedAt: timestamp('deleted_at', { withTimezone: true }), // soft delete
+  deletedAt: timestamp('deleted_at', { withTimezone: true }),
 }, (table) => ({
-  openTasksIdx: index('tasks_open_idx').on(table.userId, table.completedAt, table.priority, table.position),
+  openTasksIdx: index('tasks_open_idx').on(table.userId, table.status, table.priority, table.position),
   dueDateIdx: index('tasks_due_date_idx').on(table.userId, table.dueDate),
+  externalSyncIdx: index('tasks_external_sync_idx').on(table.externalProvider, table.externalAccountId, table.externalEventId),
   trashIdx: index('tasks_trash_idx').on(table.userId, table.deletedAt),
 }));
 

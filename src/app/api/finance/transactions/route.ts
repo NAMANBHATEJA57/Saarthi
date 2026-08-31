@@ -13,14 +13,62 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const limitParam = searchParams.get('limit');
+    const offsetParam = searchParams.get('offset');
+    const accountIds = searchParams.get('accountId'); // Can be comma separated
+    const categoryIds = searchParams.get('categoryId'); // Can be comma separated
+    const typeParam = searchParams.get('type');
+    const startDate = searchParams.get('startDate');
+    const endDate = searchParams.get('endDate');
+    const search = searchParams.get('search');
+    
     const limit = limitParam ? parseInt(limitParam) : 50;
+    const offset = offsetParam ? parseInt(offsetParam) : 0;
+
+    let condition = and(eq(financeTransactions.userId, userId), eq(financeTransactions.status, 'POSTED'));
+    const { or, inArray, gte, lte, ilike } = require('drizzle-orm');
+    
+    if (accountIds) {
+      const arr = accountIds.split(',');
+      condition = and(
+        condition,
+        or(inArray(financeTransactions.accountId, arr), inArray(financeTransactions.destinationAccountId, arr))
+      );
+    }
+
+    if (categoryIds) {
+      const arr = categoryIds.split(',');
+      condition = and(condition, inArray(financeTransactions.categoryId, arr));
+    }
+
+    if (typeParam && typeParam !== 'all') {
+      condition = and(condition, eq(financeTransactions.type, typeParam.toUpperCase()));
+    }
+
+    if (startDate) {
+      condition = and(condition, gte(financeTransactions.transactionDate, startDate));
+    }
+
+    if (endDate) {
+      condition = and(condition, lte(financeTransactions.transactionDate, endDate));
+    }
+
+    if (search) {
+      condition = and(
+        condition,
+        or(
+          ilike(financeTransactions.remark, `%${search}%`),
+          ilike(financeTransactions.originalDescription, `%${search}%`)
+        )
+      );
+    }
 
     const transactions = await db
       .select()
       .from(financeTransactions)
-      .where(and(eq(financeTransactions.userId, userId), eq(financeTransactions.status, 'POSTED')))
+      .where(condition)
       .orderBy(desc(financeTransactions.transactionDate), desc(financeTransactions.createdAt))
-      .limit(limit);
+      .limit(limit)
+      .offset(offset);
 
     return NextResponse.json({ transactions });
   } catch (error) {
@@ -43,8 +91,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
     }
     
-    if ((type === 'INCOME' || type === 'EXPENSE') && !categoryId) {
-      return NextResponse.json({ error: 'Category required for income/expense' }, { status: 400 });
+    if ((type === 'INCOME' || type === 'EXPENSE' || type === 'CREDIT_CARD_PURCHASE' || type === 'REFUND') && !categoryId) {
+      return NextResponse.json({ error: 'Category required' }, { status: 400 });
     }
 
     if ((type === 'TRANSFER' || type === 'CREDIT_CARD_PAYMENT') && (!accountId || !destinationAccountId)) {

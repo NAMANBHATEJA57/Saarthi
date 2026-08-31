@@ -7,7 +7,8 @@ export async function getOpenTasks(userId: string) {
     .from(tasks)
     .where(and(
       eq(tasks.userId, userId),
-      isNull(tasks.completedAt),
+      sql`${tasks.status} != 'completed'`,
+      sql`${tasks.status} != 'cancelled'`,
       isNull(tasks.deletedAt)
     ))
     .orderBy(
@@ -23,7 +24,7 @@ export async function getCompletedTasks(userId: string) {
     .from(tasks)
     .where(and(
       eq(tasks.userId, userId),
-      isNotNull(tasks.completedAt),
+      eq(tasks.status, 'completed'),
       isNull(tasks.deletedAt)
     ))
     .orderBy(desc(tasks.completedAt));
@@ -35,7 +36,8 @@ export async function getTodayTasksSummary(userId: string, todayDateString: stri
     .from(tasks)
     .where(and(
       eq(tasks.userId, userId),
-      isNull(tasks.completedAt),
+      sql`${tasks.status} != 'completed'`,
+      sql`${tasks.status} != 'cancelled'`,
       isNull(tasks.deletedAt),
       isNotNull(tasks.dueDate),
       lte(tasks.dueDate, todayDateString)
@@ -49,13 +51,20 @@ export async function getTodayTasksSummary(userId: string, todayDateString: stri
   return dueTasks;
 }
 
-export async function createTask(userId: string, data: { title: string; remark?: string; priority?: string; dueDate?: string | null }) {
+export async function createTask(userId: string, data: any) {
   const [task] = await db.insert(tasks).values({
     userId,
     title: data.title.trim(),
     remark: data.remark?.trim() || null,
     priority: data.priority || 'normal',
     dueDate: data.dueDate || null,
+    startTime: data.startTime ? new Date(data.startTime) : null,
+    endTime: data.endTime ? new Date(data.endTime) : null,
+    allDay: data.allDay || false,
+    timezone: data.timezone || null,
+    reminderMinutes: data.reminderMinutes || null,
+    externalProvider: data.externalProvider || null,
+    externalAccountId: data.externalAccountId || null,
     position: Date.now(), // simple timestamp-based append position
   }).returning();
   return task;

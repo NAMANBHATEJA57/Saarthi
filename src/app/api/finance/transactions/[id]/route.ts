@@ -16,10 +16,14 @@ export async function PATCH(
   try {
     const { id } = await params;
     const body = await req.json();
-    const { type, amountMinor, categoryId, remark, transactionDate } = body;
+    const { type, amountMinor, categoryId, accountId, destinationAccountId, remark, transactionDate } = body;
 
-    if (!type || !amountMinor || !categoryId || !transactionDate || amountMinor <= 0) {
+    if (!type || !amountMinor || !transactionDate || amountMinor <= 0) {
       return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
+    }
+
+    if ((type === 'INCOME' || type === 'EXPENSE' || type === 'CREDIT_CARD_PURCHASE' || type === 'REFUND') && !categoryId) {
+      return NextResponse.json({ error: 'Category required' }, { status: 400 });
     }
 
     const existingTx = await db.select().from(financeTransactions).where(and(eq(financeTransactions.id, id), eq(financeTransactions.userId, userId)));
@@ -32,7 +36,9 @@ export async function PATCH(
           type,
           amountMinor,
           transactionDate,
-          categoryId,
+          categoryId: categoryId || null,
+          accountId: accountId || null,
+          destinationAccountId: destinationAccountId || null,
           remark: remark || null,
           updatedAt: new Date(),
         })

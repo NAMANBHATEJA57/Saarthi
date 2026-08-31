@@ -99,12 +99,12 @@ export default function RulesPage() {
       <div className="space-y-4">
         {rules.map((rule, index) => (
           <Card key={rule.id || index}>
-            <CardContent className="p-4 flex items-end gap-4">
-              <div className="flex-1 space-y-2">
+            <CardContent className="p-4 flex flex-col md:flex-row md:items-end gap-4">
+              <div className="flex-1 space-y-2 w-full md:w-auto">
                 <Label>Label</Label>
                 <Input value={rule.label} onChange={e => updateRule(index, 'label', e.target.value)} placeholder="e.g. Needs, Wants, Savings" />
               </div>
-              <div className="flex-1 space-y-2">
+              <div className="flex-1 space-y-2 w-full md:w-auto">
                 <Label>Purpose</Label>
                 <Select value={rule.purpose} onValueChange={v => updateRule(index, 'purpose', v)}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
@@ -116,13 +116,15 @@ export default function RulesPage() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="w-24 space-y-2">
-                <Label>%</Label>
-                <Input type="number" min="0" max="100" step="0.01" value={Number(rule.percentageBasisPoints || 0) / 100} onChange={e => updateRule(index, 'percentageBasisPoints', Math.round(Number(e.target.value) * 100))} />
+              <div className="flex items-end gap-4 w-full md:w-auto">
+                <div className="flex-1 md:w-24 space-y-2">
+                  <Label>%</Label>
+                  <Input type="number" min="0" max="100" step="0.01" value={Number(rule.percentageBasisPoints || 0) / 100} onChange={e => updateRule(index, 'percentageBasisPoints', Math.round(Number(e.target.value) * 100))} />
+                </div>
+                <Button variant="icon" onClick={() => removeRule(index)} className="text-destructive shrink-0">
+                  <Trash2 className="w-4 h-4" />
+                </Button>
               </div>
-              <Button variant="icon" onClick={() => removeRule(index)} className="text-destructive">
-                <Trash2 className="w-4 h-4" />
-              </Button>
             </CardContent>
           </Card>
         ))}

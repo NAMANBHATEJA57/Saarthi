@@ -126,11 +126,17 @@ export async function getMonthlySummary(userId: string, yearMonth: string) {
     if (t.type === 'INCOME') {
       totalIncome += t.amountMinor;
       incomeTxIds.push(t.id);
-    } else if (t.type === 'EXPENSE') {
+    } else if (t.type === 'EXPENSE' || t.type === 'CREDIT_CARD_PURCHASE') {
       totalExpense += t.amountMinor;
       if (t.categoryId) {
         if (!categorySpending[t.categoryId]) categorySpending[t.categoryId] = 0;
         categorySpending[t.categoryId] += t.amountMinor;
+      }
+    } else if (t.type === 'REFUND') {
+      totalExpense -= t.amountMinor;
+      if (t.categoryId) {
+        if (!categorySpending[t.categoryId]) categorySpending[t.categoryId] = 0;
+        categorySpending[t.categoryId] -= t.amountMinor;
       }
     }
   }
@@ -241,6 +247,8 @@ export async function getAccountBalances(userId: string) {
       } else {
         balances[tx.accountId] -= tx.amountMinor; // Bank balance decreases
       }
+    } else if (tx.type === 'CREDIT_CARD_PURCHASE' && tx.accountId && balances[tx.accountId] !== undefined) {
+      balances[tx.accountId] += tx.amountMinor; // Outstanding liability increases
     } else if (tx.type === 'REFUND' && tx.accountId && balances[tx.accountId] !== undefined) {
       if (accounts.find(a => a.id === tx.accountId)?.type === 'CREDIT_CARD') {
         balances[tx.accountId] -= tx.amountMinor; // Liability decreases

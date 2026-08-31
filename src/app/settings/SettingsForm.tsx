@@ -3,6 +3,7 @@
 import { useTransition, useState, useEffect } from "react";
 import { saveSettings } from "@/features/settings/actions";
 import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type SettingsData = {
   name: string;
@@ -114,13 +115,14 @@ export function SettingsForm({ initialData }: { initialData: SettingsData }) {
         </div>
       </div>
 
-      <button
+      <Button
         type="submit"
+        variant="primary"
         disabled={isPending}
-        className="flex items-center justify-center w-full h-10 rounded-md bg-[hsl(var(--primary))] text-primary-foreground font-medium text-sm hover:bg-[hsl(var(--primary-active))] transition-colors disabled:opacity-50"
+        className="w-full"
       >
-        {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : "Save Changes"}
-      </button>
+        {isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : "Save Changes"}
+      </Button>
     </form>
   );
 }

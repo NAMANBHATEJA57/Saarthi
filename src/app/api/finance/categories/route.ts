@@ -25,3 +25,31 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
+
+export async function POST(req: NextRequest) {
+  const session = await auth();
+  if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const userId = session.user.id as string;
+
+  try {
+    const body = await req.json();
+    const { name, kind } = body;
+
+    if (!name || !kind || (kind !== 'INCOME' && kind !== 'EXPENSE' && kind !== 'BOTH')) {
+      return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
+    }
+
+    const [newCategory] = await db.insert(financeCategories).values({
+      userId,
+      name,
+      kind,
+      isSystemOther: false,
+    }).returning();
+
+    return NextResponse.json({ category: newCategory });
+  } catch (error) {
+    console.error('Categories POST error:', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
+}
+

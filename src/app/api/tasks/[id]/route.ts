@@ -10,13 +10,11 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     const { id } = await params;
     const data = await req.json();
     
-    // Convert status updates to completedAt timestamp
     if (data.status === 'completed' && !data.completedAt) {
       data.completedAt = new Date().toISOString();
-    } else if (data.status === 'open') {
+    } else if (data.status === 'todo' || data.status === 'in_progress') {
       data.completedAt = null;
     }
-    delete data.status;
 
     const task = await updateTask(session.user.id, id, data);
     if (!task) return NextResponse.json({ error: 'Task not found' }, { status: 404 });

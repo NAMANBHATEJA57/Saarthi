@@ -85,11 +85,14 @@ export function GlobalCaptureModal({ open, onOpenChange }: GlobalCaptureModalPro
               </Button>
               <Button
                 variant="secondary"
-                className="justify-start h-14 px-4 text-base font-medium bg-[hsl(var(--surface))] border-[hsl(var(--hairline))] hover:bg-[hsl(var(--canvas))] opacity-70"
-                disabled
+                className="justify-start h-14 px-4 text-base font-medium bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))] hover:bg-[hsl(var(--surface-elevated))] hover:border-[hsl(var(--primary))] transition-all duration-200 active:scale-[0.98] shadow-sm"
+                onClick={() => {
+                  handleOpenChange(false);
+                  window.location.href = '/food';
+                }}
               >
                 <Apple className="w-5 h-5 mr-3 text-[hsl(var(--ink-secondary))]" />
-                Food (Coming soon)
+                Food
               </Button>
             </div>
           </div>
