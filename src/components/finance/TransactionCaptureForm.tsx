@@ -72,7 +72,7 @@ export function TransactionCaptureForm({ onSuccess, onCancel }: { onSuccess: () 
     setLoading(true);
 
     try {
-      const amountMinor = Math.round(Number(amount));
+      const amountMinor = Math.round(Number(amount) * 100);
 
       const res = await fetch('/api/finance/transactions', {
         method: 'POST',

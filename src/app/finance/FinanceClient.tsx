@@ -34,8 +34,8 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
   const bankAccounts = accounts.filter((a: any) => a.type === 'BANK_ACCOUNT');
   const creditCards = accounts.filter((a: any) => a.type === 'CREDIT_CARD');
 
-  const totalBankBalance = bankAccounts.reduce((sum: number, a: any) => sum + Number(a.balanceMinor), 0);
-  const totalCreditDebt = creditCards.reduce((sum: number, a: any) => sum + Number(a.balanceMinor), 0);
+  const totalBankBalance = bankAccounts.reduce((sum: number, a: any) => sum + Number(a.balanceMinor), 0) / 100;
+  const totalCreditDebt = creditCards.reduce((sum: number, a: any) => sum + Number(a.balanceMinor), 0) / 100;
   const netAvailable = totalBankBalance - totalCreditDebt;
 
   return (
@@ -100,7 +100,7 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
                             <p className="text-xs text-[hsl(var(--ink-secondary))] mt-0.5">{acc.lastFour ? `•••• ${acc.lastFour}` : 'Account'}</p>
                           </div>
                           <div className="flex items-center gap-3">
-                            <span className="text-lg font-bold text-[hsl(var(--success))]">₹{acc.balanceMinor.toLocaleString()}</span>
+                            <span className="text-lg font-bold text-[hsl(var(--success))]">₹{(acc.balanceMinor / 100).toLocaleString()}</span>
                             <ArrowRight className="w-4 h-4 text-[hsl(var(--ink-muted))] opacity-0 group-hover:opacity-100 transition-opacity" />
                           </div>
                         </div>
@@ -128,9 +128,9 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
                             <p className="text-xs text-[hsl(var(--ink-secondary))] mt-0.5">{acc.lastFour ? `•••• ${acc.lastFour}` : 'Card'}</p>
                           </div>
                           <div className="flex flex-col items-end gap-1">
-                            <span className="text-lg font-bold text-[hsl(var(--destructive))]">₹{acc.balanceMinor.toLocaleString()} <span className="text-[10px] font-normal uppercase text-[hsl(var(--ink-muted))]">owed</span></span>
+                            <span className="text-lg font-bold text-[hsl(var(--destructive))]">₹{(acc.balanceMinor / 100).toLocaleString()} <span className="text-[10px] font-normal uppercase text-[hsl(var(--ink-muted))]">owed</span></span>
                             {acc.creditLimitMinor && (
-                              <span className="text-[11px] text-[hsl(var(--ink-secondary))]">Avail: ₹{(acc.creditLimitMinor - acc.balanceMinor).toLocaleString()}</span>
+                              <span className="text-[11px] text-[hsl(var(--ink-secondary))]">Avail: ₹{((acc.creditLimitMinor - acc.balanceMinor) / 100).toLocaleString()}</span>
                             )}
                           </div>
                         </div>
@@ -148,15 +148,15 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
                 <CardContent className="p-4 space-y-3">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-[hsl(var(--ink-secondary))]">Income</span>
-                    <span className="font-medium text-[hsl(var(--success))]">+₹{summary.totalIncome.toLocaleString()}</span>
+                    <span className="font-medium text-[hsl(var(--success))]">+₹{(summary.totalIncome / 100).toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-[hsl(var(--ink-secondary))]">Spending</span>
-                    <span className="font-medium text-[hsl(var(--destructive))]">-₹{summary.totalExpense.toLocaleString()}</span>
+                    <span className="font-medium text-[hsl(var(--destructive))]">-₹{(summary.totalExpense / 100).toLocaleString()}</span>
                   </div>
                   <div className="pt-2 mt-2 border-t border-[hsl(var(--hairline))] flex justify-between items-center text-sm">
                     <span className="font-medium">Leftover</span>
-                    <span className="font-bold">₹{(summary.totalIncome - summary.totalExpense).toLocaleString()}</span>
+                    <span className="font-bold">₹{((summary.totalIncome - summary.totalExpense) / 100).toLocaleString()}</span>
                   </div>
                 </CardContent>
               </Card>

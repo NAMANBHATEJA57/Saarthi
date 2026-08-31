@@ -45,7 +45,7 @@ export function TransactionEditDrawer({
   useEffect(() => {
     if (transaction) {
       setRemark(transaction.remark || transaction.originalDescription || "");
-      setAmount(transaction.amountMinor ? transaction.amountMinor.toString() : "");
+      setAmount(transaction.amountMinor ? (transaction.amountMinor / 100).toString() : "");
       setDate(transaction.transactionDate || "");
       setCategoryId(transaction.categoryId || "none");
       setType(transaction.type || "EXPENSE");
@@ -67,7 +67,7 @@ export function TransactionEditDrawer({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           remark,
-          amountMinor: parseInt(amount, 10),
+          amountMinor: Math.round(parseFloat(amount) * 100),
           transactionDate: date,
           categoryId: categoryId === 'none' ? null : categoryId,
           type,

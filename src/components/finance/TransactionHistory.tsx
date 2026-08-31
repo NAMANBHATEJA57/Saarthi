@@ -118,7 +118,7 @@ export function TransactionHistory({
         </div>
         <div className="text-right">
           <div className={`font-semibold text-[15px] ${colorClass}`}>
-            {prefix}₹{tx.amountMinor.toLocaleString()}
+            {prefix}₹{(tx.amountMinor / 100).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
           </div>
         </div>
       </div>
