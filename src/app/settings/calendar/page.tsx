@@ -35,7 +35,7 @@ export default async function CalendarSettingsPage() {
                   <p className="text-xs text-[hsl(var(--ink-secondary))]">{conn.email || 'Connected'}</p>
                 </div>
                 <form action={`/api/calendar/disconnect/${conn.id}`} method="POST">
-                  <Button variant="secondary" size="sm" type="submit">Disconnect</Button>
+                  <Button variant="secondary" type="submit" className="text-xs h-8 px-3">Disconnect</Button>
                 </form>
               </div>
             ))
