@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -33,13 +33,25 @@ export function TransactionEditDrawer({
   categories: any[];
   onSaved: () => void;
 }) {
-  const [remark, setRemark] = useState(transaction?.remark || transaction?.originalDescription || "");
-  const [amount, setAmount] = useState(transaction?.amountMinor ? transaction.amountMinor.toString() : "");
-  const [date, setDate] = useState(transaction?.transactionDate || "");
-  const [categoryId, setCategoryId] = useState(transaction?.categoryId || "none");
-  const [type, setType] = useState(transaction?.type || "EXPENSE");
+  const [remark, setRemark] = useState("");
+  const [amount, setAmount] = useState("");
+  const [date, setDate] = useState("");
+  const [categoryId, setCategoryId] = useState("none");
+  const [type, setType] = useState("EXPENSE");
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
+
+  // Sync state whenever transaction changes (fixes empty form bug)
+  useEffect(() => {
+    if (transaction) {
+      setRemark(transaction.remark || transaction.originalDescription || "");
+      setAmount(transaction.amountMinor ? transaction.amountMinor.toString() : "");
+      setDate(transaction.transactionDate || "");
+      setCategoryId(transaction.categoryId || "none");
+      setType(transaction.type || "EXPENSE");
+      setSaved(false);
+    }
+  }, [transaction]);
 
   if (!transaction) return null;
 
@@ -80,12 +92,9 @@ export function TransactionEditDrawer({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[460px] p-0 overflow-hidden border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]">
         
-        {/* Header Hero */}
+        {/* Color-coded hero header */}
         <div className={`relative p-6 pb-5 ${cfg.bgColor}`}>
-          <button
-            onClick={() => onOpenChange(false)}
-            className="absolute top-4 right-4 text-[hsl(var(--ink-secondary))] hover:text-[hsl(var(--ink))] transition-colors"
-          >
+          <button onClick={() => onOpenChange(false)} className="absolute top-4 right-4 text-[hsl(var(--ink-secondary))] hover:text-[hsl(var(--ink))] transition-colors">
             <X className="w-4 h-4" />
           </button>
 
@@ -101,7 +110,7 @@ export function TransactionEditDrawer({
             </div>
           </div>
 
-          {/* Big amount display */}
+          {/* Editable big amount */}
           <div className="flex items-baseline gap-1">
             <span className="text-2xl text-[hsl(var(--ink-secondary))] font-light">{cfg.prefix}₹</span>
             <input
@@ -114,32 +123,20 @@ export function TransactionEditDrawer({
           </div>
         </div>
 
-        {/* Form Body */}
+        {/* Form body */}
         <form onSubmit={handleSave} className="p-6 space-y-5">
           
-          {/* Merchant */}
           <div className="space-y-1.5">
             <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Merchant / Description</Label>
-            <Input
-              value={remark}
-              onChange={e => setRemark(e.target.value)}
-              placeholder="e.g. Swiggy, Salary, Amazon"
-              className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-11"
-            />
+            <Input value={remark} onChange={e => setRemark(e.target.value)} placeholder="e.g. Swiggy, Salary, Amazon" className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-11" />
           </div>
 
-          {/* Date */}
           <div className="space-y-1.5">
             <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Date</Label>
-            <Input
-              type="date"
-              value={date}
-              onChange={e => setDate(e.target.value)}
-              className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-11"
-            />
+            <Input type="date" value={date} onChange={e => setDate(e.target.value)} className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-11" />
           </div>
 
-          {/* Type */}
+          {/* Type selector grid */}
           <div className="space-y-1.5">
             <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Transaction Type</Label>
             <div className="grid grid-cols-3 gap-2">
@@ -147,14 +144,9 @@ export function TransactionEditDrawer({
                 const TIcon = c.icon;
                 const active = type === key;
                 return (
-                  <button
-                    key={key}
-                    type="button"
-                    onClick={() => setType(key)}
+                  <button key={key} type="button" onClick={() => setType(key)}
                     className={`flex flex-col items-center gap-1.5 p-2.5 rounded-xl border text-xs font-medium transition-all ${
-                      active
-                        ? `${c.bgColor} border-white/20 ${c.color}`
-                        : 'bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] text-[hsl(var(--ink-secondary))] hover:border-[hsl(var(--ink-muted))]'
+                      active ? `${c.bgColor} border-white/20 ${c.color}` : 'bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] text-[hsl(var(--ink-secondary))] hover:border-[hsl(var(--ink-muted))]'
                     }`}
                   >
                     <TIcon className="w-4 h-4" />
@@ -165,7 +157,6 @@ export function TransactionEditDrawer({
             </div>
           </div>
 
-          {/* Category */}
           <div className="space-y-1.5">
             <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Category</Label>
             <Select value={categoryId} onValueChange={setCategoryId}>
@@ -181,7 +172,6 @@ export function TransactionEditDrawer({
             </Select>
           </div>
 
-          {/* Import badge */}
           {transaction.originalDescription && (
             <div className="flex items-start gap-2 bg-[hsl(var(--surface-elevated))] border border-[hsl(var(--hairline))] p-3 rounded-lg">
               <span className="text-[10px] font-semibold uppercase tracking-wider text-[hsl(var(--ink-muted))] mt-0.5 shrink-0">Imported</span>
@@ -189,29 +179,10 @@ export function TransactionEditDrawer({
             </div>
           )}
 
-          {/* Actions */}
           <div className="flex gap-3 pt-2">
-            <Button
-              type="button"
-              variant="utility"
-              className="flex-1 h-11"
-              onClick={() => onOpenChange(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              variant="primary"
-              className="flex-1 h-11 gap-2"
-              disabled={loading || saved}
-            >
-              {saved ? (
-                <><Check className="w-4 h-4" /> Saved!</>
-              ) : loading ? (
-                'Saving...'
-              ) : (
-                'Save changes'
-              )}
+            <Button type="button" variant="utility" className="flex-1 h-11" onClick={() => onOpenChange(false)}>Cancel</Button>
+            <Button type="submit" variant="primary" className="flex-1 h-11 gap-2" disabled={loading || saved}>
+              {saved ? <><Check className="w-4 h-4" /> Saved!</> : loading ? 'Saving...' : 'Save changes'}
             </Button>
           </div>
         </form>

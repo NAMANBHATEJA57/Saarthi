@@ -201,7 +201,7 @@ export function TransactionCaptureForm({ onSuccess, onCancel }: { onSuccess: () 
         >
           <option value="" disabled>Select account</option>
           {sourceAccounts.map(a => (
-            <option key={a.id} value={a.id}>{a.name} (₹{a.balanceMinor.toLocaleString()})</option>
+            <option key={a.id} value={a.id}>{a.name}{a.lastFour ? ` (••••${a.lastFour})` : ''}</option>
           ))}
         </select>
       </div>
@@ -217,7 +217,7 @@ export function TransactionCaptureForm({ onSuccess, onCancel }: { onSuccess: () 
           >
             <option value="" disabled>Select destination</option>
             {destAccounts.map(a => (
-              <option key={a.id} value={a.id}>{a.name} (₹{a.balanceMinor.toLocaleString()})</option>
+              <option key={a.id} value={a.id}>{a.name}{a.lastFour ? ` (••••${a.lastFour})` : ''}</option>
             ))}
           </select>
         </div>

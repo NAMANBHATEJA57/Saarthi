@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Edit2, Archive, Trash2, Landmark, CreditCard, RefreshCcw, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,15 +11,27 @@ import { PUBLIC_INSTITUTIONS } from "@/lib/constants/institutions";
 import { cn } from "@/lib/utils";
 
 function EditAccountDialog({ account, open, onOpenChange, onSaved }: { account: any; open: boolean; onOpenChange: (v: boolean) => void; onSaved: () => void }) {
-  const [name, setName] = useState(account?.name || "");
-  const [lastFour, setLastFour] = useState(account?.lastFour || "");
-  const [creditLimit, setCreditLimit] = useState(account?.creditLimitMinor ? account.creditLimitMinor.toString() : "");
+  const [name, setName] = useState("");
+  const [lastFour, setLastFour] = useState("");
+  const [creditLimit, setCreditLimit] = useState("");
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
+
+  // Populate form whenever account changes
+  useEffect(() => {
+    if (account) {
+      setName(account.name || "");
+      setLastFour(account.lastFour || "");
+      setCreditLimit(account.creditLimitMinor ? account.creditLimitMinor.toString() : "");
+      setSaved(false);
+    }
+  }, [account]);
 
   if (!account) return null;
 
   const isCard = account.type === 'CREDIT_CARD';
+  const accentColor = isCard ? 'bg-purple-500/10' : 'bg-blue-500/10';
+  const iconColor = isCard ? 'text-purple-400' : 'text-blue-400';
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,36 +63,35 @@ function EditAccountDialog({ account, open, onOpenChange, onSaved }: { account: 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[400px] p-0 overflow-hidden border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]">
+      <DialogContent className="sm:max-w-[420px] p-0 overflow-hidden border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]">
 
-        {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b border-[hsl(var(--hairline))]">
-          <div className="flex items-center gap-3">
-            <div className={cn(
-              "w-9 h-9 rounded-lg flex items-center justify-center text-white font-bold text-sm",
-              isCard ? "bg-gradient-to-br from-purple-500 to-purple-700" : "bg-gradient-to-br from-blue-500 to-blue-700"
-            )}>
-              {name.charAt(0).toUpperCase() || (isCard ? 'C' : 'B')}
-            </div>
-            <div>
-              <p className="font-semibold text-sm">{account.name}</p>
-              <p className="text-xs text-[hsl(var(--ink-secondary))]">{isCard ? 'Credit Card' : 'Bank Account'}</p>
-            </div>
-          </div>
-          <button onClick={() => onOpenChange(false)} className="text-[hsl(var(--ink-secondary))] hover:text-[hsl(var(--ink))]">
+        {/* Hero header */}
+        <div className={`relative p-6 pb-5 ${accentColor}`}>
+          <button onClick={() => onOpenChange(false)} className="absolute top-4 right-4 text-[hsl(var(--ink-secondary))] hover:text-[hsl(var(--ink))] transition-colors">
             <X className="w-4 h-4" />
           </button>
+          <div className="flex items-center gap-3">
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${accentColor} border border-white/10`}>
+              {isCard ? <CreditCard className={`w-5 h-5 ${iconColor}`} /> : <Landmark className={`w-5 h-5 ${iconColor}`} />}
+            </div>
+            <div>
+              <p className={`text-xs font-semibold uppercase tracking-widest ${iconColor}`}>
+                {isCard ? 'Credit Card' : 'Bank Account'}
+              </p>
+              <p className="text-xl font-bold text-[hsl(var(--ink))] mt-0.5">{account.name}</p>
+            </div>
+          </div>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSave} className="p-5 space-y-4">
+        <form onSubmit={handleSave} className="p-6 space-y-4">
           <div className="space-y-1.5">
             <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Display Name</Label>
             <Input
               value={name}
               onChange={e => setName(e.target.value)}
               placeholder="e.g. HDFC Savings, ICICI Amazon Pay"
-              className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-10"
+              className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-11"
               required
             />
           </div>
@@ -92,13 +103,13 @@ function EditAccountDialog({ account, open, onOpenChange, onSaved }: { account: 
               onChange={e => setLastFour(e.target.value.slice(0, 4))}
               placeholder="e.g. 4242"
               maxLength={4}
-              className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-10 font-mono tracking-widest"
+              className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-11 font-mono tracking-widest"
             />
           </div>
 
           {isCard && (
             <div className="space-y-1.5">
-              <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Credit Limit (₹)</Label>
+              <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Credit Limit</Label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[hsl(var(--ink-secondary))] text-sm">₹</span>
                 <Input
@@ -106,17 +117,15 @@ function EditAccountDialog({ account, open, onOpenChange, onSaved }: { account: 
                   value={creditLimit}
                   onChange={e => setCreditLimit(e.target.value)}
                   placeholder="e.g. 200000"
-                  className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-10 pl-7"
+                  className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-11 pl-7"
                 />
               </div>
             </div>
           )}
 
           <div className="flex gap-3 pt-2">
-            <Button type="button" variant="utility" className="flex-1 h-10" onClick={() => onOpenChange(false)}>
-              Cancel
-            </Button>
-            <Button type="submit" variant="primary" className="flex-1 h-10 gap-2" disabled={loading || saved}>
+            <Button type="button" variant="utility" className="flex-1 h-11" onClick={() => onOpenChange(false)}>Cancel</Button>
+            <Button type="submit" variant="primary" className="flex-1 h-11 gap-2" disabled={loading || saved}>
               {saved ? <><Check className="w-4 h-4" /> Saved!</> : loading ? 'Saving...' : 'Save changes'}
             </Button>
           </div>
