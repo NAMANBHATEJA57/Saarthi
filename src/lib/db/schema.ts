@@ -403,6 +403,23 @@ export const financeCategories = pgTable('finance_categories', {
   suggestionKeys: jsonb('suggestion_keys').$type<string[]>(), // optional keywords for auto-categorization
 });
 
+export const financeAccounts = pgTable('finance_accounts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  name: text('name').notNull(),
+  type: text('type').notNull(), // 'BANK_ACCOUNT' or 'CREDIT_CARD'
+  currencyCode: text('currency_code').default('INR').notNull(),
+  creditLimitMinor: integer('credit_limit_minor'), // e.g. for credit cards
+  statementDay: integer('statement_day'), // 1-31
+  dueDay: integer('due_day'), // 1-31
+  isActive: boolean('is_active').default(true).notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  deletedAt: timestamp('deleted_at', { withTimezone: true }),
+}, (table) => ({
+  userTypeIdx: index('finance_accounts_user_type_idx').on(table.userId, table.type),
+}));
+
 export const financeTransactions = pgTable('finance_transactions', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
@@ -410,7 +427,9 @@ export const financeTransactions = pgTable('finance_transactions', {
   amountMinor: integer('amount_minor').notNull(),
   currencyCode: text('currency_code').notNull(),
   transactionDate: date('transaction_date', { mode: 'string' }).notNull(), // YYYY-MM-DD
-  categoryId: uuid('category_id').notNull().references(() => financeCategories.id),
+  accountId: uuid('account_id').references(() => financeAccounts.id), // Nullable for legacy data migration
+  destinationAccountId: uuid('destination_account_id').references(() => financeAccounts.id), // For transfers
+  categoryId: uuid('category_id').references(() => financeCategories.id), // Make nullable since transfers/payments don't need categories
   remark: text('remark'),
   source: text('source').notNull(), // 'MANUAL' or 'RECURRING'
   recurringRuleId: uuid('recurring_rule_id'), // nullable, references financeRecurringRules.id later

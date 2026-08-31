@@ -4,7 +4,8 @@ import {
   financeTransactions, 
   financeAllocationRuleSets, 
   financeAllocationRules, 
-  financeAllocationSnapshots 
+  financeAllocationSnapshots,
+  financeAccounts
 } from "@/lib/db/schema";
 import { eq, and, isNull, desc, gte, lte } from "drizzle-orm";
 
@@ -127,8 +128,10 @@ export async function getMonthlySummary(userId: string, yearMonth: string) {
       incomeTxIds.push(t.id);
     } else if (t.type === 'EXPENSE') {
       totalExpense += t.amountMinor;
-      if (!categorySpending[t.categoryId]) categorySpending[t.categoryId] = 0;
-      categorySpending[t.categoryId] += t.amountMinor;
+      if (t.categoryId) {
+        if (!categorySpending[t.categoryId]) categorySpending[t.categoryId] = 0;
+        categorySpending[t.categoryId] += t.amountMinor;
+      }
     }
   }
 
@@ -214,4 +217,57 @@ export async function getAccumulatedBalances(userId: string) {
   }
 
   return { savings, emergency };
+}
+
+export async function getAccountBalances(userId: string) {
+  const accounts = await db.select().from(financeAccounts).where(eq(financeAccounts.userId, userId));
+  
+  // We calculate balance from all POSTED transactions
+  // Bank Account Balance: Sum(INCOME) - Sum(EXPENSE) - Sum(TRANSFER OUT) + Sum(TRANSFER IN) - Sum(CREDIT_CARD_PAYMENT)
+  // Credit Card Outstanding: Sum(EXPENSE) - Sum(CREDIT_CARD_PAYMENT) - Sum(REFUND)
+  
+  const allTx = await db.select().from(financeTransactions)
+    .where(and(eq(financeTransactions.userId, userId), eq(financeTransactions.status, 'POSTED')));
+
+  const balances: Record<string, number> = {};
+  accounts.forEach(acc => balances[acc.id] = 0);
+
+  for (const tx of allTx) {
+    if (tx.type === 'INCOME' && tx.accountId && balances[tx.accountId] !== undefined) {
+      balances[tx.accountId] += tx.amountMinor;
+    } else if (tx.type === 'EXPENSE' && tx.accountId && balances[tx.accountId] !== undefined) {
+      if (accounts.find(a => a.id === tx.accountId)?.type === 'CREDIT_CARD') {
+        balances[tx.accountId] += tx.amountMinor; // Outstanding liability increases
+      } else {
+        balances[tx.accountId] -= tx.amountMinor; // Bank balance decreases
+      }
+    } else if (tx.type === 'REFUND' && tx.accountId && balances[tx.accountId] !== undefined) {
+      if (accounts.find(a => a.id === tx.accountId)?.type === 'CREDIT_CARD') {
+        balances[tx.accountId] -= tx.amountMinor; // Liability decreases
+      } else {
+        balances[tx.accountId] += tx.amountMinor; // Bank balance increases
+      }
+    } else if (tx.type === 'CREDIT_CARD_PAYMENT') {
+      if (tx.accountId && balances[tx.accountId] !== undefined) {
+        balances[tx.accountId] -= tx.amountMinor; // From Bank Account
+      }
+      if (tx.destinationAccountId && balances[tx.destinationAccountId] !== undefined) {
+        balances[tx.destinationAccountId] -= tx.amountMinor; // To Credit Card (reduces liability)
+      }
+    } else if (tx.type === 'TRANSFER') {
+      if (tx.accountId && balances[tx.accountId] !== undefined) {
+        balances[tx.accountId] -= tx.amountMinor;
+      }
+      if (tx.destinationAccountId && balances[tx.destinationAccountId] !== undefined) {
+        balances[tx.destinationAccountId] += tx.amountMinor;
+      }
+    }
+  }
+
+  // Attach balances to account objects
+  return accounts.map(acc => ({
+    ...acc,
+    balanceMinor: balances[acc.id] || 0,
+    availableCreditMinor: acc.type === 'CREDIT_CARD' && acc.creditLimitMinor ? (acc.creditLimitMinor - (balances[acc.id] || 0)) : null
+  }));
 }

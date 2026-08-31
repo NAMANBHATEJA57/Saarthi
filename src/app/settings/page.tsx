@@ -8,7 +8,7 @@ import { LogOut } from "lucide-react";
 export default async function SettingsPage() {
   const session = await auth();
   const userId = session?.user?.id;
-  const userName = session?.user?.name || "";
+  let userName = session?.user?.name || "";
   const email = session?.user?.email || "";
 
   let initialData = {

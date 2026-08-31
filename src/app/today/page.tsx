@@ -1,17 +1,17 @@
 import { auth } from "@/auth";
-import { Search, Apple, Scale } from "lucide-react";
+import { Search, Apple, Scale, IndianRupee, CheckSquare, StickyNote, Activity, Target, Landmark } from "lucide-react";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { userPreferences, weightEntries, workoutSchedules, workoutRoutines, workoutExercises, workoutDisplayStates, notes, users } from "@/lib/db/schema";
 import { eq, and, desc, isNull } from "drizzle-orm";
 import { WorkoutTodayWidget } from "@/components/workout/WorkoutTodayWidget";
-import { IndianRupee, CheckSquare, StickyNote } from "lucide-react";
-import { getMonthlySummary } from "@/lib/finance/service";
+import { getMonthlySummary, getAccountBalances } from "@/lib/finance/service";
 import { getTodayTasksSummary } from "@/lib/tasks/service";
 import { CalendarTodayWidget } from "@/components/calendar/CalendarTodayWidget";
 import { RelationshipService } from "@/lib/relationships/service";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { TimezoneSync } from "@/components/shared/TimezoneSync";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export default async function TodayPage() {
   const session = await auth();
@@ -19,6 +19,8 @@ export default async function TodayPage() {
   const userId = session?.user?.id;
   let hasPreferences = false;
   let userTimezone = "UTC";
+  let latestWeight = null;
+  
   if (userId) {
     const userRec = await db.select().from(users).where(eq(users.id, userId)).limit(1);
     if (userRec.length > 0 && userRec[0].name) {
@@ -38,25 +40,21 @@ export default async function TodayPage() {
     latestWeight = weights.length > 0 ? weights[0] : null;
   }
 
-  // Format date natively using user's timezone
   const dateObj = new Date();
   
-  // Format to YYYY-MM-DD in the user's timezone
   const dateStrFormatter = new Intl.DateTimeFormat('en-CA', {
     timeZone: userTimezone,
     year: 'numeric',
     month: '2-digit',
     day: '2-digit'
   });
-  const todayDateString = dateStrFormatter.format(dateObj); // YYYY-MM-DD
+  const todayDateString = dateStrFormatter.format(dateObj);
 
-  // Format weekday index (0-6)
   const weekdayFormatter = new Intl.DateTimeFormat('en-US', { timeZone: userTimezone, weekday: 'long' });
   const weekdayName = weekdayFormatter.format(dateObj);
   const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const currentWeekday = weekdays.indexOf(weekdayName);
 
-  // Format nice display date
   const displayFormatter = new Intl.DateTimeFormat('en-US', {
     timeZone: userTimezone,
     weekday: 'long',
@@ -68,6 +66,7 @@ export default async function TodayPage() {
   let todayRoutine = null;
   let todayDisplayState = null;
   let financeSummary = null;
+  let bankBalance = 0;
   let todayTasks: any[] = [];
   let recentNotes: any[] = [];
 
@@ -75,17 +74,20 @@ export default async function TodayPage() {
     const currentMonthStr = todayDateString.substring(0, 7);
     financeSummary = await getMonthlySummary(userId, currentMonthStr);
     
-    // Fetch tasks and their relationships
+    const accounts = await getAccountBalances(userId);
+    bankBalance = accounts.filter(a => a.type === 'BANK_ACCOUNT').reduce((sum, a) => sum + (a.balanceMinor || 0), 0) / 100;
+    
     const rawTasks = await getTodayTasksSummary(userId, todayDateString);
     todayTasks = await Promise.all(rawTasks.map(async (task) => {
       const related = await RelationshipService.getRelatedObjects(userId, 'task', task.id);
       return { ...task, related };
     }));
+    
     recentNotes = await db.select().from(notes)
       .where(and(eq(notes.userId, userId), isNull(notes.deletedAt)))
       .orderBy(desc(notes.updatedAt))
       .limit(3);
-    // Check for today's scheduled routine
+      
     const schedules = await db
       .select()
       .from(workoutSchedules)
@@ -94,7 +96,6 @@ export default async function TodayPage() {
 
     if (schedules.length > 0) {
       const routineId = schedules[0].routineId;
-      
       const routines = await db
         .select()
         .from(workoutRoutines)
@@ -136,180 +137,137 @@ export default async function TodayPage() {
   }
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
+    <div className="animate-in fade-in duration-500">
       {userId && <TimezoneSync serverTimezone={userTimezone} />}
       
-      {/* Header */}
-      <header className="space-y-1">
-        <p className="text-sm font-medium text-[hsl(var(--ink-secondary))] uppercase tracking-wider">{today}</p>
-        <h1 className="text-2xl font-bold tracking-tight">Good morning, {userName}</h1>
-      </header>
-
-      {/* OS Status Card */}
-      <section className="bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))] rounded-lg p-5">
-        <h2 className="text-xs font-semibold text-[hsl(var(--ink-muted))] tracking-wider mb-4">SYSTEM STATUS</h2>
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
-          <div className="flex items-center gap-3">
-            <div className={`w-2 h-2 rounded-full ${hasPreferences ? 'bg-green-500' : 'bg-yellow-500'}`} />
-            <span className="text-sm font-medium">Preferences {hasPreferences ? 'configured' : 'incomplete'}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="w-2 h-2 rounded-full bg-blue-500" />
-            <span className="text-sm font-medium">Food module: Pending</span>
-          </div>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        {/* Header - spans full width */}
+        <div className="col-span-full mb-2">
+          <header className="space-y-1">
+            <p className="text-xs font-semibold text-[hsl(var(--ink-secondary))] uppercase tracking-wider">{today}</p>
+            <h1 className="text-3xl font-bold tracking-tight">Good morning, {userName}</h1>
+          </header>
         </div>
-      </section>
 
-      {/* Quick Actions */}
-      <section>
-        <h2 className="text-xs font-semibold text-[hsl(var(--ink-muted))] tracking-wider mb-4">QUICK ACTIONS</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <button className="flex items-center gap-3 p-4 rounded-lg bg-[hsl(var(--surface-elevated))] border border-[hsl(var(--hairline))] text-left group">
-            <div className="p-2 rounded-md bg-[hsl(var(--surface))] group-hover:bg-[hsl(var(--canvas))] transition-colors">
-              <Search className="w-5 h-5 text-[hsl(var(--ink-secondary))]" />
-            </div>
-            <div>
-              <div className="text-sm font-semibold">Open Command Menu</div>
-              <div className="text-xs text-[hsl(var(--ink-muted))]">Search your entire OS</div>
-            </div>
-          </button>
-          <Link href="/weight" className="flex items-center gap-3 p-4 rounded-lg bg-[hsl(var(--surface-elevated))] border border-[hsl(var(--hairline))] text-left group transition-colors hover:bg-[hsl(var(--surface))]">
-            <div className="p-2 rounded-md bg-[hsl(var(--surface))] group-hover:bg-[hsl(var(--canvas))] transition-colors">
-              <Scale className="w-5 h-5 text-[hsl(var(--ink-secondary))]" />
-            </div>
-            <div>
-              <div className="text-sm font-semibold flex items-center gap-2">
-                Weight
-                {latestWeight && <span className="text-[10px] font-semibold text-[hsl(var(--ink-secondary))] bg-[hsl(var(--surface))] px-1.5 py-0.5 rounded-full">{latestWeight.weight} {latestWeight.unit}</span>}
-              </div>
-              <div className="text-xs text-[hsl(var(--ink-muted))]">
-                {latestWeight ? `Recorded ${new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(latestWeight.recordedAt)}` : 'No entries yet'}
-              </div>
-            </div>
-          </Link>
-          <Link href="/finance" className="flex items-center gap-3 p-4 rounded-lg bg-[hsl(var(--surface-elevated))] border border-[hsl(var(--hairline))] text-left group transition-colors hover:bg-[hsl(var(--surface))]">
-            <div className="p-2 rounded-md bg-[hsl(var(--surface))] group-hover:bg-[hsl(var(--canvas))] transition-colors">
-              <IndianRupee className="w-5 h-5 text-[hsl(var(--ink-secondary))]" />
-            </div>
-            <div>
-              <div className="text-sm font-semibold flex items-center gap-2">
-                Finance
-              </div>
-              <div className="text-xs text-[hsl(var(--ink-muted))]">
-                {financeSummary && (financeSummary.leftover < 0 ? 'Over budget' : 'On track')}
-              </div>
-            </div>
-          </Link>
+        {/* Left Column: Primary Focus (Tasks, Calendar, Workout) */}
+        <div className="lg:col-span-8 space-y-6">
           
-          <Link href="/food" className="flex items-center gap-3 p-4 rounded-lg bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))] text-left opacity-70 hover:opacity-100 transition-opacity">
-            <div className="p-2 rounded-md bg-[hsl(var(--canvas))]">
-              <Apple className="w-5 h-5 text-[hsl(var(--ink-secondary))]" />
+          {/* Tasks Today */}
+          <section>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-[13px] font-semibold text-[hsl(var(--ink-muted))] tracking-wider">TASKS DUE TODAY</h2>
+              <Link href="/tasks" className="text-[13px] font-medium text-[hsl(var(--primary))] hover:underline">View all</Link>
             </div>
-            <div>
-              <div className="text-sm font-semibold flex items-center gap-2">
-                Log Food
-                <span className="text-[10px] font-semibold text-[hsl(var(--ink-muted))] px-1.5 py-0.5 rounded-full bg-[hsl(var(--surface-elevated))]">Coming next</span>
-              </div>
-              <div className="text-xs text-[hsl(var(--ink-muted))]">Phase 2 feature</div>
-            </div>
-          </Link>
-        </div>
-      </section>
-
-      {/* Calendar Today */}
-      {userId && (
-        <CalendarTodayWidget userId={userId} localDateStr={todayDateString} />
-      )}
-
-      {/* Workout Today */}
-      {todayRoutine && (
-        <section>
-          <WorkoutTodayWidget 
-            routine={todayRoutine} 
-            localDate={todayDateString} 
-            initialDisplayState={todayDisplayState} 
-          />
-        </section>
-      )}
-
-      {/* Tasks Today */}
-      <section>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xs font-semibold text-[hsl(var(--ink-muted))] tracking-wider">TASKS DUE TODAY</h2>
-          <Link href="/tasks" className="text-xs font-medium text-[hsl(var(--primary))] hover:underline">View all</Link>
-        </div>
-        {todayTasks.length > 0 ? (
-          <div className="space-y-2">
-            {todayTasks.map(task => (
-              <div key={task.id} className="flex items-start gap-3 p-3 bg-[hsl(var(--surface-elevated))] rounded-lg border border-[hsl(var(--hairline))]">
-                <div className="mt-1 flex-shrink-0 w-5 h-5 rounded border border-[hsl(var(--ink-muted))]"></div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium">{task.title}</p>
-                  <div className="flex flex-wrap gap-2 mt-1 text-[10px] text-[hsl(var(--ink-muted))]">
-                    {task.priority !== 'normal' && (
-                      <span className={`${task.priority === 'high' ? 'text-red-500' : 'text-blue-500'}`}>{task.priority.toUpperCase()}</span>
-                    )}
-                    {task.dueDate && task.dueDate < todayDateString && <span className="text-red-500 font-semibold">OVERDUE</span>}
-                  </div>
-                  {task.related && task.related.length > 0 && (
-                    <div className="mt-2 pt-2 border-t border-[hsl(var(--hairline))] flex flex-wrap gap-2">
-                      {task.related.map((rel: any) => (
-                        <Link href={`/search?q=${encodeURIComponent(rel.title)}`} key={`${rel._type}-${rel.id}`} className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-[hsl(var(--surface))] rounded text-[10px] font-medium text-[hsl(var(--ink-secondary))]">
-                          Related: {rel.title}
-                        </Link>
-                      ))}
+            {todayTasks.length > 0 ? (
+              <div className="space-y-2">
+                {todayTasks.map(task => (
+                  <div key={task.id} className="flex items-start gap-3 p-4 bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-elevated))] rounded-[var(--radius)] border border-[hsl(var(--hairline))] transition-colors shadow-sm">
+                    <div className="mt-0.5 flex-shrink-0 w-5 h-5 rounded border-2 border-[hsl(var(--ink-muted))]"></div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[15px] font-medium leading-tight">{task.title}</p>
+                      <div className="flex flex-wrap gap-2 mt-1.5 text-[11px] text-[hsl(var(--ink-muted))] font-medium">
+                        {task.priority !== 'normal' && (
+                          <span className={`${task.priority === 'high' ? 'text-[hsl(var(--destructive))]' : 'text-[hsl(var(--info))]'}`}>{task.priority.toUpperCase()}</span>
+                        )}
+                        {task.dueDate && task.dueDate < todayDateString && <span className="text-[hsl(var(--destructive))]">OVERDUE</span>}
+                      </div>
                     </div>
-                  )}
-                </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        ) : (
-          <EmptyState
-            compact
-            icon={<CheckSquare className="w-5 h-5" />}
-            title="No tasks due today"
-            description="You're all caught up for the day!"
-          />
-        )}
-      </section>
+            ) : (
+              <EmptyState
+                compact
+                icon={<CheckSquare className="w-5 h-5" />}
+                title="No tasks due today"
+                description="You're all caught up for the day!"
+              />
+            )}
+          </section>
 
-      {/* Recent Notes */}
-      <section>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xs font-semibold text-[hsl(var(--ink-muted))] tracking-wider">RECENT NOTES</h2>
-          <Link href="/notes" className="text-xs font-medium text-[hsl(var(--primary))] hover:underline">View all</Link>
+          {/* Workout Today */}
+          {todayRoutine && (
+            <section>
+               <WorkoutTodayWidget 
+                routine={todayRoutine} 
+                localDate={todayDateString} 
+                initialDisplayState={todayDisplayState} 
+              />
+            </section>
+          )}
+
+          {/* Calendar Today */}
+          {userId && (
+            <section>
+               <CalendarTodayWidget userId={userId} localDateStr={todayDateString} />
+            </section>
+          )}
+
         </div>
-        {recentNotes.length > 0 ? (
-          <div className="space-y-2">
-            {recentNotes.map(note => (
-              <Link href="/notes" key={note.id} className="flex flex-col gap-1 p-3 bg-[hsl(var(--surface-elevated))] rounded-lg border border-[hsl(var(--hairline))] group hover:border-[hsl(var(--ink-tertiary))] transition-colors">
-                <div className="flex justify-between items-start">
-                  <p className="text-sm font-medium">{note.title}</p>
-                </div>
-                <p className="text-xs text-[hsl(var(--ink-secondary))] line-clamp-1">{note.content || "Empty note"}</p>
-              </Link>
-            ))}
-          </div>
-        ) : (
-          <EmptyState
-            compact
-            icon={<StickyNote className="w-5 h-5" />}
-            title="No recent notes"
-            description="Jot down your thoughts and ideas."
-          />
-        )}
-      </section>
 
-      {/* Next Up */}
-      <section>
-        <h2 className="text-xs font-semibold text-[hsl(var(--ink-muted))] tracking-wider mb-4">NEXT UP</h2>
-        <EmptyState
-          icon={<Apple className="w-6 h-6" />}
-          title="Food is pending refinement"
-          description="Food module has been partially implemented. Check out the new Finance and Workout features in the meantime."
-        />
-      </section>
+        {/* Right Column: Secondary Focus (Status, Finance, Notes) */}
+        <div className="lg:col-span-4 space-y-6">
+          
+          {/* Quick Metrics */}
+          <div className="grid grid-cols-2 gap-3">
+            <Link href="/finance" className="p-4 bg-[hsl(var(--surface))] rounded-[var(--radius)] border border-[hsl(var(--hairline))] hover:border-[hsl(var(--primary))] hover:shadow-sm transition-all group">
+              <Landmark className="w-5 h-5 mb-2 text-[hsl(var(--ink-secondary))] group-hover:text-[hsl(var(--primary))]" />
+              <div className="text-[11px] font-medium text-[hsl(var(--ink-muted))]">Bank Balance</div>
+              <div className="text-[16px] font-bold">₹{bankBalance.toLocaleString()}</div>
+            </Link>
+            
+            <Link href="/weight" className="p-4 bg-[hsl(var(--surface))] rounded-[var(--radius)] border border-[hsl(var(--hairline))] hover:border-[hsl(var(--primary))] hover:shadow-sm transition-all group">
+              <Scale className="w-5 h-5 mb-2 text-[hsl(var(--ink-secondary))] group-hover:text-[hsl(var(--primary))]" />
+              <div className="text-[11px] font-medium text-[hsl(var(--ink-muted))]">Latest Weight</div>
+              <div className="text-[16px] font-bold">{latestWeight ? `${latestWeight.weight} ${latestWeight.unit}` : '--'}</div>
+            </Link>
+          </div>
+
+          {/* OS Status Card */}
+          <Card>
+            <CardHeader className="p-4 pb-0 border-none">
+              <CardTitle className="text-[13px] font-semibold text-[hsl(var(--ink-muted))] tracking-wider">SYSTEM STATUS</CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 space-y-3">
+              <div className="flex items-center gap-3">
+                <div className={`w-2 h-2 rounded-full ${hasPreferences ? 'bg-[hsl(var(--success))]' : 'bg-[hsl(var(--warning))]'}`} />
+                <span className="text-[14px] font-medium text-[hsl(var(--ink))]">Preferences {hasPreferences ? 'configured' : 'incomplete'}</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 rounded-full bg-[hsl(var(--info))]" />
+                <span className="text-[14px] font-medium text-[hsl(var(--ink))]">Food module: Pending</span>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Recent Notes */}
+          <section>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-[13px] font-semibold text-[hsl(var(--ink-muted))] tracking-wider">RECENT NOTES</h2>
+              <Link href="/notes" className="text-[13px] font-medium text-[hsl(var(--primary))] hover:underline">View all</Link>
+            </div>
+            {recentNotes.length > 0 ? (
+              <div className="space-y-2">
+                {recentNotes.map(note => (
+                  <Link href="/notes" key={note.id} className="block p-3 bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-elevated))] rounded-[var(--radius)] border border-[hsl(var(--hairline))] transition-colors shadow-sm">
+                    <p className="text-[14px] font-semibold truncate text-[hsl(var(--ink))]">{note.title}</p>
+                    <p className="text-[12px] text-[hsl(var(--ink-secondary))] line-clamp-2 mt-1">{note.content || "Empty note"}</p>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <EmptyState
+                compact
+                icon={<StickyNote className="w-5 h-5" />}
+                title="No recent notes"
+                description="Jot down your thoughts."
+              />
+            )}
+          </section>
+
+        </div>
+      </div>
     </div>
   );
 }

@@ -36,10 +36,19 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { type, amountMinor, categoryId, remark, transactionDate } = body;
+    const { type, amountMinor, categoryId, accountId, destinationAccountId, remark, transactionDate } = body;
 
-    if (!type || !amountMinor || !categoryId || !transactionDate || amountMinor <= 0) {
+    // TRANSFER and CREDIT_CARD_PAYMENT do not require categoryId
+    if (!type || !amountMinor || !transactionDate || amountMinor <= 0) {
       return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
+    }
+    
+    if ((type === 'INCOME' || type === 'EXPENSE') && !categoryId) {
+      return NextResponse.json({ error: 'Category required for income/expense' }, { status: 400 });
+    }
+
+    if ((type === 'TRANSFER' || type === 'CREDIT_CARD_PAYMENT') && (!accountId || !destinationAccountId)) {
+      return NextResponse.json({ error: 'Both accounts required for transfer/payment' }, { status: 400 });
     }
 
     // Default to INR or from preferences
@@ -52,7 +61,9 @@ export async function POST(req: NextRequest) {
         amountMinor,
         currencyCode,
         transactionDate,
-        categoryId,
+        accountId: accountId || null,
+        destinationAccountId: destinationAccountId || null,
+        categoryId: categoryId || null,
         remark: remark || null,
         source: 'MANUAL',
       }).returning();

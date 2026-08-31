@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link2, X, Plus, Search, Calendar, CheckSquare, Dumbbell, Scale, FileText, Trash2 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
@@ -28,22 +28,7 @@ export function RelationshipManager({ sourceType, sourceId }: RelationshipManage
   const [isSearching, setIsSearching] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    fetchRelationships();
-  }, [sourceId]);
-
-  useEffect(() => {
-    if (!searchQuery) {
-      setSearchResults([]);
-      return;
-    }
-    const timer = setTimeout(() => {
-      handleSearch();
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
-
-  const fetchRelationships = async () => {
+  const fetchRelationships = useCallback(async () => {
     try {
       const res = await fetch(`/api/relationships?sourceType=${sourceType}&sourceId=${sourceId}`);
       if (res.ok) {
@@ -55,25 +40,37 @@ export function RelationshipManager({ sourceType, sourceId }: RelationshipManage
     } finally {
       setLoading(false);
     }
-  };
+  }, [sourceType, sourceId]);
 
-  const handleSearch = async () => {
+  const handleSearch = useCallback(async () => {
     setIsSearching(true);
     try {
-      const res = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}`);
+      const res = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}&excludeType=${sourceType}&excludeId=${sourceId}`);
       if (res.ok) {
         const data = await res.json();
-        // Filter out self
-        const filtered = data.results.filter((r: any) => !(r.type === sourceType && r.id === sourceId));
-        setSearchResults(filtered);
+        setSearchResults(data.results || []);
       }
     } catch (e) {
       console.error(e);
     } finally {
       setIsSearching(false);
     }
-  };
+  }, [searchQuery, sourceType, sourceId]);
 
+  useEffect(() => {
+    fetchRelationships();
+  }, [fetchRelationships]);
+
+  useEffect(() => {
+    if (!searchQuery) {
+      setSearchResults([]);
+      return;
+    }
+    const timer = setTimeout(() => {
+      handleSearch();
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery, handleSearch]);
   const linkObject = async (targetType: string, targetId: string) => {
     try {
       const res = await fetch(`/api/relationships`, {
