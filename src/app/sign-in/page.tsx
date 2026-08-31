@@ -17,10 +17,6 @@ export default function SignInPage() {
               height={64}
               priority
               className="w-16 h-16 rounded-xl object-cover"
-              onError={(e) => {
-                // Hide the img and show the gradient fallback
-                (e.target as HTMLImageElement).style.display = 'none';
-              }}
             />
           </div>
 
