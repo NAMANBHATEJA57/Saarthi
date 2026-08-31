@@ -39,12 +39,7 @@
   /* Layer 1 (top): dark canvas overlay to keep the dark theme
      Layer 2 (bottom): SVG pattern fixed to viewport */
   body {
-    background:
-      linear-gradient(
-        rgba(25, 25, 25, 0.7),
-        rgba(25, 25, 25, 0.7)
-      ),
-      url('/Bg.svg') center top / cover fixed;
+    background: url('/Bg.svg') center top / cover fixed;
     position: relative;
     color: hsl(var(--ink));
     font-family: 'Inter', -apple-system, system-ui, sans-serif;

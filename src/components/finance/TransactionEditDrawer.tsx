@@ -112,7 +112,7 @@ export function TransactionEditDrawer({
 
           {/* Editable big amount */}
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl text-[hsl(var(--ink-secondary))] font-light">{cfg.prefix}₹</span>
+            <span className="text-2xl text-[hsl(var(--ink-secondary))] font-light shrink-0 whitespace-nowrap">{cfg.prefix}₹</span>
             <input
               type="number"
               value={amount}

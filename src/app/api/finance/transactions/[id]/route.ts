@@ -22,8 +22,9 @@ export async function PATCH(
       return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
     }
 
-    if ((type === 'INCOME' || type === 'EXPENSE' || type === 'CREDIT_CARD_PURCHASE' || type === 'REFUND') && !categoryId) {
-      return NextResponse.json({ error: 'Category required' }, { status: 400 });
+    if ((type === 'INCOME' || type === 'EXPENSE' || type === 'CREDIT_CARD_PURCHASE' || type === 'REFUND') && categoryId === undefined) {
+      // We allow categoryId to be null for uncategorized, but it must be passed in the payload explicitly (even if null)
+      return NextResponse.json({ error: 'Category field missing' }, { status: 400 });
     }
 
     const existingTx = await db.select().from(financeTransactions).where(and(eq(financeTransactions.id, id), eq(financeTransactions.userId, userId)));

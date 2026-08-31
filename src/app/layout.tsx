@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-screen bg-[hsl(var(--canvas))] text-[hsl(var(--ink))] antialiased`}>
+      <body className={`${inter.className} min-h-screen text-[hsl(var(--ink))] antialiased`}>
         {/* In the future, a ThemeProvider would wrap AppShell here */}
         <AppShell>
           {children}

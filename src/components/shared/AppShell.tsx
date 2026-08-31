@@ -79,7 +79,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const [isCaptureOpen, setIsCaptureOpen] = useState(false);
 
   return (
-    <div className="flex min-h-[100dvh] w-full bg-[hsl(var(--canvas))] text-[hsl(var(--ink))]">
+    <div className="flex min-h-[100dvh] w-full bg-transparent text-[hsl(var(--ink))]">
       {/* Desktop Sidebar (hidden on mobile) */}
       <aside className="hidden md:flex flex-col w-64 border-r border-[hsl(var(--hairline))] bg-[hsl(var(--canvas))] sticky top-0 h-[100dvh]">
         <div className="p-4 flex items-center gap-2 mb-2 h-14 border-b border-[hsl(var(--hairline))]">
