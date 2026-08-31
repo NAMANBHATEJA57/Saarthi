@@ -36,23 +36,15 @@
   }
 
   /* ─── Background: Bg.svg geometric grid texture ─── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background-image: url('/Bg.svg');
-    background-size: cover;
-    background-position: center top;
-    background-repeat: no-repeat;
-    /* Very subtle opacity so the grid is a texture, not a feature */
-    opacity: 0.07;
-    pointer-events: none;
-  }
-
-  /* Solid canvas fallback behind the ::before pseudo-element */
+  /* Layer 1 (top): dark canvas overlay to keep the dark theme
+     Layer 2 (bottom): SVG pattern fixed to viewport */
   body {
-    background-color: hsl(var(--canvas-soft));
+    background:
+      linear-gradient(
+        hsl(0 0% 10% / 0.86),
+        hsl(0 0% 10% / 0.86)
+      ),
+      url('/Bg.svg') center top / cover fixed;
     position: relative;
     color: hsl(var(--ink));
     font-family: 'Inter', -apple-system, system-ui, sans-serif;
