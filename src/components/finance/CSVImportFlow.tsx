@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Papa from 'papaparse';
 import * as XLSX from 'xlsx';
+import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -73,6 +74,36 @@ export function CSVImportFlow({ accounts, categories }: { accounts: any[], categ
           alert("Failed to parse CSV file.");
         }
       });
+    } else if (uploadedFile.name.match(/\.pdf$/i)) {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append('file', uploadedFile);
+      try {
+        const res = await fetch('/api/finance/ocr', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+        if (data.transactions) {
+          const mappedTxs = data.transactions.map((t: any) => ({
+            id: t.id,
+            transactionDate: t.date,
+            amount: t.amount,
+            description: t.description,
+            type: t.type,
+            selected: true
+          }));
+          setTransactions(mappedTxs);
+          setStep(3);
+        } else {
+          alert("Failed to extract data from PDF.");
+        }
+      } catch (err) {
+        console.error("PDF Parse Error:", err);
+        alert("Failed to parse PDF file.");
+      } finally {
+        setLoading(false);
+      }
     } else if (uploadedFile.name.match(/\.xlsx?$/i)) {
       try {
         const buffer = await uploadedFile.arrayBuffer();
@@ -266,17 +297,17 @@ export function CSVImportFlow({ accounts, categories }: { accounts: any[], categ
               <TableIcon className={`w-8 h-8 ${isDragging ? 'text-[hsl(var(--canvas))]' : 'text-[hsl(var(--ink-muted))]'}`} />
             </div>
             <div className="space-y-1">
-              <h3 className="font-semibold text-lg">Upload CSV or Excel</h3>
+              <h3 className="font-semibold text-lg">Upload Bank Statement</h3>
               <p className="text-sm text-[hsl(var(--ink-secondary))] max-w-sm">
-                Drag and drop your bank statement here, or click below. Supports .csv, .xls, and .xlsx files.
+                Drag and drop your bank statement here, or click below. Supports .csv, .xls, .xlsx, and .pdf files.
               </p>
             </div>
-            <Label htmlFor="csv-upload" className="cursor-pointer">
+            <Label htmlFor="csv-upload" className={`cursor-pointer ${loading ? 'opacity-50 pointer-events-none' : ''}`}>
               <div className="inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-[hsl(var(--ink))] text-[hsl(var(--canvas))] shadow hover:bg-[hsl(var(--ink-muted))] h-10 px-4 py-2 mt-4 gap-2">
-                <Upload className="w-4 h-4" /> Select File
+                {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />} {loading ? 'Processing...' : 'Select File'}
               </div>
             </Label>
-            <input id="csv-upload" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" className="hidden" onChange={handleFileUpload} />
+            <input id="csv-upload" type="file" accept=".csv, .pdf, application/pdf, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" className="hidden" onChange={handleFileUpload} disabled={loading} />
           </CardContent>
         </Card>
       )}
