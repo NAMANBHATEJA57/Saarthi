@@ -21,6 +21,18 @@ export function TransactionHistory({
   const [internalTransactions, setInternalTransactions] = useState<any[]>([]);
   const [internalLoading, setInternalLoading] = useState(true);
 
+  // Reference data for resolving IDs to names
+  const [categories, setCategories] = useState<any[]>([]);
+  const [incomeTypes, setIncomeTypes] = useState<any[]>([]);
+  const [savingsGoals, setSavingsGoals] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Fetch reference data once
+    fetch('/api/finance/categories').then(r => r.json()).then(d => { if (d.categories) setCategories(d.categories); });
+    fetch('/api/finance/income-types').then(r => r.json()).then(d => { if (d.incomeTypes) setIncomeTypes(d.incomeTypes); });
+    fetch('/api/finance/savings-goals').then(r => r.json()).then(d => { if (d.savingsGoals) setSavingsGoals(d.savingsGoals); });
+  }, []);
+
   useEffect(() => {
     if (customTransactions !== undefined) return;
     
@@ -109,10 +121,13 @@ export function TransactionHistory({
           </div>
           <div>
             <p className="font-medium text-[15px] leading-tight text-[hsl(var(--ink))]">
-              {tx.merchant || tx.description || (tx.categoryId ? 'Categorized' : subtitle)}
+              {tx.merchant || tx.description || 'Unknown'}
             </p>
             <p className="text-[11px] text-[hsl(var(--ink-secondary))] mt-0.5 uppercase tracking-wider font-semibold">
               {subtitle}
+              {tx.categoryId && categories.find(c => c.id === tx.categoryId)?.name && ` • ${categories.find(c => c.id === tx.categoryId)?.name}`}
+              {tx.incomeTypeId && incomeTypes.find(c => c.id === tx.incomeTypeId)?.name && ` • ${incomeTypes.find(c => c.id === tx.incomeTypeId)?.name}`}
+              {tx.savingsGoalId && savingsGoals.find(c => c.id === tx.savingsGoalId)?.name && ` • 🎯 ${savingsGoals.find(c => c.id === tx.savingsGoalId)?.name}`}
             </p>
           </div>
         </div>
