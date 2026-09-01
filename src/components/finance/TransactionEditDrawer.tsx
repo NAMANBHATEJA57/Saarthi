@@ -268,7 +268,11 @@ export function TransactionEditDrawer({
                       if (savingsGoalId === sg.id) {
                         setSavingsGoalId('');
                       } else {
-                        if (window.confirm(`Are you sure you want to spend from the ${sg.name} fund?`)) {
+                        if (sg.name.toLowerCase() === 'savings') {
+                          if (window.confirm(`Are you sure you want to spend from the ${sg.name} fund?`)) {
+                            setSavingsGoalId(sg.id);
+                          }
+                        } else {
                           setSavingsGoalId(sg.id);
                         }
                       }
