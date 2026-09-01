@@ -1,36 +1,18 @@
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
-import { Card, CardContent } from '@/components/ui/card';
-import { FileText, Upload } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { db } from '@/lib/db';
+import { financeAccounts, financeCategories } from '@/lib/db/schema';
+import { eq } from 'drizzle-orm';
+import { OCRClient } from './OCRClient';
 
 export default async function OCRPage() {
   const session = await auth();
   if (!session?.user?.id) redirect('/login');
+  
+  const [accounts, categories] = await Promise.all([
+    db.select().from(financeAccounts).where(eq(financeAccounts.userId, session.user.id)),
+    db.select().from(financeCategories).where(eq(financeCategories.userId, session.user.id))
+  ]);
 
-  return (
-    <div className="space-y-6">
-      <header>
-        <h1 className="text-2xl font-bold tracking-tight">Receipt Scanner</h1>
-        <p className="text-[hsl(var(--ink-secondary))] mt-1">Upload a receipt or invoice to automatically extract transaction details.</p>
-      </header>
-
-      <Card className="border-dashed border-2 border-[hsl(var(--hairline))] bg-transparent">
-        <CardContent className="flex flex-col items-center justify-center p-12 text-center space-y-4">
-          <div className="w-16 h-16 bg-[hsl(var(--surface-elevated))] rounded-full flex items-center justify-center">
-            <FileText className="w-8 h-8 text-[hsl(var(--ink-muted))]" />
-          </div>
-          <div className="space-y-1">
-            <h3 className="font-semibold text-lg">Upload Receipt</h3>
-            <p className="text-sm text-[hsl(var(--ink-secondary))] max-w-sm">
-              Supports JPEG, PNG, and PDF files. AI will automatically extract the merchant, amount, and date.
-            </p>
-          </div>
-          <Button variant="primary" className="mt-4 gap-2">
-            <Upload className="w-4 h-4" /> Select File
-          </Button>
-        </CardContent>
-      </Card>
-    </div>
-  );
+  return <OCRClient accounts={accounts} categories={categories} />;
 }
