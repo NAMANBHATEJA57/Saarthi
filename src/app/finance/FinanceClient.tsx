@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, RefreshCcw, Receipt, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, RefreshCcw, Receipt, ArrowRight, Upload } from 'lucide-react';
 import { EmptyState } from '@/components/shared/EmptyState';
 import { useRouter } from 'next/navigation';
 import { Landmark, CreditCard, Plus } from 'lucide-react';
@@ -172,9 +172,11 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
                 </CardContent>
               </Card>
               
-              <div className="flex gap-3">
-                <Button variant="secondary" className="flex-1 bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))]" onClick={() => router.push('/finance/settings')}>Settings</Button>
-                <Button variant="secondary" className="flex-1 bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))]" onClick={() => router.push('/finance/transactions')}>All Transactions</Button>
+              <div className="grid grid-cols-2 gap-3">
+                <Button variant="secondary" className="bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))]" onClick={() => router.push('/finance/settings')}>Settings</Button>
+                <Button variant="secondary" className="bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))]" onClick={() => router.push('/finance/transactions')}>All Transactions</Button>
+                <Button variant="secondary" className="bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))] gap-2" onClick={() => router.push('/finance/ocr')}><Receipt className="w-4 h-4" /> Scan Receipt</Button>
+                <Button variant="secondary" className="bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))] gap-2" onClick={() => router.push('/finance/import')}><Upload className="w-4 h-4" /> Bulk Import</Button>
               </div>
 
               {/* RECENT TRANSACTIONS COMPONENT */}
