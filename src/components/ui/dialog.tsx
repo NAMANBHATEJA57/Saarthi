@@ -38,13 +38,15 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed z-50 grid w-full max-w-lg gap-4 bg-background p-6 shadow-lg duration-200 border sm:rounded-lg",
+        "fixed z-50 grid w-full gap-4 bg-background p-6 shadow-lg duration-200 border",
         // Mobile bottom sheet
-        "bottom-0 left-0 right-0 rounded-t-2xl sm:bottom-auto sm:left-[50%] sm:top-[50%] sm:translate-x-[-50%] sm:translate-y-[-50%]",
+        "bottom-0 left-0 right-0 rounded-t-2xl max-h-[90vh] overflow-y-auto sm:max-h-screen",
+        // Desktop side drawer
+        "sm:bottom-auto sm:left-auto sm:right-0 sm:top-0 sm:h-full sm:w-[400px] sm:max-w-[400px] sm:translate-x-0 sm:translate-y-0 sm:rounded-none sm:border-l sm:border-t-0 sm:border-b-0 sm:border-r-0",
         // Animations
         "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
         "data-[state=closed]:slide-out-to-bottom-[100%] data-[state=open]:slide-in-from-bottom-[100%]",
-        "sm:data-[state=closed]:zoom-out-95 sm:data-[state=open]:zoom-in-95 sm:data-[state=closed]:slide-out-to-left-1/2 sm:data-[state=closed]:slide-out-to-top-[48%] sm:data-[state=open]:slide-in-from-left-1/2 sm:data-[state=open]:slide-in-from-top-[48%]",
+        "sm:data-[state=closed]:slide-out-to-right-[100%] sm:data-[state=open]:slide-in-from-right-[100%]",
         className
       )}
       {...props}

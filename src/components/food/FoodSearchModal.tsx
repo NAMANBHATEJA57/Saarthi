@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Loader2, ChevronLeft, Plus } from "lucide-react";
+import { Search, Loader2, Plus } from "lucide-react";
+import { BackButton } from '@/components/shared/BackButton';
 
 interface FoodSearchModalProps {
   open: boolean;
@@ -190,12 +191,7 @@ export function FoodSearchModal({ open, onOpenChange, mealType, localDate, onSuc
         ) : recordDetails && (
           <div className="flex flex-col h-full">
             <div className="flex items-center p-4 border-b border-[hsl(var(--hairline))] shrink-0">
-              <button 
-                onClick={() => setSelectedRecordId(null)}
-                className="p-1.5 -ml-1.5 mr-2 rounded-md hover:bg-[hsl(var(--surface))] transition-colors"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
+              <BackButton onClick={() => setSelectedRecordId(null)} className="mr-3" />
               <DialogTitle className="text-lg font-semibold truncate pr-4">
                 {recordDetails.record.normalizedIdentity}
               </DialogTitle>

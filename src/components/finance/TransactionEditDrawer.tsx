@@ -157,7 +157,7 @@ export function TransactionEditDrawer({
               step="0.01"
               value={amount}
               onChange={e => setAmount(e.target.value)}
-              className="text-4xl font-bold bg-transparent border-none outline-none text-[hsl(var(--ink))] w-full min-w-0 placeholder:text-[hsl(var(--ink-muted))]"
+              className="text-4xl font-bold bg-transparent border-none outline-none focus:outline-none focus:ring-0 p-0 text-[hsl(var(--ink))] w-full min-w-0 placeholder:text-[hsl(var(--ink-muted))]"
               placeholder="0"
             />
           </div>

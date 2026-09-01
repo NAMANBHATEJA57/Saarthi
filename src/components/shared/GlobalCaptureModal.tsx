@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Apple, Scale, ChevronLeft, Dumbbell, IndianRupee, CheckSquare, StickyNote } from "lucide-react";
+import { Apple, Scale, Dumbbell, IndianRupee, CheckSquare, StickyNote } from "lucide-react";
+import { BackButton } from '@/components/shared/BackButton';
 import { WeightCaptureForm } from "../weight/WeightCaptureForm";
 import { RoutineEditor } from "../workout/RoutineEditor";
 import { TransactionCaptureForm } from "../finance/TransactionCaptureForm";
@@ -98,21 +99,17 @@ export function GlobalCaptureModal({ open, onOpenChange }: GlobalCaptureModalPro
           </div>
         ) : (
           <div className="flex flex-col h-full max-h-[85vh]">
-            <div className="flex items-center px-4 py-3 border-b border-[hsl(var(--hairline))]">
-              <button 
-                onClick={() => setActiveType("menu")}
-                className="p-2 -ml-2 rounded-full hover:bg-[hsl(var(--surface))] transition-colors"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <h2 className="text-base font-semibold ml-2">
-                {activeType === "note" && "New Note"}
-                {activeType === "task" && "New Task"}
-                {activeType === "weight" && "Log Weight"}
-                {activeType === "workout" && "New Workout Routine"}
-                {activeType === "finance" && "Log Transaction"}
-              </h2>
-            </div>
+            {activeType !== "finance" && (
+              <div className="flex items-center px-4 py-3 border-b border-[hsl(var(--hairline))]">
+                <BackButton onClick={() => setActiveType("menu")} className="mr-3" />
+                <h2 className="text-base font-semibold ml-2">
+                  {activeType === "note" && "New Note"}
+                  {activeType === "task" && "New Task"}
+                  {activeType === "weight" && "Log Weight"}
+                  {activeType === "workout" && "New Workout Routine"}
+                </h2>
+              </div>
+            )}
             
             <div className="p-6 overflow-y-auto">
               {activeType === "weight" && (
@@ -122,7 +119,9 @@ export function GlobalCaptureModal({ open, onOpenChange }: GlobalCaptureModalPro
                 <RoutineEditor onSuccess={handleSuccess} onCancel={() => handleOpenChange(false)} />
               )}
               {activeType === "finance" && (
-                <TransactionCaptureForm onSuccess={handleSuccess} onCancel={() => handleOpenChange(false)} />
+                <div className="-m-6">
+                  <TransactionCaptureForm onSuccess={handleSuccess} onCancel={() => handleOpenChange(false)} />
+                </div>
               )}
               {activeType === "task" && (
                 <TaskCaptureForm onSuccess={handleSuccess} onCancel={() => handleOpenChange(false)} />

@@ -6,7 +6,8 @@ import * as XLSX from 'xlsx';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Upload, ArrowLeft, ArrowRight, Save, Table as TableIcon } from 'lucide-react';
+import { Upload, ArrowRight, Save, Table as TableIcon } from 'lucide-react';
+import { BackButton } from '@/components/shared/BackButton';
 import { useRouter } from 'next/navigation';
 
 export function CSVImportFlow({ accounts, categories }: { accounts: any[], categories: any[] }) {
@@ -245,7 +246,7 @@ export function CSVImportFlow({ accounts, categories }: { accounts: any[], categ
     <div className="space-y-6">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-4">
-          <Button variant="utility" className="p-2" onClick={() => router.push('/finance')}><ArrowLeft className="w-5 h-5" /></Button>
+          <BackButton fallbackHref="/finance" />
           <div>
             <h1 className="text-2xl font-bold">Bulk Import</h1>
             <p className="text-[hsl(var(--ink-secondary))] text-sm">Step {step} of 3</p>

@@ -225,7 +225,7 @@ export function TransactionCaptureForm({
             step="0.01"
             value={amount}
             onChange={e => setAmount(e.target.value)}
-            className="text-4xl font-bold bg-transparent border-none outline-none text-[hsl(var(--ink))] w-full min-w-0 placeholder:text-[hsl(var(--ink-muted))]"
+            className="text-4xl font-bold bg-transparent border-none outline-none focus:outline-none focus:ring-0 p-0 text-[hsl(var(--ink))] w-full min-w-0 placeholder:text-[hsl(var(--ink-muted))]"
             placeholder="0.00"
             autoFocus
           />
@@ -238,17 +238,17 @@ export function TransactionCaptureForm({
           <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">
             {type === 'INCOME' ? 'Received Into' : type === 'CREDIT_CARD_PAYMENT' ? 'Pay From (Bank)' : 'Paid From'}
           </Label>
-          <select 
-            className="w-full h-11 px-3 py-2 rounded-xl border border-[hsl(var(--hairline))] bg-[hsl(var(--surface-elevated))] text-sm appearance-none"
-            value={accountId}
-            onChange={(e) => setAccountId(e.target.value)}
-            required
-          >
-            <option value="" disabled>Select account</option>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {sourceAccounts.map(a => (
-              <option key={a.id} value={a.id}>{a.name}{a.lastFour ? ` (••••${a.lastFour})` : ''}</option>
+              <div
+                key={a.id}
+                onClick={() => setAccountId(a.id)}
+                className={`p-2 border border-[hsl(var(--hairline))] rounded-lg text-center text-xs cursor-pointer transition-colors flex items-center justify-center ${accountId === a.id ? 'bg-[hsl(var(--primary))] text-white border-[hsl(var(--primary))]' : 'bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-elevated))]'}`}
+              >
+                {a.name}{a.lastFour ? ` (••••${a.lastFour})` : ''}
+              </div>
             ))}
-          </select>
+          </div>
         </div>
 
         {(type === 'TRANSFER' || type === 'CREDIT_CARD_PAYMENT') && (
@@ -312,7 +312,7 @@ export function TransactionCaptureForm({
           </div>
         )}
 
-        {type === 'EXPENSE' && savingsGoals.length > 0 && (
+        {type === 'EXPENSE' && savingsGoals.length > 0 && accounts.find(a => a.id === accountId)?.type !== 'CREDIT_CARD' && (
           <div className="space-y-1.5">
             <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold flex justify-between">
               <span>Spend from Fund <span className="font-normal">(Optional)</span></span>

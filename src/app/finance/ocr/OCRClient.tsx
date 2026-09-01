@@ -6,7 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Upload, Trash, FileText } from 'lucide-react';
+import { Upload, Trash, FileText } from 'lucide-react';
+import { BackButton } from '@/components/shared/BackButton';
 
 export function OCRClient({ accounts, categories }: { accounts: any[], categories: any[] }) {
   const router = useRouter();
@@ -68,7 +69,7 @@ export function OCRClient({ accounts, categories }: { accounts: any[], categorie
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4 mb-4">
-        <Button variant="utility" className="p-2" onClick={() => router.push('/finance')}><ArrowLeft className="w-5 h-5" /></Button>
+        <BackButton fallbackHref="/finance" />
         <div>
           <h1 className="text-2xl font-bold">Receipt Scanner</h1>
           <p className="text-[hsl(var(--ink-secondary))] text-sm">Upload a PDF statement to extract transactions automatically.</p>

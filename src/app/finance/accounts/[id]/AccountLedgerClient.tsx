@@ -3,7 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, Landmark, CreditCard } from 'lucide-react';
+import { Landmark, CreditCard } from 'lucide-react';
+import { BackButton } from '@/components/shared/BackButton';
 import { TransactionHistory } from '@/components/finance/TransactionHistory';
 
 export function AccountLedgerClient({ account }: { account: any }) {
@@ -14,9 +15,7 @@ export function AccountLedgerClient({ account }: { account: any }) {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <Button variant="utility" onClick={() => router.back()} className="h-8 w-8 p-0 rounded-full">
-          <ChevronLeft className="w-5 h-5" />
-        </Button>
+        <BackButton fallbackHref="/finance" />
         <div>
           <h1 className="text-xl font-bold tracking-tight">{account.name}</h1>
           <p className="text-xs text-[hsl(var(--ink-secondary))]">{account.lastFour ? `•••• ${account.lastFour}` : 'Account Ledger'}</p>
