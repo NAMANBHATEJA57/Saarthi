@@ -109,7 +109,7 @@ export function TransactionHistory({
           </div>
           <div>
             <p className="font-medium text-[15px] leading-tight text-[hsl(var(--ink))]">
-              {tx.originalDescription || tx.remark || (tx.categoryId ? 'Categorized' : subtitle)}
+              {tx.merchant || tx.description || (tx.categoryId ? 'Categorized' : subtitle)}
             </p>
             <p className="text-[11px] text-[hsl(var(--ink-secondary))] mt-0.5 uppercase tracking-wider font-semibold">
               {subtitle}
@@ -118,7 +118,7 @@ export function TransactionHistory({
         </div>
         <div className="text-right">
           <div className={`font-semibold text-[15px] ${colorClass}`}>
-            {prefix}₹{(tx.amountMinor / 100).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
+            {prefix}₹{(tx.amount || 0).toLocaleString()}
           </div>
         </div>
       </div>

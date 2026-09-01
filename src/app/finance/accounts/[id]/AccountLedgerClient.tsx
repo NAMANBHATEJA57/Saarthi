@@ -34,19 +34,19 @@ export function AccountLedgerClient({ account }: { account: any }) {
                 {isCC ? 'Current Outstanding' : 'Available Balance'}
               </p>
               <p className={`text-3xl font-bold ${isCC ? 'text-[hsl(var(--destructive))]' : 'text-[hsl(var(--success))]'}`}>
-                ₹{account.balanceMinor.toLocaleString()}
+                ₹{(account.balance || 0).toLocaleString()}
               </p>
             </div>
           </div>
           
-          {isCC && account.creditLimitMinor && (
+          {isCC && account.creditLimit && (
             <div className="bg-[hsl(var(--canvas))] p-4 rounded-lg border border-[hsl(var(--hairline))]">
               <p className="text-[11px] font-semibold text-[hsl(var(--ink-secondary))] uppercase tracking-wider mb-1">Credit Limit</p>
-              <p className="text-lg font-medium">₹{account.creditLimitMinor.toLocaleString()}</p>
+              <p className="text-lg font-medium">₹{account.creditLimit.toLocaleString()}</p>
               <div className="h-1.5 w-full bg-[hsl(var(--surface-elevated))] rounded-full mt-2 overflow-hidden">
                 <div 
                   className="h-full bg-[hsl(var(--destructive))]" 
-                  style={{ width: `${Math.min(100, (account.balanceMinor / account.creditLimitMinor) * 100)}%` }}
+                  style={{ width: `${Math.min(100, ((account.balance || 0) / account.creditLimit) * 100)}%` }}
                 />
               </div>
             </div>

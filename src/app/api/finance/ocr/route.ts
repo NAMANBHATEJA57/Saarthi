@@ -41,14 +41,14 @@ export async function POST(req: NextRequest) {
         const amountStr = amountMatch[1].replace(/,/g, '');
         const type = (amountMatch[2] && amountMatch[2].toLowerCase() === 'cr') ? 'INCOME' : 'EXPENSE';
         
-        const remark = line.substring(dateMatch[0].length, line.lastIndexOf(amountMatch[0])).trim();
+        const description = line.substring(dateMatch[0].length, line.lastIndexOf(amountMatch[0])).trim();
         
         transactions.push({
           id: Math.random().toString(36).substring(7),
           date: new Date().toISOString().split('T')[0], // Use current date as fallback or parse dateStr ideally
           originalDateString: dateStr,
-          remark,
-          amountMinor: Math.round(parseFloat(amountStr)),
+          description,
+          amount: Math.round(parseFloat(amountStr)),
           type,
           selected: true
         });
