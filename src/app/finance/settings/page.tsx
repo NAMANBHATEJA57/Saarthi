@@ -70,7 +70,7 @@ export default async function SettingsPage() {
                 {savingsGoals.map(g => (
                   <div key={g.id} className="flex justify-between items-center p-3 border border-[hsl(var(--hairline))] rounded-lg">
                     <span className="font-medium">{g.name}</span>
-                    <span className="text-[hsl(var(--ink-muted))]">₹{g.targetAmount.toLocaleString()} target</span>
+                    <span className="text-[hsl(var(--ink-muted))]">₹{(g.ultimateTargetAmount || 0).toLocaleString()} target</span>
                   </div>
                 ))}
               </div>
