@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Papa from 'papaparse';
+import * as XLSX from 'xlsx';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -13,6 +14,7 @@ export function CSVImportFlow({ accounts, categories }: { accounts: any[], categ
   
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [file, setFile] = useState<File | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
   
   // Parsed raw data
   const [headers, setHeaders] = useState<string[]>([]);
@@ -29,37 +31,87 @@ export function CSVImportFlow({ accounts, categories }: { accounts: any[], categ
   const [selectedAccountId, setSelectedAccountId] = useState(accounts[0]?.id || '');
   const [loading, setLoading] = useState(false);
 
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      processFile(e.dataTransfer.files[0]);
+    }
+  };
+
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const uploadedFile = e.target.files?.[0];
     if (!uploadedFile) return;
+    processFile(uploadedFile);
+  };
+
+  const processFile = async (uploadedFile: File) => {
     setFile(uploadedFile);
     
-    Papa.parse(uploadedFile, {
-      header: true,
-      skipEmptyLines: true,
-      complete: (results) => {
-        if (results.meta.fields) {
-          setHeaders(results.meta.fields);
-          
-          // Auto-guess columns
-          const lowerFields = results.meta.fields.map(f => f.toLowerCase());
-          const guessField = (keywords: string[]) => {
-            return results.meta.fields?.find(f => keywords.some(k => f.toLowerCase().includes(k))) || '';
-          };
-          
-          setMapDate(guessField(['date', 'time']));
-          setMapAmount(guessField(['amount', 'value', 'price']));
-          setMapDescription(guessField(['description', 'merchant', 'details', 'payee', 'name']));
-          setMapType(guessField(['type', 'cr/dr', 'category']));
+    if (uploadedFile.name.toLowerCase().endsWith('.csv')) {
+      Papa.parse(uploadedFile, {
+        header: true,
+        skipEmptyLines: true,
+        complete: (results) => {
+          if (results.meta.fields) {
+            setupHeadersAndRows(results.meta.fields, results.data);
+          }
+        },
+        error: (err) => {
+          console.error("CSV Parse Error:", err);
+          alert("Failed to parse CSV file.");
         }
-        setRows(results.data.slice(0, 500)); // Limit to first 500 for safety
-        setStep(2);
-      },
-      error: (err) => {
-        console.error("CSV Parse Error:", err);
-        alert("Failed to parse CSV file.");
+      });
+    } else if (uploadedFile.name.match(/\.xlsx?$/i)) {
+      try {
+        const buffer = await uploadedFile.arrayBuffer();
+        const workbook = XLSX.read(buffer, { type: 'array' });
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        
+        // Convert sheet to JSON array of objects
+        const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+        
+        if (jsonData.length > 0) {
+          const excelHeaders = Object.keys(jsonData[0] as object);
+          setupHeadersAndRows(excelHeaders, jsonData);
+        } else {
+          alert("Excel file appears to be empty.");
+        }
+      } catch (err) {
+        console.error("Excel Parse Error:", err);
+        alert("Failed to parse Excel file.");
       }
-    });
+    } else {
+      alert("Unsupported file format. Please upload a .csv, .xls, or .xlsx file.");
+    }
+  };
+
+  const setupHeadersAndRows = (fields: string[], data: any[]) => {
+    setHeaders(fields);
+    
+    // Auto-guess columns
+    const guessField = (keywords: string[]) => {
+      return fields.find(f => keywords.some(k => f.toLowerCase().includes(k))) || '';
+    };
+    
+    setMapDate(guessField(['date', 'time', 'txn date']));
+    setMapAmount(guessField(['amount', 'value', 'price', 'withdrawal', 'deposit']));
+    setMapDescription(guessField(['description', 'merchant', 'details', 'payee', 'name', 'particulars', 'narration']));
+    setMapType(guessField(['type', 'cr/dr', 'category']));
+    
+    setRows(data.slice(0, 500)); // Limit to first 500 for safety
+    setStep(2);
   };
 
   const parseAmount = (val: string) => {
@@ -160,23 +212,28 @@ export function CSVImportFlow({ accounts, categories }: { accounts: any[], categ
       </div>
 
       {step === 1 && (
-        <Card className="border-dashed border-2 border-[hsl(var(--hairline))] bg-transparent">
+        <Card 
+          className={`border-dashed border-2 bg-transparent transition-colors ${isDragging ? 'border-[hsl(var(--ink))] bg-[hsl(var(--ink-muted))]' : 'border-[hsl(var(--hairline))]'}`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
           <CardContent className="flex flex-col items-center justify-center p-12 text-center space-y-4">
-            <div className="w-16 h-16 bg-[hsl(var(--surface-elevated))] rounded-full flex items-center justify-center">
-              <TableIcon className="w-8 h-8 text-[hsl(var(--ink-muted))]" />
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center transition-colors ${isDragging ? 'bg-[hsl(var(--ink))]' : 'bg-[hsl(var(--surface-elevated))]'}`}>
+              <TableIcon className={`w-8 h-8 ${isDragging ? 'text-[hsl(var(--canvas))]' : 'text-[hsl(var(--ink-muted))]'}`} />
             </div>
             <div className="space-y-1">
-              <h3 className="font-semibold text-lg">Upload CSV</h3>
+              <h3 className="font-semibold text-lg">Upload CSV or Excel</h3>
               <p className="text-sm text-[hsl(var(--ink-secondary))] max-w-sm">
-                Upload your bank statement. You'll be able to map columns and review transactions before importing.
+                Drag and drop your bank statement here, or click below. Supports .csv, .xls, and .xlsx files.
               </p>
             </div>
             <Label htmlFor="csv-upload" className="cursor-pointer">
               <div className="inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-[hsl(var(--ink))] text-[hsl(var(--canvas))] shadow hover:bg-[hsl(var(--ink-muted))] h-10 px-4 py-2 mt-4 gap-2">
-                <Upload className="w-4 h-4" /> Select CSV File
+                <Upload className="w-4 h-4" /> Select File
               </div>
             </Label>
-            <input id="csv-upload" type="file" accept=".csv" className="hidden" onChange={handleFileUpload} />
+            <input id="csv-upload" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" className="hidden" onChange={handleFileUpload} />
           </CardContent>
         </Card>
       )}
