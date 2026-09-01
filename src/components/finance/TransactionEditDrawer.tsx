@@ -164,7 +164,7 @@ export function TransactionEditDrawer({
         </div>
 
         {/* Form body */}
-        <form onSubmit={handleSave} className="p-6 space-y-5">
+        <form onSubmit={handleSave} className="p-6 space-y-5 max-h-[60vh] overflow-y-auto custom-scrollbar">
           
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
