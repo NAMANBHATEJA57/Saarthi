@@ -9,7 +9,7 @@ import { TransactionFilters } from '@/components/finance/TransactionFilters';
 import { TransactionHistory } from '@/components/finance/TransactionHistory';
 import { TransactionEditDrawer } from '@/components/finance/TransactionEditDrawer';
 
-export function TransactionsClient({ accounts, categories, incomeTypes }: { accounts: any[], categories: any[], incomeTypes: any[] }) {
+export function TransactionsClient({ accounts, categories, incomeTypes, savingsGoals }: { accounts: any[], categories: any[], incomeTypes: any[], savingsGoals: any[] }) {
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState({
     type: 'all',
@@ -18,8 +18,6 @@ export function TransactionsClient({ accounts, categories, incomeTypes }: { acco
     startDate: '',
     endDate: ''
   });
-  
-  const [savingsGoals, setSavingsGoals] = useState<any[]>([]);
   
   const [transactions, setTransactions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -58,7 +56,6 @@ export function TransactionsClient({ accounts, categories, incomeTypes }: { acco
   };
 
   useEffect(() => {
-    fetch('/api/finance/savings-goals').then(r => r.json()).then(d => { if (d.savingsGoals) setSavingsGoals(d.savingsGoals); });
     setPage(0);
     fetchTransactions(true);
   }, [search, filters]);

@@ -54,8 +54,8 @@ export function IncomeAlignmentCard({ expectedMonthlyIncome, savingsGoals, curre
           <CardContent className="p-0">
             <div className="divide-y divide-[hsl(var(--hairline))]">
               {savingsGoals.map(g => {
-                const target = g.targetPercentage ? (expectedMonthlyIncome * (g.targetPercentage / 100)) : (g.ultimateTargetAmount || 0);
-                const spent = spentByGoal[g.id] || 0;
+                const target = Math.round(g.targetPercentage ? (expectedMonthlyIncome * (g.targetPercentage / 100)) : (g.ultimateTargetAmount || 0));
+                const spent = Math.round(spentByGoal[g.id] || 0);
                 const remaining = target - spent;
                 
                 return (
@@ -86,7 +86,7 @@ export function IncomeAlignmentCard({ expectedMonthlyIncome, savingsGoals, curre
                   <Wallet className="w-4 h-4 text-[hsl(var(--ink-muted))]" />
                   <span>Leftover for Spending</span>
                 </div>
-                <span>₹{leftoverBudget.toLocaleString()}</span>
+                <span>₹{Math.round(leftoverBudget).toLocaleString()}</span>
               </div>
             </div>
           </CardContent>
