@@ -277,19 +277,19 @@ export function TransactionCaptureForm({
       )}
 
       <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label>Date</Label>
-          <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} required className="h-10 bg-[hsl(var(--canvas))]" />
+        <div className="space-y-1.5">
+          <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Merchant</Label>
+          <Input type="text" value={merchant} onChange={(e) => setMerchant(e.target.value)} placeholder="e.g. Swiggy" className="bg-[hsl(var(--canvas))] border-[hsl(var(--hairline))] h-10" />
         </div>
-        <div className="space-y-2">
-          <Label>Merchant</Label>
-          <Input type="text" value={merchant} onChange={(e) => setMerchant(e.target.value)} placeholder="Optional" className="h-10 bg-[hsl(var(--canvas))]" />
+        <div className="space-y-1.5">
+          <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Date</Label>
+          <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} required className="bg-[hsl(var(--canvas))] border-[hsl(var(--hairline))] h-10" />
         </div>
       </div>
       
-      <div className="space-y-2">
-        <Label>Description / Note</Label>
-        <Input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Optional" className="h-10 bg-[hsl(var(--canvas))]" />
+      <div className="space-y-1.5">
+        <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Description / Note</Label>
+        <Input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="e.g. Salary, Amazon" className="bg-[hsl(var(--canvas))] border-[hsl(var(--hairline))] h-10" />
       </div>
 
       {error && <div className="text-[hsl(var(--destructive))] text-sm font-medium">{error}</div>}
