@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
           date: new Date().toISOString().split('T')[0], // Use current date as fallback or parse dateStr ideally
           originalDateString: dateStr,
           description,
-          amount: Math.round(parseFloat(amountStr)),
+          amount: parseFloat(amountStr),
           type,
           selected: true
         });

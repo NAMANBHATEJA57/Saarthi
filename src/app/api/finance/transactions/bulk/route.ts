@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
       userId,
       accountId: tx.accountId,
       type: tx.type,
-      amount: Math.round(Number(tx.amount)),
+      amount: Number(tx.amount),
       description: tx.description || 'Imported Transaction',
       transactionDate: tx.transactionDate,
       categoryId: tx.categoryId || null,

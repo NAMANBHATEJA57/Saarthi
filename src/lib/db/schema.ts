@@ -11,6 +11,7 @@ import {
   numeric,
   boolean,
   date,
+  doublePrecision,
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 import type { AdapterAccountType } from 'next-auth/adapters';
@@ -443,7 +444,7 @@ export const financeTransactions = pgTable('finance_transactions', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
   type: text('type').notNull(), // 'INCOME', 'EXPENSE', 'TRANSFER', 'CREDIT_CARD_PAYMENT'
-  amount: integer('amount').notNull(),
+  amount: doublePrecision('amount').notNull(),
   currencyCode: text('currency_code').notNull(),
   transactionDate: date('transaction_date', { mode: 'string' }).notNull(), // YYYY-MM-DD
   
@@ -484,10 +485,10 @@ export const financeSavingsGoals = pgTable('finance_savings_goals', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
   name: text('name').notNull(),
-  ultimateTargetAmount: integer('ultimate_target_amount'),
+  ultimateTargetAmount: doublePrecision('ultimate_target_amount'),
   accountId: uuid('account_id').references(() => financeAccounts.id),
-  monthlyTargetAmount: integer('monthly_target_amount'),
-  currentSavedAmount: integer('current_saved_amount').default(0).notNull(),
+  monthlyTargetAmount: doublePrecision('monthly_target_amount'),
+  currentSavedAmount: doublePrecision('current_saved_amount').default(0).notNull(),
   isActive: boolean('is_active').default(true).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
@@ -496,7 +497,7 @@ export const financeSavingsGoals = pgTable('finance_savings_goals', {
 export const financeMonthlyPlanItems = pgTable('finance_monthly_plan_items', {
   id: uuid('id').primaryKey().defaultRandom(),
   planId: uuid('plan_id').notNull().references(() => financeMonthlyPlans.id, { onDelete: 'cascade' }),
-  amount: integer('amount').notNull(),
+  amount: doublePrecision('amount').notNull(),
   expenseCategoryId: uuid('expense_category_id').references(() => financeCategories.id), // for spending allocations
   savingsGoalId: uuid('savings_goal_id').references(() => financeSavingsGoals.id), // for savings allocations
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
