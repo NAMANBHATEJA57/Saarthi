@@ -23,6 +23,7 @@ export function TransactionEditDrawer({
   accounts, 
   categories,
   incomeTypes,
+  savingsGoals = [],
   onSaved
 }: { 
   open: boolean; 
@@ -31,6 +32,7 @@ export function TransactionEditDrawer({
   accounts: any[];
   categories: any[];
   incomeTypes: any[];
+  savingsGoals?: any[];
   onSaved: () => void;
 }) {
   const [description, setDescription] = useState("");
@@ -39,6 +41,7 @@ export function TransactionEditDrawer({
   const [date, setDate] = useState("");
   const [categoryId, setCategoryId] = useState("none");
   const [incomeTypeId, setIncomeTypeId] = useState("none");
+  const [savingsGoalId, setSavingsGoalId] = useState("none");
   const [accountId, setAccountId] = useState("none");
   const [destinationAccountId, setDestinationAccountId] = useState("none");
   const [type, setType] = useState("EXPENSE");
@@ -54,6 +57,7 @@ export function TransactionEditDrawer({
       setDate(transaction.transactionDate || "");
       setCategoryId(transaction.categoryId || "none");
       setIncomeTypeId(transaction.incomeTypeId || "none");
+      setSavingsGoalId(transaction.savingsGoalId || "none");
       setAccountId(transaction.accountId || "none");
       setDestinationAccountId(transaction.destinationAccountId || "none");
       setType(transaction.type || "EXPENSE");
@@ -80,6 +84,7 @@ export function TransactionEditDrawer({
           transactionDate: date,
           categoryId: categoryId === 'none' ? null : categoryId,
           incomeTypeId: incomeTypeId === 'none' ? null : incomeTypeId,
+          savingsGoalId: savingsGoalId === 'none' ? null : savingsGoalId,
           accountId: accountId === 'none' ? null : accountId,
           destinationAccountId: destinationAccountId === 'none' ? null : destinationAccountId,
           type,
@@ -244,6 +249,20 @@ export function TransactionEditDrawer({
                   ))}
                 </SelectContent>
               </Select>
+            </div>
+          )}
+
+          {type === 'EXPENSE' && savingsGoals.length > 0 && (
+            <div className="space-y-1.5">
+              <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Spend from Fund (Optional)</Label>
+              <select 
+                className="w-full h-11 px-3 py-2 rounded-xl border border-[hsl(var(--hairline))] bg-[hsl(var(--surface-elevated))] text-sm appearance-none"
+                value={savingsGoalId}
+                onChange={e => setSavingsGoalId(e.target.value)}
+              >
+                <option value="none">No fund</option>
+                {savingsGoals.map((c: any) => <option key={c.id} value={c.id}>{c.name}</option>)}
+              </select>
             </div>
           )}
 

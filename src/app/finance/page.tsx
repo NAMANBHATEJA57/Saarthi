@@ -2,7 +2,7 @@ import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 import { getMonthlySummary, getAccountBalances } from '@/lib/finance/service';
 import { db } from '@/lib/db';
-import { financeIncomeTypes, financeSavingsGoals } from '@/lib/db/schema';
+import { financeIncomeTypes, financeSavingsGoals, users } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 import FinanceClient from './FinanceClient';
 
@@ -18,6 +18,7 @@ export default async function FinancePage({ searchParams }: { searchParams: Prom
   
   const incomeTypes = await db.select().from(financeIncomeTypes).where(and(eq(financeIncomeTypes.userId, session.user.id), eq(financeIncomeTypes.isActive, true))).orderBy(financeIncomeTypes.sortOrder);
   const savingsGoals = await db.select().from(financeSavingsGoals).where(and(eq(financeSavingsGoals.userId, session.user.id), eq(financeSavingsGoals.isActive, true)));
+  const userRecord = await db.select().from(users).where(eq(users.id, session.user.id)).limit(1);
 
-  return <FinanceClient initialSummary={summary} initialAccountBalances={accountBalances} currentMonth={month} incomeTypes={incomeTypes} savingsGoals={savingsGoals} />;
+  return <FinanceClient initialSummary={summary} initialAccountBalances={accountBalances} currentMonth={month} incomeTypes={incomeTypes} savingsGoals={savingsGoals} expectedMonthlyIncome={userRecord[0]?.expectedMonthlyIncome || 0} />;
 }

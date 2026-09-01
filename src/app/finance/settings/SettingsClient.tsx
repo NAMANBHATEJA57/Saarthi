@@ -10,10 +10,12 @@ import { Plus, Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export function SettingsClient({ 
+  initialExpectedIncome,
   initialCategories, 
   initialIncomeTypes, 
   initialSavingsGoals 
 }: { 
+  initialExpectedIncome: number,
   initialCategories: any[], 
   initialIncomeTypes: any[], 
   initialSavingsGoals: any[] 
@@ -23,6 +25,9 @@ export function SettingsClient({
   const [categories, setCategories] = useState(initialCategories);
   const [incomeTypes, setIncomeTypes] = useState(initialIncomeTypes);
   const [savingsGoals, setSavingsGoals] = useState(initialSavingsGoals);
+  
+  const [globalExpectedIncome, setGlobalExpectedIncome] = useState(initialExpectedIncome.toString());
+  const [isUpdatingIncome, setIsUpdatingIncome] = useState(false);
 
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isIncomeTypeOpen, setIsIncomeTypeOpen] = useState(false);
@@ -37,15 +42,13 @@ export function SettingsClient({
   
   const [loading, setLoading] = useState(false);
 
-  // Bi-directional sync logic
+  // Bi-directional sync logic using Global Expected Income
   const handleAmountChange = (val: string) => {
     setTargetAmount(val);
-    if (linkedIncomeId && val) {
-      const inc = incomeTypes.find(i => i.id === linkedIncomeId);
-      if (inc && inc.expectedAmount) {
-        const perc = (parseFloat(val) / inc.expectedAmount) * 100;
-        setTargetPercentage(perc.toFixed(2));
-      }
+    const globalIncome = parseFloat(globalExpectedIncome) || 0;
+    if (globalIncome > 0 && val) {
+      const perc = (parseFloat(val) / globalIncome) * 100;
+      setTargetPercentage(perc.toFixed(2));
     } else {
       setTargetPercentage('');
     }
@@ -53,28 +56,16 @@ export function SettingsClient({
 
   const handlePercentageChange = (val: string) => {
     setTargetPercentage(val);
-    if (linkedIncomeId && val) {
-      const inc = incomeTypes.find(i => i.id === linkedIncomeId);
-      if (inc && inc.expectedAmount) {
-        const amt = (parseFloat(val) / 100) * inc.expectedAmount;
-        setTargetAmount(amt.toFixed(0));
-      }
+    const globalIncome = parseFloat(globalExpectedIncome) || 0;
+    if (globalIncome > 0 && val) {
+      const amt = (parseFloat(val) / 100) * globalIncome;
+      setTargetAmount(amt.toFixed(0));
     } else {
       setTargetAmount('');
     }
   };
 
-  const handleIncomeSelect = (val: string) => {
-    setLinkedIncomeId(val);
-    // Recalculate amount or percentage if one exists
-    if (val) {
-      const inc = incomeTypes.find(i => i.id === val);
-      if (inc && inc.expectedAmount && targetPercentage) {
-        const amt = (parseFloat(targetPercentage) / 100) * inc.expectedAmount;
-        setTargetAmount(amt.toFixed(0));
-      }
-    }
-  };
+
 
   const handleCreateCategory = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -177,8 +168,48 @@ export function SettingsClient({
     }
   };
 
+  const handleUpdateGlobalIncome = async () => {
+    if (isNaN(parseFloat(globalExpectedIncome))) return;
+    setIsUpdatingIncome(true);
+    try {
+      await fetch('/api/finance/settings', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ expectedMonthlyIncome: parseFloat(globalExpectedIncome) })
+      });
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsUpdatingIncome(false);
+    }
+  };
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
+      {/* GLOBAL INCOME SETTINGS */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Global Expected Monthly Income</CardTitle>
+          <p className="text-sm text-[hsl(var(--ink-secondary))]">This serves as the base pool of money for your Savings Goals and Income Alignment.</p>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center gap-3 max-w-sm">
+            <span className="text-lg text-[hsl(var(--ink-muted))]">₹</span>
+            <Input 
+              type="number" 
+              step="0.01" 
+              value={globalExpectedIncome} 
+              onChange={e => setGlobalExpectedIncome(e.target.value)} 
+              placeholder="e.g. 53000"
+              className="text-lg font-medium"
+            />
+            <Button variant="primary" onClick={handleUpdateGlobalIncome} disabled={isUpdatingIncome}>
+              {isUpdatingIncome ? 'Saving...' : 'Save'}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
       <div className="grid md:grid-cols-2 gap-6">
         
         {/* Expense Categories */}
@@ -302,25 +333,12 @@ export function SettingsClient({
               <Label>Name</Label>
               <Input autoFocus value={newName} onChange={e => setNewName(e.target.value)} placeholder="e.g. Emergency Fund" required />
             </div>
-            <div className="space-y-2">
-              <Label>Link Income Source (optional)</Label>
-              <select 
-                className="w-full p-2 rounded-md border border-[hsl(var(--hairline))] bg-[hsl(var(--canvas))] text-sm"
-                value={linkedIncomeId} 
-                onChange={e => handleIncomeSelect(e.target.value)}
-              >
-                <option value="">-- No linked income --</option>
-                {incomeTypes.map(inc => (
-                  <option key={inc.id} value={inc.id}>{inc.name} {inc.expectedAmount ? `(₹${inc.expectedAmount})` : '(No expected amount)'}</option>
-                ))}
-              </select>
-            </div>
             <div className="flex gap-4">
               <div className="space-y-2 flex-1">
                 <Label>Target Amount (₹)</Label>
                 <Input type="number" step="0.01" value={targetAmount} onChange={e => handleAmountChange(e.target.value)} placeholder="50000" required />
               </div>
-              {linkedIncomeId && incomeTypes.find(i => i.id === linkedIncomeId)?.expectedAmount && (
+              {(parseFloat(globalExpectedIncome) > 0) && (
                 <div className="space-y-2 flex-1">
                   <Label>Percentage (%)</Label>
                   <Input type="number" step="0.01" value={targetPercentage} onChange={e => handlePercentageChange(e.target.value)} placeholder="20" />

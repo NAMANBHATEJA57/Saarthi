@@ -26,6 +26,7 @@ export const users = pgTable('users', {
   email: text('email').unique(),
   emailVerified: timestamp('email_verified', { mode: 'date' }),
   image: text('image'),
+  expectedMonthlyIncome: doublePrecision('expected_monthly_income').default(0),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 });
@@ -455,6 +456,7 @@ export const financeTransactions = pgTable('finance_transactions', {
   
   categoryId: uuid('category_id').references(() => financeCategories.id),
   incomeTypeId: uuid('income_type_id').references(() => financeIncomeTypes.id),
+  savingsGoalId: uuid('savings_goal_id').references(() => financeSavingsGoals.id),
   
   description: text('description'),
   merchant: text('merchant'),

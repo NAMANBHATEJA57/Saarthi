@@ -15,7 +15,7 @@ export async function PATCH(
   try {
     const { id } = await params;
     const body = await req.json();
-    const { type, amount, categoryId, incomeTypeId, accountId, destinationAccountId, externalRecipientName, description, merchant, notes, transactionDate } = body;
+    const { type, amount, categoryId, incomeTypeId, savingsGoalId, accountId, destinationAccountId, externalRecipientName, description, merchant, notes, transactionDate } = body;
 
     if (!type || !amount || !transactionDate || amount <= 0) {
       return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
@@ -24,23 +24,27 @@ export async function PATCH(
     const existingTx = await db.select().from(financeTransactions).where(and(eq(financeTransactions.id, id), eq(financeTransactions.userId, userId)));
     if (existingTx.length === 0) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
+    const currencyCode = 'INR';
+
     const [updatedTx] = await db
       .update(financeTransactions)
       .set({
         type,
         amount,
+        currencyCode,
         transactionDate,
-        categoryId: categoryId || null,
-        incomeTypeId: incomeTypeId || null,
         accountId: accountId || null,
         destinationAccountId: destinationAccountId || null,
         externalRecipientName: externalRecipientName || null,
+        categoryId: categoryId || null,
+        incomeTypeId: incomeTypeId || null,
+        savingsGoalId: savingsGoalId || null,
         description: description || null,
         merchant: merchant || null,
         notes: notes || null,
         updatedAt: new Date(),
       })
-      .where(eq(financeTransactions.id, id))
+      .where(and(eq(financeTransactions.id, id), eq(financeTransactions.userId, userId)))
       .returning();
 
     return NextResponse.json({ transaction: updatedTx });

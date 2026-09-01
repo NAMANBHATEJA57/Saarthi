@@ -19,6 +19,7 @@ export function TransactionCaptureForm({
   const [amount, setAmount] = useState<string>('');
   const [categoryId, setCategoryId] = useState<string>('');
   const [incomeTypeId, setIncomeTypeId] = useState<string>('');
+  const [savingsGoalId, setSavingsGoalId] = useState<string>('');
   const [accountId, setAccountId] = useState<string>('');
   const [destinationAccountId, setDestinationAccountId] = useState<string>('');
   const [description, setDescription] = useState<string>('');
@@ -27,6 +28,7 @@ export function TransactionCaptureForm({
   
   const [categories, setCategories] = useState<any[]>([]);
   const [incomeTypes, setIncomeTypes] = useState<any[]>([]);
+  const [savingsGoals, setSavingsGoals] = useState<any[]>([]);
   const [accounts, setAccounts] = useState<any[]>([]);
   
   const [loading, setLoading] = useState(false);
@@ -40,6 +42,7 @@ export function TransactionCaptureForm({
   useEffect(() => {
     fetch('/api/finance/categories').then(r => r.json()).then(d => { if (d.categories) setCategories(d.categories); });
     fetch('/api/finance/income-types').then(r => r.json()).then(d => { if (d.incomeTypes) setIncomeTypes(d.incomeTypes); });
+    fetch('/api/finance/savings-goals').then(r => r.json()).then(d => { if (d.savingsGoals) setSavingsGoals(d.savingsGoals); });
       
     fetch('/api/finance/accounts')
       .then(r => r.json())
@@ -97,6 +100,7 @@ export function TransactionCaptureForm({
           amount: amountParsed,
           categoryId: type === 'EXPENSE' ? categoryId : undefined,
           incomeTypeId: type === 'INCOME' ? incomeTypeId : undefined,
+          savingsGoalId: type === 'EXPENSE' ? (savingsGoalId || undefined) : undefined,
           accountId,
           destinationAccountId: (type === 'TRANSFER' || type === 'CREDIT_CARD_PAYMENT') ? destinationAccountId : undefined,
           description,
@@ -273,6 +277,28 @@ export function TransactionCaptureForm({
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {type === 'EXPENSE' && savingsGoals.length > 0 && (
+        <div className="space-y-2">
+          <Label className="flex justify-between">
+            <span>Spend from Fund <span className="text-[hsl(var(--ink-secondary))] font-normal">(Optional)</span></span>
+            {savingsGoalId && (
+              <span className="text-xs text-[hsl(var(--destructive))] font-normal cursor-pointer" onClick={() => setSavingsGoalId('')}>Clear</span>
+            )}
+          </Label>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-40 overflow-y-auto p-1 custom-scrollbar">
+            {savingsGoals.map(sg => (
+              <div
+                key={sg.id}
+                onClick={() => setSavingsGoalId(sg.id === savingsGoalId ? '' : sg.id)}
+                className={`p-2 border border-[hsl(var(--hairline))] rounded-md text-center text-xs cursor-pointer transition-colors ${savingsGoalId === sg.id ? 'bg-[hsl(var(--primary))] text-white border-[hsl(var(--primary))]' : 'bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-elevated))]'}`}
+              >
+                {sg.name}
+              </div>
+            ))}
+          </div>
         </div>
       )}
 

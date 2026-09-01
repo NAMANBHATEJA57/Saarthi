@@ -1,8 +1,8 @@
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
-import { financeCategories, financeIncomeTypes, financeSavingsGoals } from '@/lib/db/schema';
-import { eq, desc } from 'drizzle-orm';
+import { financeCategories, financeIncomeTypes, financeSavingsGoals, users } from '@/lib/db/schema';
+import { eq, desc, and } from 'drizzle-orm';
 import { SettingsClient } from './SettingsClient';
 
 export default async function SettingsPage() {
@@ -10,10 +10,11 @@ export default async function SettingsPage() {
   if (!session?.user?.id) redirect('/login');
   const userId = session.user.id;
 
-  const [categories, incomeTypes, savingsGoals] = await Promise.all([
-    db.select().from(financeCategories).where(eq(financeCategories.userId, userId)).orderBy(desc(financeCategories.sortOrder)),
-    db.select().from(financeIncomeTypes).where(eq(financeIncomeTypes.userId, userId)).orderBy(desc(financeIncomeTypes.sortOrder)),
-    db.select().from(financeSavingsGoals).where(eq(financeSavingsGoals.userId, userId)).orderBy(desc(financeSavingsGoals.createdAt)),
+  const [categories, incomeTypes, savingsGoals, userRecord] = await Promise.all([
+    db.select().from(financeCategories).where(and(eq(financeCategories.userId, userId), eq(financeCategories.isActive, true))).orderBy(desc(financeCategories.sortOrder)),
+    db.select().from(financeIncomeTypes).where(and(eq(financeIncomeTypes.userId, userId), eq(financeIncomeTypes.isActive, true))).orderBy(desc(financeIncomeTypes.sortOrder)),
+    db.select().from(financeSavingsGoals).where(and(eq(financeSavingsGoals.userId, userId), eq(financeSavingsGoals.isActive, true))).orderBy(desc(financeSavingsGoals.createdAt)),
+    db.select().from(users).where(eq(users.id, userId)).limit(1),
   ]);
 
   return (
@@ -24,6 +25,7 @@ export default async function SettingsPage() {
       </header>
       
       <SettingsClient 
+        initialExpectedIncome={userRecord[0]?.expectedMonthlyIncome || 0}
         initialCategories={categories}
         initialIncomeTypes={incomeTypes}
         initialSavingsGoals={savingsGoals}

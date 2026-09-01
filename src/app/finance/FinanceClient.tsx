@@ -14,7 +14,7 @@ import { TransactionCaptureForm } from '@/components/finance/TransactionCaptureF
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { IncomeAlignmentCard } from '@/components/finance/IncomeAlignmentCard';
 
-export default function FinanceClient({ initialSummary, initialAccountBalances, currentMonth, incomeTypes = [], savingsGoals = [] }: any) {
+export default function FinanceClient({ initialSummary, initialAccountBalances, currentMonth, incomeTypes = [], savingsGoals = [], expectedMonthlyIncome = 0 }: any) {
   const router = useRouter();
   const [summary, setSummary] = useState(initialSummary);
   const [accounts, setAccounts] = useState(initialAccountBalances || []);
@@ -88,6 +88,13 @@ export default function FinanceClient({ initialSummary, initialAccountBalances, 
             </Card>
           </div>
 
+          {/* INCOME & SAVINGS ALIGNMENT */}
+          {expectedMonthlyIncome > 0 && (
+            <div className="mt-6 mb-6">
+              <IncomeAlignmentCard expectedMonthlyIncome={expectedMonthlyIncome} savingsGoals={savingsGoals} currentMonth={currentMonth} />
+            </div>
+          )}
+
           <div className="grid lg:grid-cols-2 gap-6">
             <div className="space-y-6">
               {/* BANK ACCOUNTS */}
@@ -148,13 +155,6 @@ export default function FinanceClient({ initialSummary, initialAccountBalances, 
                 </CardContent>
               </Card>
             </div>
-
-            {/* INCOME & SAVINGS ALIGNMENT */}
-            {incomeTypes.length > 0 && (
-              <div className="pt-2">
-                <IncomeAlignmentCard incomeTypes={incomeTypes} savingsGoals={savingsGoals} />
-              </div>
-            )}
 
             {/* MONTHLY SUMMARY & LEDGER */}
             <div className="space-y-6">

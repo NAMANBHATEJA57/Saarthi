@@ -19,6 +19,8 @@ export function TransactionsClient({ accounts, categories, incomeTypes }: { acco
     endDate: ''
   });
   
+  const [savingsGoals, setSavingsGoals] = useState<any[]>([]);
+  
   const [transactions, setTransactions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
@@ -56,6 +58,7 @@ export function TransactionsClient({ accounts, categories, incomeTypes }: { acco
   };
 
   useEffect(() => {
+    fetch('/api/finance/savings-goals').then(r => r.json()).then(d => { if (d.savingsGoals) setSavingsGoals(d.savingsGoals); });
     setPage(0);
     fetchTransactions(true);
   }, [search, filters]);
@@ -142,6 +145,7 @@ export function TransactionsClient({ accounts, categories, incomeTypes }: { acco
         accounts={accounts}
         categories={categories}
         incomeTypes={incomeTypes}
+        savingsGoals={savingsGoals}
         onSaved={() => fetchTransactions(true)}
       />
     </div>

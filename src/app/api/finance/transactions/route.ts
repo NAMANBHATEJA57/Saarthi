@@ -90,8 +90,9 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { 
-      type, amount, categoryId, incomeTypeId, accountId, destinationAccountId, 
-      externalRecipientName, description, merchant, notes, transactionDate, source
+      type, amount, transactionDate, accountId, destinationAccountId, 
+      externalRecipientName, categoryId, incomeTypeId, savingsGoalId,
+      description, merchant, notes, source 
     } = body;
 
     if (!type || !amount || !transactionDate || amount <= 0) {
@@ -127,6 +128,7 @@ export async function POST(req: NextRequest) {
       externalRecipientName: externalRecipientName || null,
       categoryId: categoryId || null,
       incomeTypeId: incomeTypeId || null,
+      savingsGoalId: savingsGoalId || null,
       description: description || null,
       merchant: merchant || null,
       notes: notes || null,
