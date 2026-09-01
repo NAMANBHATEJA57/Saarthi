@@ -254,15 +254,31 @@ export function TransactionEditDrawer({
 
           {type === 'EXPENSE' && savingsGoals.length > 0 && (
             <div className="space-y-1.5">
-              <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Spend from Fund (Optional)</Label>
-              <select 
-                className="w-full h-11 px-3 py-2 rounded-xl border border-[hsl(var(--hairline))] bg-[hsl(var(--surface-elevated))] text-sm appearance-none"
-                value={savingsGoalId}
-                onChange={e => setSavingsGoalId(e.target.value)}
-              >
-                <option value="none">No fund</option>
-                {savingsGoals.map((c: any) => <option key={c.id} value={c.id}>{c.name}</option>)}
-              </select>
+              <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold flex justify-between">
+                <span>Spend from Fund <span className="font-normal">(Optional)</span></span>
+                {savingsGoalId && (
+                  <span className="text-[hsl(var(--destructive))] font-normal cursor-pointer capitalize" onClick={() => setSavingsGoalId('')}>Clear</span>
+                )}
+              </Label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-40 overflow-y-auto p-1 custom-scrollbar">
+                {savingsGoals.map((sg: any) => (
+                  <div
+                    key={sg.id}
+                    onClick={() => {
+                      if (savingsGoalId === sg.id) {
+                        setSavingsGoalId('');
+                      } else {
+                        if (window.confirm(`Are you sure you want to spend from the ${sg.name} fund?`)) {
+                          setSavingsGoalId(sg.id);
+                        }
+                      }
+                    }}
+                    className={`p-2 border border-[hsl(var(--hairline))] rounded-md text-center text-xs cursor-pointer transition-colors ${savingsGoalId === sg.id ? 'bg-[hsl(var(--primary))] text-white border-[hsl(var(--primary))]' : 'bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-elevated))]'}`}
+                  >
+                    {sg.name}
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 

@@ -292,7 +292,15 @@ export function TransactionCaptureForm({
             {savingsGoals.map(sg => (
               <div
                 key={sg.id}
-                onClick={() => setSavingsGoalId(sg.id === savingsGoalId ? '' : sg.id)}
+                onClick={() => {
+                  if (savingsGoalId === sg.id) {
+                    setSavingsGoalId('');
+                  } else {
+                    if (window.confirm(`Are you sure you want to spend from the ${sg.name} fund?`)) {
+                      setSavingsGoalId(sg.id);
+                    }
+                  }
+                }}
                 className={`p-2 border border-[hsl(var(--hairline))] rounded-md text-center text-xs cursor-pointer transition-colors ${savingsGoalId === sg.id ? 'bg-[hsl(var(--primary))] text-white border-[hsl(var(--primary))]' : 'bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-elevated))]'}`}
               >
                 {sg.name}
