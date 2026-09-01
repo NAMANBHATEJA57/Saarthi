@@ -130,7 +130,7 @@ export function SettingsClient({
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0">
             <CardTitle className="text-lg">Expense Categories</CardTitle>
-            <Button variant="ghost" size="icon" onClick={() => { setNewName(''); setIsCategoryOpen(true); }}><Plus className="w-4 h-4" /></Button>
+            <Button variant="icon" size="icon" onClick={() => { setNewName(''); setIsCategoryOpen(true); }}><Plus className="w-4 h-4" /></Button>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex flex-wrap gap-2">
@@ -150,7 +150,7 @@ export function SettingsClient({
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0">
             <CardTitle className="text-lg">Income Types</CardTitle>
-            <Button variant="ghost" size="icon" onClick={() => { setNewName(''); setIsIncomeTypeOpen(true); }}><Plus className="w-4 h-4" /></Button>
+            <Button variant="icon" size="icon" onClick={() => { setNewName(''); setIsIncomeTypeOpen(true); }}><Plus className="w-4 h-4" /></Button>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex flex-wrap gap-2">
@@ -170,7 +170,7 @@ export function SettingsClient({
         <Card className="md:col-span-2">
           <CardHeader className="flex flex-row items-center justify-between space-y-0">
             <CardTitle className="text-lg">Savings Goals</CardTitle>
-            <Button variant="ghost" size="icon" onClick={() => { setNewName(''); setTargetAmount(''); setIsSavingsGoalOpen(true); }}><Plus className="w-4 h-4" /></Button>
+            <Button variant="icon" size="icon" onClick={() => { setNewName(''); setTargetAmount(''); setIsSavingsGoalOpen(true); }}><Plus className="w-4 h-4" /></Button>
           </CardHeader>
           <CardContent>
             {savingsGoals.length === 0 ? (
