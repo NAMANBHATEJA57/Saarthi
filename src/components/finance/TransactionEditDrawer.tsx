@@ -76,7 +76,7 @@ export function TransactionEditDrawer({
         body: JSON.stringify({
           description,
           merchant,
-          amount: Math.round(parseFloat(amount)),
+          amount: parseFloat(amount),
           transactionDate: date,
           categoryId: categoryId === 'none' ? null : categoryId,
           incomeTypeId: incomeTypeId === 'none' ? null : incomeTypeId,
@@ -149,6 +149,7 @@ export function TransactionEditDrawer({
             <span className="text-2xl text-[hsl(var(--ink-secondary))] font-light shrink-0 whitespace-nowrap">{cfg.prefix}₹</span>
             <input
               type="number"
+              step="0.01"
               value={amount}
               onChange={e => setAmount(e.target.value)}
               className="text-4xl font-bold bg-transparent border-none outline-none text-[hsl(var(--ink))] w-full min-w-0 placeholder:text-[hsl(var(--ink-muted))]"

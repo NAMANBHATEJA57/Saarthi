@@ -87,7 +87,7 @@ export function TransactionCaptureForm({
     setLoading(true);
 
     try {
-      const amountParsed = Math.round(Number(amount));
+      const amountParsed = Number(amount);
 
       const res = await fetch('/api/finance/transactions', {
         method: 'POST',
@@ -192,7 +192,7 @@ export function TransactionCaptureForm({
           value={amount} 
           onChange={(e) => setAmount(e.target.value)} 
           placeholder="0" 
-          step="1"
+          step="0.01"
           required 
           autoFocus 
           className="text-2xl h-12 bg-[hsl(var(--canvas))]"

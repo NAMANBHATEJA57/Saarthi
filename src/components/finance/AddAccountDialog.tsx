@@ -63,11 +63,11 @@ export function AddAccountDialog({ open, onOpenChange, onSuccess }: AddAccountDi
         name,
         type,
         institutionId: selectedInst?.id || null,
-        openingBalance: type === 'BANK_ACCOUNT' && initialBalance ? Math.round(parseFloat(initialBalance)) : 0,
-        openingOutstanding: type === 'CREDIT_CARD' && initialBalance ? Math.round(parseFloat(initialBalance)) : 0,
+        openingBalance: type === 'BANK_ACCOUNT' && initialBalance ? parseFloat(initialBalance) : 0,
+        openingOutstanding: type === 'CREDIT_CARD' && initialBalance ? parseFloat(initialBalance) : 0,
         lastFour: lastFour.trim() || null,
         notes: notes.trim() || null,
-        creditLimit: type === 'CREDIT_CARD' && creditLimit ? Math.round(parseFloat(creditLimit)) : null,
+        creditLimit: type === 'CREDIT_CARD' && creditLimit ? parseFloat(creditLimit) : null,
         statementDay: type === 'CREDIT_CARD' && statementDay ? parseInt(statementDay) : null,
         dueDay: type === 'CREDIT_CARD' && dueDay ? parseInt(dueDay) : null,
       };
@@ -217,7 +217,7 @@ export function AddAccountDialog({ open, onOpenChange, onSuccess }: AddAccountDi
                 <label className="text-sm font-medium">{type === 'BANK_ACCOUNT' ? 'Current Balance (₹)' : 'Outstanding (₹)'}</label>
                 <Input 
                   type="number" 
-                  step="1" 
+                  step="0.01" 
                   value={initialBalance} 
                   onChange={e => setInitialBalance(e.target.value)} 
                   placeholder="0"
@@ -240,7 +240,7 @@ export function AddAccountDialog({ open, onOpenChange, onSuccess }: AddAccountDi
                   <label className="text-sm font-medium">Credit Limit (₹)</label>
                   <Input 
                     type="number" 
-                    step="1"
+                    step="0.01"
                     value={creditLimit} 
                     onChange={e => setCreditLimit(e.target.value)} 
                     placeholder="e.g. 500000"
