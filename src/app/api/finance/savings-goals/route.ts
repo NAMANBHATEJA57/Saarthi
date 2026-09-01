@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   const userId = session.user.id;
 
   try {
-    const { name, ultimateTargetAmount } = await req.json();
+    const { name, ultimateTargetAmount, incomeTypeId, targetPercentage } = await req.json();
 
     if (!name || !ultimateTargetAmount) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -18,7 +18,9 @@ export async function POST(req: NextRequest) {
     const [goal] = await db.insert(financeSavingsGoals).values({
       userId,
       name,
-      ultimateTargetAmount: Math.round(ultimateTargetAmount),
+      ultimateTargetAmount: parseFloat(ultimateTargetAmount),
+      incomeTypeId: incomeTypeId || null,
+      targetPercentage: targetPercentage ? parseFloat(targetPercentage) : null,
     }).returning();
 
     return NextResponse.json({ goal });

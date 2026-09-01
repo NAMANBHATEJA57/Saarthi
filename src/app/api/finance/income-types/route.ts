@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { name } = body;
+    const { name, expectedAmount } = body;
 
     if (!name) {
       return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
@@ -39,6 +39,7 @@ export async function POST(req: NextRequest) {
     const [newIncomeType] = await db.insert(financeIncomeTypes).values({
       userId,
       name,
+      expectedAmount: expectedAmount ? parseFloat(expectedAmount) : null,
     }).returning();
 
     return NextResponse.json({ incomeType: newIncomeType });

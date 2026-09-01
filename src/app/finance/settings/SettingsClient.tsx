@@ -30,7 +30,51 @@ export function SettingsClient({
 
   const [newName, setNewName] = useState('');
   const [targetAmount, setTargetAmount] = useState('');
+  const [expectedAmount, setExpectedAmount] = useState('');
+  
+  const [linkedIncomeId, setLinkedIncomeId] = useState<string>('');
+  const [targetPercentage, setTargetPercentage] = useState('');
+  
   const [loading, setLoading] = useState(false);
+
+  // Bi-directional sync logic
+  const handleAmountChange = (val: string) => {
+    setTargetAmount(val);
+    if (linkedIncomeId && val) {
+      const inc = incomeTypes.find(i => i.id === linkedIncomeId);
+      if (inc && inc.expectedAmount) {
+        const perc = (parseFloat(val) / inc.expectedAmount) * 100;
+        setTargetPercentage(perc.toFixed(2));
+      }
+    } else {
+      setTargetPercentage('');
+    }
+  };
+
+  const handlePercentageChange = (val: string) => {
+    setTargetPercentage(val);
+    if (linkedIncomeId && val) {
+      const inc = incomeTypes.find(i => i.id === linkedIncomeId);
+      if (inc && inc.expectedAmount) {
+        const amt = (parseFloat(val) / 100) * inc.expectedAmount;
+        setTargetAmount(amt.toFixed(0));
+      }
+    } else {
+      setTargetAmount('');
+    }
+  };
+
+  const handleIncomeSelect = (val: string) => {
+    setLinkedIncomeId(val);
+    // Recalculate amount or percentage if one exists
+    if (val) {
+      const inc = incomeTypes.find(i => i.id === val);
+      if (inc && inc.expectedAmount && targetPercentage) {
+        const amt = (parseFloat(targetPercentage) / 100) * inc.expectedAmount;
+        setTargetAmount(amt.toFixed(0));
+      }
+    }
+  };
 
   const handleCreateCategory = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,13 +107,17 @@ export function SettingsClient({
       const res = await fetch('/api/finance/income-types', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: newName })
+        body: JSON.stringify({ 
+          name: newName,
+          expectedAmount: expectedAmount ? parseFloat(expectedAmount) : null
+        })
       });
       if (res.ok) {
         const data = await res.json();
         setIncomeTypes([...incomeTypes, data.incomeType]);
         setIsIncomeTypeOpen(false);
         setNewName('');
+        setExpectedAmount('');
       }
     } catch (err) {
       console.error(err);
@@ -86,7 +134,12 @@ export function SettingsClient({
       const res = await fetch('/api/finance/savings-goals', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: newName, ultimateTargetAmount: parseFloat(targetAmount) })
+        body: JSON.stringify({ 
+          name: newName, 
+          ultimateTargetAmount: parseFloat(targetAmount),
+          incomeTypeId: linkedIncomeId || null,
+          targetPercentage: targetPercentage ? parseFloat(targetPercentage) : null
+        })
       });
       if (res.ok) {
         const data = await res.json();
@@ -94,6 +147,8 @@ export function SettingsClient({
         setIsSavingsGoalOpen(false);
         setNewName('');
         setTargetAmount('');
+        setTargetPercentage('');
+        setLinkedIncomeId('');
       }
     } catch (err) {
       console.error(err);
@@ -156,7 +211,7 @@ export function SettingsClient({
             <div className="flex flex-wrap gap-2">
               {incomeTypes.map(c => (
                 <div key={c.id} className="px-3 py-1 bg-[hsl(var(--surface-elevated))] border border-[hsl(var(--hairline))] rounded-full text-sm flex items-center gap-2 group">
-                  {c.name}
+                  {c.name} {c.expectedAmount ? <span className="text-[hsl(var(--ink-muted))] text-xs">(₹{c.expectedAmount})</span> : null}
                   <button onClick={() => handleDelete(c.id, 'incomeType')} className="text-[hsl(var(--ink-muted))] hover:text-[hsl(var(--destructive))] opacity-0 group-hover:opacity-100 transition-opacity">
                     <Trash className="w-3 h-3" />
                   </button>
@@ -177,17 +232,23 @@ export function SettingsClient({
               <p className="text-sm text-[hsl(var(--ink-secondary))] pb-4">You haven't set up any savings goals yet.</p>
             ) : (
               <div className="space-y-2 pb-4">
-                {savingsGoals.map(g => (
-                  <div key={g.id} className="flex justify-between items-center p-3 border border-[hsl(var(--hairline))] rounded-lg group">
-                    <span className="font-medium">{g.name}</span>
-                    <div className="flex items-center gap-4">
-                      <span className="text-[hsl(var(--ink-muted))]">₹{(g.ultimateTargetAmount || 0).toLocaleString()} target</span>
-                      <button onClick={() => handleDelete(g.id, 'savingsGoal')} className="text-[hsl(var(--ink-muted))] hover:text-[hsl(var(--destructive))] opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Trash className="w-4 h-4" />
-                      </button>
+                {savingsGoals.map(g => {
+                  const linkedIncome = incomeTypes.find(i => i.id === g.incomeTypeId);
+                  return (
+                    <div key={g.id} className="flex justify-between items-center p-3 border border-[hsl(var(--hairline))] rounded-lg group">
+                      <div className="flex flex-col">
+                        <span className="font-medium">{g.name}</span>
+                        {linkedIncome && <span className="text-xs text-[hsl(var(--ink-secondary))]">Linked to {linkedIncome.name} ({g.targetPercentage}%)</span>}
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span className="text-[hsl(var(--ink-muted))]">₹{(g.ultimateTargetAmount || 0).toLocaleString()} target</span>
+                        <button onClick={() => handleDelete(g.id, 'savingsGoal')} className="text-[hsl(var(--ink-muted))] hover:text-[hsl(var(--destructive))] opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Trash className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </CardContent>
@@ -220,6 +281,10 @@ export function SettingsClient({
               <Label>Name</Label>
               <Input autoFocus value={newName} onChange={e => setNewName(e.target.value)} required />
             </div>
+            <div className="space-y-2">
+              <Label>Expected Monthly Amount (₹, optional)</Label>
+              <Input type="number" step="0.01" value={expectedAmount} onChange={e => setExpectedAmount(e.target.value)} placeholder="e.g. 50000" />
+            </div>
             <DialogFooter>
               <Button type="button" variant="utility" onClick={() => setIsIncomeTypeOpen(false)}>Cancel</Button>
               <Button type="submit" disabled={loading}>{loading ? 'Creating...' : 'Create'}</Button>
@@ -238,8 +303,29 @@ export function SettingsClient({
               <Input autoFocus value={newName} onChange={e => setNewName(e.target.value)} placeholder="e.g. Emergency Fund" required />
             </div>
             <div className="space-y-2">
-              <Label>Target Amount (₹)</Label>
-              <Input type="number" step="1" value={targetAmount} onChange={e => setTargetAmount(e.target.value)} placeholder="500000" required />
+              <Label>Link Income Source (optional)</Label>
+              <select 
+                className="w-full p-2 rounded-md border border-[hsl(var(--hairline))] bg-[hsl(var(--canvas))] text-sm"
+                value={linkedIncomeId} 
+                onChange={e => handleIncomeSelect(e.target.value)}
+              >
+                <option value="">-- No linked income --</option>
+                {incomeTypes.map(inc => (
+                  <option key={inc.id} value={inc.id}>{inc.name} {inc.expectedAmount ? `(₹${inc.expectedAmount})` : '(No expected amount)'}</option>
+                ))}
+              </select>
+            </div>
+            <div className="flex gap-4">
+              <div className="space-y-2 flex-1">
+                <Label>Target Amount (₹)</Label>
+                <Input type="number" step="0.01" value={targetAmount} onChange={e => handleAmountChange(e.target.value)} placeholder="50000" required />
+              </div>
+              {linkedIncomeId && incomeTypes.find(i => i.id === linkedIncomeId)?.expectedAmount && (
+                <div className="space-y-2 flex-1">
+                  <Label>Percentage (%)</Label>
+                  <Input type="number" step="0.01" value={targetPercentage} onChange={e => handlePercentageChange(e.target.value)} placeholder="20" />
+                </div>
+              )}
             </div>
             <DialogFooter>
               <Button type="button" variant="utility" onClick={() => setIsSavingsGoalOpen(false)}>Cancel</Button>

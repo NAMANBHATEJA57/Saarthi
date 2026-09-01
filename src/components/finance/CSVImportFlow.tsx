@@ -78,12 +78,54 @@ export function CSVImportFlow({ accounts, categories }: { accounts: any[], categ
         const workbook = XLSX.read(buffer, { type: 'array' });
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
+        // Get raw array of arrays to find the actual header row
+        const rawRows = XLSX.utils.sheet_to_json(worksheet, { header: 1 }) as any[][];
         
-        // Convert sheet to JSON array of objects
-        const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+        let headerRowIndex = 0;
+        let maxScore = -1;
+
+        // Scan first 30 rows for common bank statement header keywords
+        for (let i = 0; i < Math.min(rawRows.length, 30); i++) {
+          const row = rawRows[i];
+          if (!row || !Array.isArray(row)) continue;
+          
+          const rowString = row.join(' ').toLowerCase();
+          let score = 0;
+          if (rowString.includes('date')) score++;
+          if (rowString.includes('amount') || rowString.includes('withdrawal') || rowString.includes('deposit') || rowString.includes('credit') || rowString.includes('debit')) score++;
+          if (rowString.includes('description') || rowString.includes('particulars') || rowString.includes('narration') || rowString.includes('remarks')) score++;
+          if (rowString.includes('balance')) score++;
+          
+          if (score > maxScore && score > 0) {
+            maxScore = score;
+            headerRowIndex = i;
+          }
+        }
+
+        if (maxScore === -1) {
+          headerRowIndex = rawRows.findIndex(row => row && row.filter(cell => cell != null && cell !== '').length > 2) || 0;
+          if (headerRowIndex < 0) headerRowIndex = 0;
+        }
+
+        const rawHeaders = rawRows[headerRowIndex] || [];
+        const excelHeaders = rawHeaders.map((h, i) => {
+          const str = String(h || '').trim();
+          return str || `Column_${i + 1}`;
+        });
+
+        const jsonData = [];
+        for (let i = headerRowIndex + 1; i < rawRows.length; i++) {
+          const rowArray = rawRows[i];
+          if (!rowArray || rowArray.length === 0 || rowArray.every(c => c === '' || c == null)) continue;
+          
+          const rowObj: any = {};
+          for (let j = 0; j < excelHeaders.length; j++) {
+            rowObj[excelHeaders[j]] = rowArray[j] !== undefined ? rowArray[j] : "";
+          }
+          jsonData.push(rowObj);
+        }
         
         if (jsonData.length > 0) {
-          const excelHeaders = Object.keys(jsonData[0] as object);
           setupHeadersAndRows(excelHeaders, jsonData);
         } else {
           alert("Excel file appears to be empty.");

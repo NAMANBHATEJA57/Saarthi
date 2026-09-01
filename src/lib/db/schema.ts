@@ -406,6 +406,7 @@ export const financeIncomeTypes = pgTable('finance_income_types', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
   name: text('name').notNull(),
+  expectedAmount: doublePrecision('expected_amount'),
   isActive: boolean('is_active').default(true).notNull(),
   sortOrder: integer('sort_order').default(0).notNull(),
 });
@@ -486,6 +487,8 @@ export const financeSavingsGoals = pgTable('finance_savings_goals', {
   userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
   name: text('name').notNull(),
   ultimateTargetAmount: doublePrecision('ultimate_target_amount'),
+  incomeTypeId: uuid('income_type_id').references(() => financeIncomeTypes.id),
+  targetPercentage: doublePrecision('target_percentage'),
   accountId: uuid('account_id').references(() => financeAccounts.id),
   monthlyTargetAmount: doublePrecision('monthly_target_amount'),
   currentSavedAmount: doublePrecision('current_saved_amount').default(0).notNull(),
