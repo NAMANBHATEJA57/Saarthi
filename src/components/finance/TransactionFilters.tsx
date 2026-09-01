@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Filter } from 'lucide-react';
 
 export function TransactionFilters({ accounts, categories, filters, setFilters }: { accounts: any[], categories: any[], filters: any, setFilters: any }) {
@@ -27,16 +27,19 @@ export function TransactionFilters({ accounts, categories, filters, setFilters }
   };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
         <Button variant="secondary" className="h-11 px-4 gap-2 border border-[hsl(var(--hairline))]">
           <Filter className="w-4 h-4" />
           <span className="hidden sm:inline">Filters</span>
         </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-80 p-4 space-y-6" align="end">
+      </SheetTrigger>
+      <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-[hsl(var(--surface))] border-l border-[hsl(var(--hairline))] p-6 space-y-8 overflow-y-auto">
+        <SheetHeader>
+          <SheetTitle className="text-left">Filter Transactions</SheetTitle>
+        </SheetHeader>
         
-        <div className="space-y-2">
+        <div className="space-y-3">
           <h4 className="text-sm font-semibold uppercase tracking-wider text-[hsl(var(--ink-secondary))]">Type</h4>
           <div className="grid grid-cols-2 gap-2">
             {['all', 'income', 'expense', 'transfer', 'credit_card_payment', 'refund'].map(type => (
@@ -86,7 +89,7 @@ export function TransactionFilters({ accounts, categories, filters, setFilters }
           </div>
         </div>
 
-      </PopoverContent>
-    </Popover>
+      </SheetContent>
+    </Sheet>
   );
 }
