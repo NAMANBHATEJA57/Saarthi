@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
-import { financeTransactions, userPreferences } from '@/lib/db/schema';
+import { financeTransactions } from '@/lib/db/schema';
 import { eq, and, desc } from 'drizzle-orm';
-import { createAllocationSnapshots } from '@/lib/finance/service';
 
 export async function GET(req: NextRequest) {
   const session = await auth();
@@ -16,6 +15,7 @@ export async function GET(req: NextRequest) {
     const offsetParam = searchParams.get('offset');
     const accountIds = searchParams.get('accountId'); // Can be comma separated
     const categoryIds = searchParams.get('categoryId'); // Can be comma separated
+    const incomeTypeIds = searchParams.get('incomeTypeId'); // Can be comma separated
     const typeParam = searchParams.get('type');
     const startDate = searchParams.get('startDate');
     const endDate = searchParams.get('endDate');
@@ -24,8 +24,8 @@ export async function GET(req: NextRequest) {
     const limit = limitParam ? parseInt(limitParam) : 50;
     const offset = offsetParam ? parseInt(offsetParam) : 0;
 
-    let condition = and(eq(financeTransactions.userId, userId), eq(financeTransactions.status, 'POSTED'));
     const { or, inArray, gte, lte, ilike } = require('drizzle-orm');
+    let condition = and(eq(financeTransactions.userId, userId), eq(financeTransactions.status, 'POSTED'));
     
     if (accountIds) {
       const arr = accountIds.split(',');
@@ -38,6 +38,11 @@ export async function GET(req: NextRequest) {
     if (categoryIds) {
       const arr = categoryIds.split(',');
       condition = and(condition, inArray(financeTransactions.categoryId, arr));
+    }
+    
+    if (incomeTypeIds) {
+      const arr = incomeTypeIds.split(',');
+      condition = and(condition, inArray(financeTransactions.incomeTypeId, arr));
     }
 
     if (typeParam && typeParam !== 'all') {
@@ -56,8 +61,8 @@ export async function GET(req: NextRequest) {
       condition = and(
         condition,
         or(
-          ilike(financeTransactions.remark, `%${search}%`),
-          ilike(financeTransactions.originalDescription, `%${search}%`)
+          ilike(financeTransactions.description, `%${search}%`),
+          ilike(financeTransactions.merchant, `%${search}%`)
         )
       );
     }
@@ -84,46 +89,51 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { type, amountMinor, categoryId, accountId, destinationAccountId, remark, transactionDate } = body;
+    const { 
+      type, amount, categoryId, incomeTypeId, accountId, destinationAccountId, 
+      externalRecipientName, description, merchant, notes, transactionDate, source
+    } = body;
 
-    // TRANSFER and CREDIT_CARD_PAYMENT do not require categoryId
-    if (!type || !amountMinor || !transactionDate || amountMinor <= 0) {
+    if (!type || !amount || !transactionDate || amount <= 0) {
       return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
     }
     
-    if ((type === 'INCOME' || type === 'EXPENSE' || type === 'CREDIT_CARD_PURCHASE' || type === 'REFUND') && !categoryId) {
-      return NextResponse.json({ error: 'Category required' }, { status: 400 });
+    if (type === 'EXPENSE' && !categoryId) {
+      return NextResponse.json({ error: 'Category required for expense' }, { status: 400 });
+    }
+    
+    if (type === 'INCOME' && !incomeTypeId) {
+      return NextResponse.json({ error: 'Income Type required for income' }, { status: 400 });
     }
 
-    if ((type === 'TRANSFER' || type === 'CREDIT_CARD_PAYMENT') && (!accountId || !destinationAccountId)) {
-      return NextResponse.json({ error: 'Both accounts required for transfer/payment' }, { status: 400 });
+    if ((type === 'TRANSFER' || type === 'CREDIT_CARD_PAYMENT') && (!accountId)) {
+      return NextResponse.json({ error: 'Source account required for transfer/payment' }, { status: 400 });
+    }
+    
+    if (type === 'TRANSFER' && !destinationAccountId && !externalRecipientName) {
+       return NextResponse.json({ error: 'Destination account or external recipient required for transfer' }, { status: 400 });
     }
 
-    // Default to INR or from preferences
     const currencyCode = 'INR';
 
-    const result = await db.transaction(async (tx) => {
-      const [newTx] = await tx.insert(financeTransactions).values({
-        userId,
-        type,
-        amountMinor,
-        currencyCode,
-        transactionDate,
-        accountId: accountId || null,
-        destinationAccountId: destinationAccountId || null,
-        categoryId: categoryId || null,
-        remark: remark || null,
-        source: 'MANUAL',
-      }).returning();
+    const [newTx] = await db.insert(financeTransactions).values({
+      userId,
+      type,
+      amount,
+      currencyCode,
+      transactionDate,
+      accountId: accountId || null,
+      destinationAccountId: destinationAccountId || null,
+      externalRecipientName: externalRecipientName || null,
+      categoryId: categoryId || null,
+      incomeTypeId: incomeTypeId || null,
+      description: description || null,
+      merchant: merchant || null,
+      notes: notes || null,
+      source: source || 'MANUAL',
+    }).returning();
 
-      if (type === 'INCOME') {
-        await createAllocationSnapshots(tx, userId, newTx.id, amountMinor, transactionDate);
-      }
-
-      return newTx;
-    });
-
-    return NextResponse.json({ transaction: result });
+    return NextResponse.json({ transaction: newTx });
   } catch (error) {
     console.error('Transactions POST error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

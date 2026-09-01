@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
-import { financeCategories } from '@/lib/db/schema';
+import { financeIncomeTypes } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
-import { ensureDefaultCategories } from '@/lib/finance/service';
 
 export async function GET(req: NextRequest) {
   const session = await auth();
@@ -11,17 +10,15 @@ export async function GET(req: NextRequest) {
   const userId = session.user.id as string;
 
   try {
-    await ensureDefaultCategories(userId);
-
-    const categories = await db
+    const incomeTypes = await db
       .select()
-      .from(financeCategories)
-      .where(and(eq(financeCategories.userId, userId), eq(financeCategories.isActive, true)))
-      .orderBy(financeCategories.sortOrder);
+      .from(financeIncomeTypes)
+      .where(and(eq(financeIncomeTypes.userId, userId), eq(financeIncomeTypes.isActive, true)))
+      .orderBy(financeIncomeTypes.sortOrder);
 
-    return NextResponse.json({ categories });
+    return NextResponse.json({ incomeTypes });
   } catch (error) {
-    console.error('Categories GET error:', error);
+    console.error('IncomeTypes GET error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
@@ -39,14 +36,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
     }
 
-    const [newCategory] = await db.insert(financeCategories).values({
+    const [newIncomeType] = await db.insert(financeIncomeTypes).values({
       userId,
       name,
     }).returning();
 
-    return NextResponse.json({ category: newCategory });
+    return NextResponse.json({ incomeType: newIncomeType });
   } catch (error) {
-    console.error('Categories POST error:', error);
+    console.error('IncomeTypes POST error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

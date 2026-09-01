@@ -16,10 +16,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 export default function FinanceClient({ initialSummary, initialBalances, initialAccountBalances, currentMonth }: any) {
   const router = useRouter();
   const [summary, setSummary] = useState(initialSummary);
-  const [balances, setBalances] = useState(initialBalances);
   const [accounts, setAccounts] = useState(initialAccountBalances || []);
   const [isAddAccountOpen, setIsAddAccountOpen] = useState(false);
-  const [transactionFormType, setTransactionFormType] = useState<'EXPENSE' | 'CREDIT_CARD_PURCHASE' | null>(null);
+  const [transactionFormType, setTransactionFormType] = useState<'EXPENSE' | 'INCOME' | 'TRANSFER' | 'CREDIT_CARD_PAYMENT' | null>(null);
 
   const prevMonth = () => {
     const d = new Date(currentMonth + '-01');
@@ -37,8 +36,8 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
   const bankAccounts = accounts.filter((a: any) => a.type === 'BANK_ACCOUNT');
   const creditCards = accounts.filter((a: any) => a.type === 'CREDIT_CARD');
 
-  const totalBankBalance = bankAccounts.reduce((sum: number, a: any) => sum + Number(a.balanceMinor), 0) / 100;
-  const totalCreditDebt = creditCards.reduce((sum: number, a: any) => sum + Number(a.balanceMinor), 0) / 100;
+  const totalBankBalance = bankAccounts.reduce((sum: number, a: any) => sum + Number(a.balance), 0);
+  const totalCreditDebt = creditCards.reduce((sum: number, a: any) => sum + Number(a.balance), 0);
   const netAvailable = totalBankBalance - totalCreditDebt;
 
   return (
@@ -108,7 +107,7 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
                             <p className="text-xs text-[hsl(var(--ink-secondary))] mt-0.5">{acc.lastFour ? `•••• ${acc.lastFour}` : 'Account'}</p>
                           </div>
                           <div className="flex items-center gap-3">
-                            <span className="text-lg font-bold text-[hsl(var(--success))]">₹{(acc.balanceMinor / 100).toLocaleString()}</span>
+                            <span className="text-lg font-bold text-[hsl(var(--success))]">₹{acc.balance.toLocaleString()}</span>
                             <ArrowRight className="w-4 h-4 text-[hsl(var(--ink-muted))] opacity-0 group-hover:opacity-100 transition-opacity" />
                           </div>
                         </div>
@@ -122,7 +121,7 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between pb-2 bg-[hsl(var(--surface))] rounded-t-lg">
                   <CardTitle className="flex items-center gap-2 text-base"><CreditCard className="w-5 h-5 text-[hsl(var(--ink-secondary))]" /> Credit Cards</CardTitle>
-                  <Button variant="utility" onClick={() => setTransactionFormType('CREDIT_CARD_PURCHASE')} className="h-7 px-2 text-xs"><Plus className="w-3 h-3 mr-1" /> Add</Button>
+                  <Button variant="utility" onClick={() => setTransactionFormType('EXPENSE')} className="h-7 px-2 text-xs"><Plus className="w-3 h-3 mr-1" /> Add</Button>
                 </CardHeader>
                 <CardContent className="p-0">
                   {creditCards.length === 0 ? (
@@ -136,9 +135,9 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
                             <p className="text-xs text-[hsl(var(--ink-secondary))] mt-0.5">{acc.lastFour ? `•••• ${acc.lastFour}` : 'Card'}</p>
                           </div>
                           <div className="flex flex-col items-end gap-1">
-                            <span className="text-lg font-bold text-[hsl(var(--destructive))]">₹{(acc.balanceMinor / 100).toLocaleString()} <span className="text-[10px] font-normal uppercase text-[hsl(var(--ink-muted))]">owed</span></span>
-                            {acc.creditLimitMinor && (
-                              <span className="text-[11px] text-[hsl(var(--ink-secondary))]">Avail: ₹{((acc.creditLimitMinor - acc.balanceMinor) / 100).toLocaleString()}</span>
+                            <span className="text-lg font-bold text-[hsl(var(--destructive))]">₹{acc.balance.toLocaleString()} <span className="text-[10px] font-normal uppercase text-[hsl(var(--ink-muted))]">owed</span></span>
+                            {acc.creditLimit && (
+                              <span className="text-[11px] text-[hsl(var(--ink-secondary))]">Avail: ₹{(acc.creditLimit - acc.balance).toLocaleString()}</span>
                             )}
                           </div>
                         </div>
@@ -156,34 +155,31 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
                 <CardContent className="p-4 space-y-3">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-[hsl(var(--ink-secondary))]">Income</span>
-                    <span className="font-medium text-[hsl(var(--success))]">+₹{(summary.totalIncome / 100).toLocaleString()}</span>
+                    <span className="font-medium text-[hsl(var(--success))]">+₹{summary.totalIncome.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-[hsl(var(--ink-secondary))]">Spending</span>
-                    <span className="font-medium text-[hsl(var(--destructive))]">-₹{(summary.totalExpense / 100).toLocaleString()}</span>
+                    <span className="font-medium text-[hsl(var(--destructive))]">-₹{summary.totalExpense.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-[hsl(var(--ink-secondary))]">Planned</span>
+                    <span className="font-medium text-[hsl(var(--ink-muted))]">₹{summary.plannedTotal?.toLocaleString() || 0}</span>
                   </div>
                   <div className="pt-2 mt-2 border-t border-[hsl(var(--hairline))] flex justify-between items-center text-sm">
-                    <span className="font-medium">Leftover</span>
-                    <span className="font-bold">₹{((summary.totalIncome - summary.totalExpense) / 100).toLocaleString()}</span>
+                    <span className="font-medium">Leftover (Unallocated)</span>
+                    <span className="font-bold">₹{summary.leftover?.toLocaleString() || 0}</span>
                   </div>
                 </CardContent>
               </Card>
               
               <div className="flex gap-3">
-                <Button variant="secondary" className="flex-1 bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))]" onClick={() => router.push('/finance/rules')}>Rules</Button>
-                <Button variant="secondary" className="flex-1 bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))]" onClick={() => router.push('/finance/recurring')}>Recurring</Button>
+                <Button variant="secondary" className="flex-1 bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))]" onClick={() => router.push('/finance/settings')}>Settings</Button>
+                <Button variant="secondary" className="flex-1 bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))]" onClick={() => router.push('/finance/transactions')}>All Transactions</Button>
               </div>
 
               {/* RECENT TRANSACTIONS COMPONENT */}
               <div>
                 <TransactionHistory limit={10} />
-                <Button 
-                  variant="utility" 
-                  className="w-full mt-2 text-sm text-[hsl(var(--primary))]"
-                  onClick={() => router.push('/finance/transactions')}
-                >
-                  View all transactions <ArrowRight className="w-4 h-4 ml-1" />
-                </Button>
               </div>
             </div>
           </div>

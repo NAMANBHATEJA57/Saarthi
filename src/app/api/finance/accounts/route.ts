@@ -23,34 +23,24 @@ export async function POST(req: NextRequest) {
   
   try {
     const body = await req.json();
-    const { name, type, creditLimitMinor, statementDay, dueDay, lastFour, notes, institutionId } = body;
+    const { name, type, creditLimit, openingBalance, openingOutstanding, statementDay, dueDay, lastFour, notes, institutionId } = body;
     if (!name || !type) return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
 
     const [acc] = await db.insert(financeAccounts).values({
       userId: session.user.id,
       name,
       type,
-      creditLimitMinor: creditLimitMinor || null,
+      creditLimit: creditLimit || null,
+      openingBalance: openingBalance || 0,
+      openingBalanceDate: new Date(),
+      openingOutstanding: openingOutstanding || 0,
+      openingOutstandingDate: new Date(),
       statementDay: statementDay || null,
       dueDay: dueDay || null,
       lastFour: lastFour || null,
       notes: notes || null,
       institutionId: institutionId || null,
     }).returning();
-    
-    if (body.initialBalanceMinor && body.initialBalanceMinor > 0) {
-      await db.insert(financeTransactions).values({
-        userId: session.user.id,
-        type: type === 'CREDIT_CARD' ? 'EXPENSE' : 'INCOME',
-        amountMinor: body.initialBalanceMinor,
-        currencyCode: 'INR',
-        transactionDate: new Date().toISOString().split('T')[0],
-        accountId: acc.id,
-        remark: 'Opening Balance',
-        source: 'MANUAL',
-        status: 'POSTED',
-      });
-    }
     
     return NextResponse.json({ account: acc });
   } catch (err) {

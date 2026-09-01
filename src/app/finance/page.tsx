@@ -1,6 +1,6 @@
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
-import { getMonthlySummary, getAccumulatedBalances, getAccountBalances } from '@/lib/finance/service';
+import { getMonthlySummary, getAccountBalances } from '@/lib/finance/service';
 import FinanceClient from './FinanceClient';
 
 export default async function FinancePage({ searchParams }: { searchParams: Promise<{ month?: string }> }) {
@@ -11,8 +11,7 @@ export default async function FinancePage({ searchParams }: { searchParams: Prom
   const month = sp.month || new Date().toISOString().substring(0, 7);
 
   const summary = await getMonthlySummary(session.user.id, month);
-  const balances = await getAccumulatedBalances(session.user.id);
   const accountBalances = await getAccountBalances(session.user.id);
 
-  return <FinanceClient initialSummary={summary} initialBalances={balances} initialAccountBalances={accountBalances} currentMonth={month} />;
+  return <FinanceClient initialSummary={summary} initialAccountBalances={accountBalances} currentMonth={month} />;
 }

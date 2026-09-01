@@ -13,17 +13,20 @@ export function TransactionCaptureForm({
 }: { 
   onSuccess: () => void; 
   onCancel: () => void;
-  defaultType?: 'EXPENSE' | 'INCOME' | 'TRANSFER' | 'CREDIT_CARD_PURCHASE' | 'CREDIT_CARD_PAYMENT';
+  defaultType?: 'EXPENSE' | 'INCOME' | 'TRANSFER' | 'CREDIT_CARD_PAYMENT';
 }) {
-  const [type, setType] = useState<'EXPENSE' | 'INCOME' | 'TRANSFER' | 'CREDIT_CARD_PURCHASE' | 'CREDIT_CARD_PAYMENT'>(defaultType);
+  const [type, setType] = useState<'EXPENSE' | 'INCOME' | 'TRANSFER' | 'CREDIT_CARD_PAYMENT'>(defaultType);
   const [amount, setAmount] = useState<string>('');
   const [categoryId, setCategoryId] = useState<string>('');
+  const [incomeTypeId, setIncomeTypeId] = useState<string>('');
   const [accountId, setAccountId] = useState<string>('');
   const [destinationAccountId, setDestinationAccountId] = useState<string>('');
-  const [remark, setRemark] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [merchant, setMerchant] = useState<string>('');
   const [date, setDate] = useState<string>(new Date().toISOString().split('T')[0]);
   
   const [categories, setCategories] = useState<any[]>([]);
+  const [incomeTypes, setIncomeTypes] = useState<any[]>([]);
   const [accounts, setAccounts] = useState<any[]>([]);
   
   const [loading, setLoading] = useState(false);
@@ -35,10 +38,8 @@ export function TransactionCaptureForm({
   const [creatingCatLoading, setCreatingCatLoading] = useState(false);
   
   useEffect(() => {
-    fetch('/api/finance/categories')
-      .then(r => r.json())
-      .then(d => { if (d.categories) setCategories(d.categories); })
-      .catch(e => console.error("Failed to load categories", e));
+    fetch('/api/finance/categories').then(r => r.json()).then(d => { if (d.categories) setCategories(d.categories); });
+    fetch('/api/finance/income-types').then(r => r.json()).then(d => { if (d.incomeTypes) setIncomeTypes(d.incomeTypes); });
       
     fetch('/api/finance/accounts')
       .then(r => r.json())
@@ -58,11 +59,17 @@ export function TransactionCaptureForm({
       setError('Enter a valid amount');
       return;
     }
-    const needsCategory = type === 'EXPENSE' || type === 'INCOME' || type === 'CREDIT_CARD_PURCHASE';
-    if (needsCategory && !categoryId) {
+    
+    if (type === 'EXPENSE' && !categoryId) {
       setError('Select a category');
       return;
     }
+    
+    if (type === 'INCOME' && !incomeTypeId) {
+      setError('Select an income type');
+      return;
+    }
+    
     if ((type === 'TRANSFER' || type === 'CREDIT_CARD_PAYMENT') && (!accountId || !destinationAccountId)) {
       setError('Select both source and destination accounts');
       return;
@@ -71,7 +78,7 @@ export function TransactionCaptureForm({
       setError('Source and destination cannot be the same');
       return;
     }
-    if ((type === 'EXPENSE' || type === 'INCOME' || type === 'CREDIT_CARD_PURCHASE') && !accountId) {
+    if ((type === 'EXPENSE' || type === 'INCOME') && !accountId) {
       setError('Select an account');
       return;
     }
@@ -80,18 +87,20 @@ export function TransactionCaptureForm({
     setLoading(true);
 
     try {
-      const amountMinor = Math.round(Number(amount) * 100);
+      const amountParsed = Math.round(Number(amount));
 
       const res = await fetch('/api/finance/transactions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           type,
-          amountMinor,
-          categoryId: needsCategory ? categoryId : undefined,
+          amount: amountParsed,
+          categoryId: type === 'EXPENSE' ? categoryId : undefined,
+          incomeTypeId: type === 'INCOME' ? incomeTypeId : undefined,
           accountId,
           destinationAccountId: (type === 'TRANSFER' || type === 'CREDIT_CARD_PAYMENT') ? destinationAccountId : undefined,
-          remark,
+          description,
+          merchant,
           transactionDate: date,
         }),
       });
@@ -112,16 +121,23 @@ export function TransactionCaptureForm({
     if (!newCategoryName.trim()) return;
     setCreatingCatLoading(true);
     try {
-      const kind = type === 'INCOME' ? 'INCOME' : 'EXPENSE';
-      const res = await fetch('/api/finance/categories', {
+      const endpoint = type === 'INCOME' ? '/api/finance/income-types' : '/api/finance/categories';
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: newCategoryName, kind })
+        body: JSON.stringify({ name: newCategoryName })
       });
       if (!res.ok) throw new Error("Failed to create category");
       const data = await res.json();
-      setCategories([...categories, data.category]);
-      setCategoryId(data.category.id);
+      
+      if (type === 'INCOME') {
+        setIncomeTypes([...incomeTypes, data.incomeType]);
+        setIncomeTypeId(data.incomeType.id);
+      } else {
+        setCategories([...categories, data.category]);
+        setCategoryId(data.category.id);
+      }
+      
       setIsCreatingCategory(false);
       setNewCategoryName('');
     } catch (e) {
@@ -132,30 +148,18 @@ export function TransactionCaptureForm({
     }
   };
 
-  const categoryKind = type === 'INCOME' ? 'INCOME' : 'EXPENSE';
-  const filteredCategories = categories.filter(c => c.kind === categoryKind || c.kind === 'BOTH');
-  
   // Account filters based on type
   let sourceAccounts = accounts;
   let destAccounts = accounts;
 
-  if (type === 'CREDIT_CARD_PURCHASE') {
-    sourceAccounts = accounts.filter(a => a.type === 'CREDIT_CARD');
-  } else if (type === 'CREDIT_CARD_PAYMENT') {
+  if (type === 'CREDIT_CARD_PAYMENT') {
     sourceAccounts = accounts.filter(a => a.type === 'BANK_ACCOUNT');
     destAccounts = accounts.filter(a => a.type === 'CREDIT_CARD');
-  } else if (type === 'INCOME' || type === 'EXPENSE') {
-    // For normal expense/income, prefer bank accounts or cash, though users could use CC for expense. 
-    // We created CREDIT_CARD_PURCHASE explicitly, so EXPENSE might just be bank/cash.
-    // Let's allow all just in case, but usually EXPENSE is from bank.
-    sourceAccounts = accounts.filter(a => a.type === 'BANK_ACCOUNT');
   }
 
   // Pre-select logic when changing types
   useEffect(() => {
-    if (type === 'CREDIT_CARD_PURCHASE' && sourceAccounts.length > 0) {
-      setAccountId(sourceAccounts[0].id);
-    } else if (type === 'CREDIT_CARD_PAYMENT') {
+    if (type === 'CREDIT_CARD_PAYMENT') {
       if (sourceAccounts.length > 0) setAccountId(sourceAccounts[0].id);
       if (destAccounts.length > 0) setDestinationAccountId(destAccounts[0].id);
     } else if (type === 'EXPENSE' || type === 'INCOME' || type === 'TRANSFER') {
@@ -168,15 +172,15 @@ export function TransactionCaptureForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="flex gap-2 p-1 bg-secondary rounded-lg overflow-x-auto text-xs sm:text-sm custom-scrollbar pb-2">
-        {(['EXPENSE', 'INCOME', 'TRANSFER', 'CREDIT_CARD_PURCHASE', 'CREDIT_CARD_PAYMENT'] as const).map(t => (
+        {(['EXPENSE', 'INCOME', 'TRANSFER', 'CREDIT_CARD_PAYMENT'] as const).map(t => (
           <Button
             key={t}
             type="button"
             variant={type === t ? 'primary' : 'utility'}
-            className={`flex-shrink-0 px-3 whitespace-nowrap ${type === t && t === 'INCOME' ? 'bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-600' : ''}`}
+            className={`flex-shrink-0 px-3 whitespace-nowrap ${type === t && t === 'INCOME' ? 'bg-[hsl(var(--success))] hover:bg-[hsl(var(--success))] text-white border-[hsl(var(--success))]' : ''}`}
             onClick={() => { setType(t); setError(''); setIsCreatingCategory(false); }}
           >
-            {t === 'CREDIT_CARD_PURCHASE' ? 'CC Purchase' : t === 'CREDIT_CARD_PAYMENT' ? 'CC Payment' : t.charAt(0) + t.slice(1).toLowerCase()}
+            {t === 'CREDIT_CARD_PAYMENT' ? 'CC Payment' : t.charAt(0) + t.slice(1).toLowerCase()}
           </Button>
         ))}
       </div>
@@ -198,7 +202,6 @@ export function TransactionCaptureForm({
       <div className="space-y-2">
         <Label>
           {type === 'INCOME' ? 'Received Into' : 
-           type === 'CREDIT_CARD_PURCHASE' ? 'Paid with Card' : 
            type === 'CREDIT_CARD_PAYMENT' ? 'Pay From (Bank)' : 'Paid From'}
         </Label>
         <select 
@@ -231,15 +234,15 @@ export function TransactionCaptureForm({
         </div>
       )}
 
-      {(type === 'EXPENSE' || type === 'INCOME' || type === 'CREDIT_CARD_PURCHASE') && (
+      {(type === 'EXPENSE' || type === 'INCOME') && (
         <div className="space-y-2">
-          <Label>Category</Label>
+          <Label>{type === 'INCOME' ? 'Income Type' : 'Category'}</Label>
           
           {isCreatingCategory ? (
             <div className="flex gap-2 p-2 border border-[hsl(var(--hairline))] rounded-lg bg-[hsl(var(--canvas))]">
               <Input 
                 autoFocus
-                placeholder="New category name"
+                placeholder="New name"
                 value={newCategoryName}
                 onChange={(e) => setNewCategoryName(e.target.value)}
                 className="h-8"
@@ -253,11 +256,11 @@ export function TransactionCaptureForm({
             </div>
           ) : (
             <div className="grid grid-cols-3 gap-2 max-h-40 overflow-y-auto p-1 custom-scrollbar">
-              {filteredCategories.map(cat => (
+              {(type === 'INCOME' ? incomeTypes : categories).map(cat => (
                 <div
                   key={cat.id}
-                  onClick={() => setCategoryId(cat.id)}
-                  className={`p-2 border border-[hsl(var(--hairline))] rounded-md text-center text-xs cursor-pointer transition-colors ${categoryId === cat.id ? 'bg-[hsl(var(--primary))] text-white border-[hsl(var(--primary))]' : 'bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-elevated))]'}`}
+                  onClick={() => type === 'INCOME' ? setIncomeTypeId(cat.id) : setCategoryId(cat.id)}
+                  className={`p-2 border border-[hsl(var(--hairline))] rounded-md text-center text-xs cursor-pointer transition-colors ${(type === 'INCOME' ? incomeTypeId : categoryId) === cat.id ? 'bg-[hsl(var(--primary))] text-white border-[hsl(var(--primary))]' : 'bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-elevated))]'}`}
                 >
                   {cat.name}
                 </div>
@@ -279,12 +282,17 @@ export function TransactionCaptureForm({
           <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} required className="h-10 bg-[hsl(var(--canvas))]" />
         </div>
         <div className="space-y-2">
-          <Label>Remark / Merchant</Label>
-          <Input type="text" value={remark} onChange={(e) => setRemark(e.target.value)} placeholder="Optional" className="h-10 bg-[hsl(var(--canvas))]" />
+          <Label>Merchant</Label>
+          <Input type="text" value={merchant} onChange={(e) => setMerchant(e.target.value)} placeholder="Optional" className="h-10 bg-[hsl(var(--canvas))]" />
         </div>
       </div>
+      
+      <div className="space-y-2">
+        <Label>Description / Note</Label>
+        <Input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Optional" className="h-10 bg-[hsl(var(--canvas))]" />
+      </div>
 
-      {error && <div className="text-destructive text-sm font-medium">{error}</div>}
+      {error && <div className="text-[hsl(var(--destructive))] text-sm font-medium">{error}</div>}
 
       <div className="flex gap-2 pt-4 border-t border-[hsl(var(--hairline))] mt-4">
         <Button type="button" variant="utility" className="flex-1" onClick={onCancel}>

@@ -2,23 +2,23 @@ import { db } from "@/lib/db";
 import { 
   financeCategories, 
   financeTransactions, 
-  financeAllocationRuleSets, 
-  financeAllocationRules, 
-  financeAllocationSnapshots,
-  financeAccounts
+  financeAccounts,
+  financeMonthlyPlans,
+  financeMonthlyPlanItems,
+  financeSavingsGoals
 } from "@/lib/db/schema";
-import { eq, and, isNull, desc, gte, lte } from "drizzle-orm";
+import { eq, and, desc, gte, lte } from "drizzle-orm";
 
 const DEFAULT_CATEGORIES = [
-  { name: "Food", kind: "EXPENSE" },
-  { name: "Transport", kind: "EXPENSE" },
-  { name: "Shopping", kind: "EXPENSE" },
-  { name: "Subscriptions", kind: "EXPENSE" },
-  { name: "Bills", kind: "EXPENSE" },
-  { name: "Health", kind: "EXPENSE" },
-  { name: "Entertainment", kind: "EXPENSE" },
-  { name: "Travel", kind: "EXPENSE" },
-  { name: "Other", kind: "BOTH", isSystemOther: true },
+  { name: "Food" },
+  { name: "Transport" },
+  { name: "Shopping" },
+  { name: "Subscriptions" },
+  { name: "Bills" },
+  { name: "Health" },
+  { name: "Entertainment" },
+  { name: "Travel" },
+  { name: "Other" },
 ];
 
 export async function ensureDefaultCategories(userId: string) {
@@ -28,83 +28,76 @@ export async function ensureDefaultCategories(userId: string) {
     const values = DEFAULT_CATEGORIES.map((c, i) => ({
       userId,
       name: c.name,
-      kind: c.kind,
-      isSystemOther: c.isSystemOther || false,
       sortOrder: i,
     }));
     await db.insert(financeCategories).values(values);
   }
 }
 
-export async function getActiveRuleSet(userId: string, dateStr: string) {
-  // Finds the active rule set covering the given date (YYYY-MM-DD)
-  // For MVP we just use the first ACTIVE rule set if date boundaries are simple,
-  // but let's query for one where status = ACTIVE.
-  
-  const rulesets = await db.select()
-    .from(financeAllocationRuleSets)
-    .where(and(
-      eq(financeAllocationRuleSets.userId, userId),
-      eq(financeAllocationRuleSets.status, 'ACTIVE')
-    ))
-    .limit(1);
-    
-  if (rulesets.length === 0) return null;
-  const rs = rulesets[0];
-  
-  const rules = await db.select()
-    .from(financeAllocationRules)
-    .where(eq(financeAllocationRules.ruleSetId, rs.id))
-    .orderBy(financeAllocationRules.sortOrder);
-    
-  return { ruleSet: rs, rules };
-}
+export async function getAccountBalances(userId: string) {
+  const accounts = await db.select().from(financeAccounts).where(eq(financeAccounts.userId, userId));
+  const allTx = await db.select().from(financeTransactions)
+    .where(and(eq(financeTransactions.userId, userId), eq(financeTransactions.status, 'POSTED')));
 
-export async function createAllocationSnapshots(tx: any, userId: string, incomeTransactionId: string, amountMinor: number, transactionDate: string) {
-  const activeConfig = await getActiveRuleSet(userId, transactionDate);
-  if (!activeConfig || activeConfig.rules.length === 0) return;
-
-  const { ruleSet, rules } = activeConfig;
+  const balances: Record<string, number> = {};
   
-  let remainingAmount = amountMinor;
-  const snapshots = [];
-
-  for (let i = 0; i < rules.length; i++) {
-    const rule = rules[i];
-    // amount = Income * (basis points / 10000)
-    let ruleAmount = Math.floor((amountMinor * rule.percentageBasisPoints) / 10000);
-    
-    // Distribute remainder to the last rule
-    if (i === rules.length - 1) {
-      ruleAmount = remainingAmount;
+  // Initialize balances with opening amounts
+  accounts.forEach(acc => {
+    if (acc.type === 'CREDIT_CARD') {
+      balances[acc.id] = acc.openingOutstanding || 0;
     } else {
-      remainingAmount -= ruleAmount;
+      balances[acc.id] = acc.openingBalance || 0;
     }
+  });
 
-    snapshots.push({
-      userId,
-      incomeTransactionId,
-      ruleId: rule.id,
-      ruleSetId: ruleSet.id,
-      label: rule.label,
-      purpose: rule.purpose,
-      percentageBasisPoints: rule.percentageBasisPoints,
-      amountMinor: ruleAmount,
-    });
+  for (const tx of allTx) {
+    // Bank Account Balance: + Income + Transfer IN - Transfer OUT - Expense - CC Payment
+    // Credit Card Outstanding: + Expense - CC Payment
+    
+    if (tx.type === 'INCOME') {
+      if (tx.accountId && balances[tx.accountId] !== undefined) {
+        balances[tx.accountId] += tx.amount;
+      }
+    } else if (tx.type === 'EXPENSE') {
+      if (tx.accountId && balances[tx.accountId] !== undefined) {
+        const isCreditCard = accounts.find(a => a.id === tx.accountId)?.type === 'CREDIT_CARD';
+        if (isCreditCard) {
+          balances[tx.accountId] += tx.amount; // Outstanding liability increases
+        } else {
+          balances[tx.accountId] -= tx.amount; // Bank balance decreases
+        }
+      }
+    } else if (tx.type === 'CREDIT_CARD_PAYMENT') {
+      if (tx.accountId && balances[tx.accountId] !== undefined) {
+        balances[tx.accountId] -= tx.amount; // From Bank Account
+      }
+      if (tx.destinationAccountId && balances[tx.destinationAccountId] !== undefined) {
+        balances[tx.destinationAccountId] -= tx.amount; // To Credit Card (reduces liability)
+      }
+    } else if (tx.type === 'TRANSFER') {
+      if (tx.accountId && balances[tx.accountId] !== undefined) {
+        balances[tx.accountId] -= tx.amount;
+      }
+      if (tx.destinationAccountId && balances[tx.destinationAccountId] !== undefined) {
+        balances[tx.destinationAccountId] += tx.amount;
+      }
+    }
   }
 
-  if (snapshots.length > 0) {
-    await tx.insert(financeAllocationSnapshots).values(snapshots);
-  }
+  return accounts.map(acc => ({
+    ...acc,
+    balance: balances[acc.id] || 0,
+    availableCredit: acc.type === 'CREDIT_CARD' && acc.creditLimit ? (acc.creditLimit - (balances[acc.id] || 0)) : null
+  }));
 }
 
 export async function getMonthlySummary(userId: string, yearMonth: string) {
   // yearMonth is 'YYYY-MM'
   const startDate = `${yearMonth}-01`;
-  
-  // To get end of month, we can parse it
   const [yearStr, monthStr] = yearMonth.split('-');
-  const endDateObj = new Date(parseInt(yearStr), parseInt(monthStr), 0);
+  const year = parseInt(yearStr);
+  const month = parseInt(monthStr);
+  const endDateObj = new Date(year, month, 0);
   const endDate = `${yearStr}-${monthStr}-${endDateObj.getDate().toString().padStart(2, '0')}`;
 
   const transactions = await db.select()
@@ -120,48 +113,35 @@ export async function getMonthlySummary(userId: string, yearMonth: string) {
   let totalExpense = 0;
   const categorySpending: Record<string, number> = {};
 
-  const incomeTxIds = [];
-
   for (const t of transactions) {
     if (t.type === 'INCOME') {
-      totalIncome += t.amountMinor;
-      incomeTxIds.push(t.id);
-    } else if (t.type === 'EXPENSE' || t.type === 'CREDIT_CARD_PURCHASE') {
-      totalExpense += t.amountMinor;
+      totalIncome += t.amount;
+    } else if (t.type === 'EXPENSE') {
+      totalExpense += t.amount;
       if (t.categoryId) {
         if (!categorySpending[t.categoryId]) categorySpending[t.categoryId] = 0;
-        categorySpending[t.categoryId] += t.amountMinor;
-      }
-    } else if (t.type === 'REFUND') {
-      totalExpense -= t.amountMinor;
-      if (t.categoryId) {
-        if (!categorySpending[t.categoryId]) categorySpending[t.categoryId] = 0;
-        categorySpending[t.categoryId] -= t.amountMinor;
+        categorySpending[t.categoryId] += t.amount;
       }
     }
   }
 
-  // Get snapshots for the income in this month
-  let plannedSavings = 0;
-  let plannedEmergency = 0;
-  let plannedSpendingAllocation = 0;
+  // Get Monthly Plan
+  let plannedTotal = 0;
+  const plannedCategorySpending: Record<string, number> = {};
+  
+  const plan = await db.select().from(financeMonthlyPlans).where(
+    and(eq(financeMonthlyPlans.userId, userId), eq(financeMonthlyPlans.month, month), eq(financeMonthlyPlans.year, year))
+  ).limit(1);
 
-  if (incomeTxIds.length > 0) {
-    // We cannot use IN clause with empty array in drizzle easily, so only if length > 0
-    const snapshots = await db.select()
-      .from(financeAllocationSnapshots)
-      .where(eq(financeAllocationSnapshots.userId, userId)); // Filter in memory for MVP speed / simplicity
-      
-    for (const s of snapshots) {
-      if (incomeTxIds.includes(s.incomeTransactionId)) {
-        if (s.purpose === 'SAVINGS') plannedSavings += s.amountMinor;
-        else if (s.purpose === 'EMERGENCY_FUND') plannedEmergency += s.amountMinor;
-        else if (s.purpose === 'SPENDING') plannedSpendingAllocation += s.amountMinor;
+  if (plan.length > 0) {
+    const planItems = await db.select().from(financeMonthlyPlanItems).where(eq(financeMonthlyPlanItems.planId, plan[0].id));
+    for (const item of planItems) {
+      plannedTotal += item.amount;
+      if (item.expenseCategoryId) {
+        plannedCategorySpending[item.expenseCategoryId] = item.amount;
       }
     }
   }
-
-  const leftover = totalIncome - totalExpense - plannedSavings - plannedEmergency;
 
   const categories = await db.select().from(financeCategories).where(eq(financeCategories.userId, userId));
   const categoryMap = categories.reduce((acc, c) => {
@@ -169,113 +149,27 @@ export async function getMonthlySummary(userId: string, yearMonth: string) {
     return acc;
   }, {} as Record<string, string>);
 
-  const namedCategorySpending: Record<string, number> = {};
+  const namedCategorySpending: Record<string, { actual: number, planned: number }> = {};
+  
+  // Initialize with all planned categories
+  for (const [catId, plannedAmount] of Object.entries(plannedCategorySpending)) {
+    const name = categoryMap[catId] || 'Unknown';
+    if (!namedCategorySpending[name]) namedCategorySpending[name] = { actual: 0, planned: 0 };
+    namedCategorySpending[name].planned = plannedAmount;
+  }
+  
+  // Add actual spending
   for (const [catId, amount] of Object.entries(categorySpending)) {
     const name = categoryMap[catId] || 'Unknown';
-    if (!namedCategorySpending[name]) namedCategorySpending[name] = 0;
-    namedCategorySpending[name] += amount as number;
+    if (!namedCategorySpending[name]) namedCategorySpending[name] = { actual: 0, planned: 0 };
+    namedCategorySpending[name].actual = amount as number;
   }
 
   return {
     totalIncome,
     totalExpense,
-    plannedSavings,
-    plannedEmergency,
-    plannedSpendingAllocation,
-    leftover,
+    plannedTotal,
+    leftover: totalIncome - plannedTotal,
     categorySpending: namedCategorySpending,
   };
-}
-
-// Global aggregates for Savings & Emergency (All time)
-export async function getAccumulatedBalances(userId: string) {
-  const snapshots = await db.select()
-    .from(financeAllocationSnapshots)
-    .where(eq(financeAllocationSnapshots.userId, userId));
-    
-  let savings = 0;
-  let emergency = 0;
-  
-  for (const s of snapshots) {
-    // Check if the underlying income transaction is still POSTED
-    // A JOIN would be better here for performance, doing it simple for MVP logic outline
-    if (s.purpose === 'SAVINGS') savings += s.amountMinor;
-    if (s.purpose === 'EMERGENCY_FUND') emergency += s.amountMinor;
-  }
-  
-  // Real check with JOIN:
-  const validSnapshots = await db.select({
-    purpose: financeAllocationSnapshots.purpose,
-    amountMinor: financeAllocationSnapshots.amountMinor
-  })
-  .from(financeAllocationSnapshots)
-  .innerJoin(financeTransactions, eq(financeAllocationSnapshots.incomeTransactionId, financeTransactions.id))
-  .where(and(
-    eq(financeAllocationSnapshots.userId, userId),
-    eq(financeTransactions.status, 'POSTED')
-  ));
-  
-  savings = 0;
-  emergency = 0;
-  for (const vs of validSnapshots) {
-    if (vs.purpose === 'SAVINGS') savings += vs.amountMinor;
-    if (vs.purpose === 'EMERGENCY_FUND') emergency += vs.amountMinor;
-  }
-
-  return { savings, emergency };
-}
-
-export async function getAccountBalances(userId: string) {
-  const accounts = await db.select().from(financeAccounts).where(eq(financeAccounts.userId, userId));
-  
-  // We calculate balance from all POSTED transactions
-  // Bank Account Balance: Sum(INCOME) - Sum(EXPENSE) - Sum(TRANSFER OUT) + Sum(TRANSFER IN) - Sum(CREDIT_CARD_PAYMENT)
-  // Credit Card Outstanding: Sum(EXPENSE) - Sum(CREDIT_CARD_PAYMENT) - Sum(REFUND)
-  
-  const allTx = await db.select().from(financeTransactions)
-    .where(and(eq(financeTransactions.userId, userId), eq(financeTransactions.status, 'POSTED')));
-
-  const balances: Record<string, number> = {};
-  accounts.forEach(acc => balances[acc.id] = 0);
-
-  for (const tx of allTx) {
-    if (tx.type === 'INCOME' && tx.accountId && balances[tx.accountId] !== undefined) {
-      balances[tx.accountId] += tx.amountMinor;
-    } else if (tx.type === 'EXPENSE' && tx.accountId && balances[tx.accountId] !== undefined) {
-      if (accounts.find(a => a.id === tx.accountId)?.type === 'CREDIT_CARD') {
-        balances[tx.accountId] += tx.amountMinor; // Outstanding liability increases
-      } else {
-        balances[tx.accountId] -= tx.amountMinor; // Bank balance decreases
-      }
-    } else if (tx.type === 'CREDIT_CARD_PURCHASE' && tx.accountId && balances[tx.accountId] !== undefined) {
-      balances[tx.accountId] += tx.amountMinor; // Outstanding liability increases
-    } else if (tx.type === 'REFUND' && tx.accountId && balances[tx.accountId] !== undefined) {
-      if (accounts.find(a => a.id === tx.accountId)?.type === 'CREDIT_CARD') {
-        balances[tx.accountId] -= tx.amountMinor; // Liability decreases
-      } else {
-        balances[tx.accountId] += tx.amountMinor; // Bank balance increases
-      }
-    } else if (tx.type === 'CREDIT_CARD_PAYMENT') {
-      if (tx.accountId && balances[tx.accountId] !== undefined) {
-        balances[tx.accountId] -= tx.amountMinor; // From Bank Account
-      }
-      if (tx.destinationAccountId && balances[tx.destinationAccountId] !== undefined) {
-        balances[tx.destinationAccountId] -= tx.amountMinor; // To Credit Card (reduces liability)
-      }
-    } else if (tx.type === 'TRANSFER') {
-      if (tx.accountId && balances[tx.accountId] !== undefined) {
-        balances[tx.accountId] -= tx.amountMinor;
-      }
-      if (tx.destinationAccountId && balances[tx.destinationAccountId] !== undefined) {
-        balances[tx.destinationAccountId] += tx.amountMinor;
-      }
-    }
-  }
-
-  // Attach balances to account objects
-  return accounts.map(acc => ({
-    ...acc,
-    balanceMinor: balances[acc.id] || 0,
-    availableCreditMinor: acc.type === 'CREDIT_CARD' && acc.creditLimitMinor ? (acc.creditLimitMinor - (balances[acc.id] || 0)) : null
-  }));
 }

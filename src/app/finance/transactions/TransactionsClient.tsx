@@ -9,7 +9,7 @@ import { TransactionFilters } from '@/components/finance/TransactionFilters';
 import { TransactionHistory } from '@/components/finance/TransactionHistory';
 import { TransactionEditDrawer } from '@/components/finance/TransactionEditDrawer';
 
-export function TransactionsClient({ accounts, categories }: { accounts: any[], categories: any[] }) {
+export function TransactionsClient({ accounts, categories, incomeTypes }: { accounts: any[], categories: any[], incomeTypes: any[] }) {
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState({
     type: 'all',
@@ -141,6 +141,7 @@ export function TransactionsClient({ accounts, categories }: { accounts: any[], 
         transaction={selectedTx}
         accounts={accounts}
         categories={categories}
+        incomeTypes={incomeTypes}
         onSaved={() => fetchTransactions(true)}
       />
     </div>

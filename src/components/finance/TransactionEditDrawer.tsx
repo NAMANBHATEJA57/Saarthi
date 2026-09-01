@@ -6,16 +6,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { ArrowDownRight, ArrowUpRight, ArrowRightLeft, CreditCard, Landmark, RotateCcw, X, Check } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, ArrowRightLeft, Landmark, X, Check } from "lucide-react";
 import { format, parseISO } from "date-fns";
 
 const TYPE_CONFIG: Record<string, { label: string; icon: any; color: string; bgColor: string; prefix: string }> = {
-  INCOME:              { label: 'Income',       icon: ArrowDownRight, color: 'text-emerald-400', bgColor: 'bg-emerald-500/10', prefix: '+' },
-  EXPENSE:             { label: 'Expense',      icon: ArrowUpRight,   color: 'text-red-400',     bgColor: 'bg-red-500/10',     prefix: '-' },
-  CREDIT_CARD_PURCHASE:{ label: 'CC Purchase',  icon: CreditCard,     color: 'text-orange-400',  bgColor: 'bg-orange-500/10',  prefix: '-' },
-  CREDIT_CARD_PAYMENT: { label: 'CC Payment',   icon: Landmark,       color: 'text-blue-400',    bgColor: 'bg-blue-500/10',    prefix: '' },
-  TRANSFER:            { label: 'Transfer',     icon: ArrowRightLeft, color: 'text-purple-400',  bgColor: 'bg-purple-500/10',  prefix: '' },
-  REFUND:              { label: 'Refund',       icon: RotateCcw,      color: 'text-cyan-400',    bgColor: 'bg-cyan-500/10',    prefix: '+' },
+  INCOME:              { label: 'Income',       icon: ArrowDownRight, color: 'text-[hsl(var(--success))]', bgColor: 'bg-[hsl(var(--success))]/10', prefix: '+' },
+  EXPENSE:             { label: 'Expense',      icon: ArrowUpRight,   color: 'text-[hsl(var(--destructive))]',     bgColor: 'bg-[hsl(var(--destructive))]/10',     prefix: '-' },
+  TRANSFER:            { label: 'Transfer',     icon: ArrowRightLeft, color: 'text-[hsl(var(--primary))]',  bgColor: 'bg-[hsl(var(--primary))]/10',  prefix: '' },
+  CREDIT_CARD_PAYMENT: { label: 'CC Payment',   icon: Landmark,       color: 'text-[hsl(var(--info))]',    bgColor: 'bg-[hsl(var(--info))]/10',    prefix: '' },
 };
 
 export function TransactionEditDrawer({ 
@@ -24,6 +22,7 @@ export function TransactionEditDrawer({
   transaction, 
   accounts, 
   categories,
+  incomeTypes,
   onSaved
 }: { 
   open: boolean; 
@@ -31,12 +30,17 @@ export function TransactionEditDrawer({
   transaction: any;
   accounts: any[];
   categories: any[];
+  incomeTypes: any[];
   onSaved: () => void;
 }) {
-  const [remark, setRemark] = useState("");
+  const [description, setDescription] = useState("");
+  const [merchant, setMerchant] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
   const [categoryId, setCategoryId] = useState("none");
+  const [incomeTypeId, setIncomeTypeId] = useState("none");
+  const [accountId, setAccountId] = useState("none");
+  const [destinationAccountId, setDestinationAccountId] = useState("none");
   const [type, setType] = useState("EXPENSE");
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -44,10 +48,14 @@ export function TransactionEditDrawer({
   // Sync state whenever transaction changes (fixes empty form bug)
   useEffect(() => {
     if (transaction) {
-      setRemark(transaction.remark || transaction.originalDescription || "");
-      setAmount(transaction.amountMinor ? (transaction.amountMinor / 100).toString() : "");
+      setDescription(transaction.description || "");
+      setMerchant(transaction.merchant || "");
+      setAmount(transaction.amount ? (transaction.amount).toString() : "");
       setDate(transaction.transactionDate || "");
       setCategoryId(transaction.categoryId || "none");
+      setIncomeTypeId(transaction.incomeTypeId || "none");
+      setAccountId(transaction.accountId || "none");
+      setDestinationAccountId(transaction.destinationAccountId || "none");
       setType(transaction.type || "EXPENSE");
       setSaved(false);
     }
@@ -66,10 +74,14 @@ export function TransactionEditDrawer({
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          remark,
-          amountMinor: Math.round(parseFloat(amount) * 100),
+          description,
+          merchant,
+          amount: Math.round(parseFloat(amount)),
           transactionDate: date,
           categoryId: categoryId === 'none' ? null : categoryId,
+          incomeTypeId: incomeTypeId === 'none' ? null : incomeTypeId,
+          accountId: accountId === 'none' ? null : accountId,
+          destinationAccountId: destinationAccountId === 'none' ? null : destinationAccountId,
           type,
         })
       });
@@ -148,60 +160,93 @@ export function TransactionEditDrawer({
         {/* Form body */}
         <form onSubmit={handleSave} className="p-6 space-y-5">
           
-          <div className="space-y-1.5">
-            <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Merchant / Description</Label>
-            <Input value={remark} onChange={e => setRemark(e.target.value)} placeholder="e.g. Swiggy, Salary, Amazon" className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-11" />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Merchant</Label>
+              <Input value={merchant} onChange={e => setMerchant(e.target.value)} placeholder="e.g. Swiggy" className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-11" />
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Date</Label>
+              <Input type="date" value={date} onChange={e => setDate(e.target.value)} className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-11" />
+            </div>
           </div>
-
+          
           <div className="space-y-1.5">
-            <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Date</Label>
-            <Input type="date" value={date} onChange={e => setDate(e.target.value)} className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-11" />
+            <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Description</Label>
+            <Input value={description} onChange={e => setDescription(e.target.value)} placeholder="e.g. Salary, Amazon" className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-11" />
           </div>
 
           {/* Type selector grid */}
           <div className="space-y-1.5">
             <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Transaction Type</Label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-4 gap-2">
               {Object.entries(TYPE_CONFIG).map(([key, c]) => {
                 const TIcon = c.icon;
                 const active = type === key;
                 return (
                   <button key={key} type="button" onClick={() => setType(key)}
-                    className={`flex flex-col items-center gap-1.5 p-2.5 rounded-xl border text-xs font-medium transition-all ${
+                    className={`flex flex-col items-center gap-1.5 p-2 rounded-xl border text-[10px] font-medium transition-all ${
                       active ? `${c.bgColor} border-white/20 ${c.color}` : 'bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] text-[hsl(var(--ink-secondary))] hover:border-[hsl(var(--ink-muted))]'
                     }`}
                   >
                     <TIcon className="w-4 h-4" />
-                    <span className="leading-tight text-center">{c.label}</span>
+                    <span className="leading-tight text-center whitespace-nowrap">{c.label}</span>
                   </button>
                 );
               })}
             </div>
           </div>
-
+          
           <div className="space-y-1.5">
-            <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Category</Label>
-            <Select value={categoryId} onValueChange={setCategoryId}>
+            <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">From Account</Label>
+            <Select value={accountId} onValueChange={setAccountId}>
               <SelectTrigger className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-11">
-                <SelectValue placeholder="No category" />
+                <SelectValue placeholder="No account" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="none">No category</SelectItem>
-                {categories.map(c => (
+                <SelectItem value="none">No account</SelectItem>
+                {accounts.map(c => (
                   <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
-
-          {transaction.originalDescription && (
-            <div className="flex items-start gap-2 bg-[hsl(var(--surface-elevated))] border border-[hsl(var(--hairline))] p-3 rounded-lg">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-[hsl(var(--ink-muted))] mt-0.5 shrink-0">Imported</span>
-              <span className="text-xs text-[hsl(var(--ink-secondary))] truncate">{transaction.originalDescription}</span>
+          
+          {(type === 'TRANSFER' || type === 'CREDIT_CARD_PAYMENT') && (
+            <div className="space-y-1.5">
+              <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">To Account</Label>
+              <Select value={destinationAccountId} onValueChange={setDestinationAccountId}>
+                <SelectTrigger className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-11">
+                  <SelectValue placeholder="No account" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">No account</SelectItem>
+                  {accounts.map(c => (
+                    <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           )}
 
-          <div className="flex gap-3 pt-2">
+          {(type === 'EXPENSE' || type === 'INCOME') && (
+            <div className="space-y-1.5">
+              <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">{type === 'INCOME' ? 'Income Type' : 'Category'}</Label>
+              <Select value={type === 'INCOME' ? incomeTypeId : categoryId} onValueChange={type === 'INCOME' ? setIncomeTypeId : setCategoryId}>
+                <SelectTrigger className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-11">
+                  <SelectValue placeholder="No category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">No category</SelectItem>
+                  {(type === 'INCOME' ? incomeTypes : categories).map(c => (
+                    <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
+          <div className="flex gap-3 pt-2 border-t border-[hsl(var(--hairline))] mt-4">
             <Button type="button" variant="utility" className="h-11 px-4 text-[hsl(var(--destructive))] hover:border-[hsl(var(--destructive))] hover:bg-[hsl(var(--destructive))]/10" onClick={handleDelete} disabled={loading || saved}>Delete</Button>
             <Button type="button" variant="utility" className="flex-1 h-11" onClick={() => onOpenChange(false)}>Cancel</Button>
             <Button type="submit" variant="primary" className="flex-1 h-11 gap-2" disabled={loading || saved}>

@@ -2,7 +2,7 @@ import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 import { TransactionsClient } from './TransactionsClient';
 import { db } from '@/lib/db';
-import { financeAccounts, financeCategories } from '@/lib/db/schema';
+import { financeAccounts, financeCategories, financeIncomeTypes } from '@/lib/db/schema';
 import { eq, desc } from 'drizzle-orm';
 
 export default async function TransactionsPage() {
@@ -11,9 +11,10 @@ export default async function TransactionsPage() {
   
   const userId = session.user.id;
 
-  const [accounts, categories] = await Promise.all([
+  const [accounts, categories, incomeTypes] = await Promise.all([
     db.select().from(financeAccounts).where(eq(financeAccounts.userId, userId)),
-    db.select().from(financeCategories).where(eq(financeCategories.userId, userId)).orderBy(desc(financeCategories.sortOrder))
+    db.select().from(financeCategories).where(eq(financeCategories.userId, userId)).orderBy(desc(financeCategories.sortOrder)),
+    db.select().from(financeIncomeTypes).where(eq(financeIncomeTypes.userId, userId)).orderBy(desc(financeIncomeTypes.sortOrder))
   ]);
 
   return (
@@ -21,7 +22,7 @@ export default async function TransactionsPage() {
       <header className="flex items-center justify-between">
         <h1 className="text-2xl font-bold tracking-tight">Transactions</h1>
       </header>
-      <TransactionsClient accounts={accounts} categories={categories} />
+      <TransactionsClient accounts={accounts} categories={categories} incomeTypes={incomeTypes} />
     </div>
   );
 }

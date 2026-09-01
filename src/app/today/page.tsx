@@ -75,7 +75,7 @@ export default async function TodayPage() {
     financeSummary = await getMonthlySummary(userId, currentMonthStr);
     
     const accounts = await getAccountBalances(userId);
-    bankBalance = accounts.filter(a => a.type === 'BANK_ACCOUNT').reduce((sum, a) => sum + (a.balanceMinor || 0), 0) / 100;
+    bankBalance = accounts.filter(a => a.type === 'BANK_ACCOUNT').reduce((sum, a) => sum + (a.balance || 0), 0);
     
     const rawTasks = await getTodayTasksSummary(userId, todayDateString);
     todayTasks = await Promise.all(rawTasks.map(async (task) => {

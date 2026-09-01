@@ -396,11 +396,17 @@ export const financeCategories = pgTable('finance_categories', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
   name: text('name').notNull(),
-  kind: text('kind').notNull(), // 'INCOME', 'EXPENSE', or 'BOTH'
-  isSystemOther: boolean('is_system_other').default(false).notNull(),
   isActive: boolean('is_active').default(true).notNull(),
   sortOrder: integer('sort_order').default(0).notNull(),
   suggestionKeys: jsonb('suggestion_keys').$type<string[]>(), // optional keywords for auto-categorization
+});
+
+export const financeIncomeTypes = pgTable('finance_income_types', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  name: text('name').notNull(),
+  isActive: boolean('is_active').default(true).notNull(),
+  sortOrder: integer('sort_order').default(0).notNull(),
 });
 
 export const financeAccounts = pgTable('finance_accounts', {
@@ -409,12 +415,22 @@ export const financeAccounts = pgTable('finance_accounts', {
   name: text('name').notNull(),
   type: text('type').notNull(), // 'BANK_ACCOUNT' or 'CREDIT_CARD'
   currencyCode: text('currency_code').default('INR').notNull(),
-  creditLimitMinor: integer('credit_limit_minor'), // e.g. for credit cards
-  statementDay: integer('statement_day'), // 1-31
-  dueDay: integer('due_day'), // 1-31
+  
+  // Bank Account fields
+  openingBalance: integer('opening_balance').default(0).notNull(),
+  openingBalanceDate: timestamp('opening_balance_date', { withTimezone: true }),
+  
+  // Credit Card fields
+  creditLimit: integer('credit_limit'),
+  openingOutstanding: integer('opening_outstanding').default(0).notNull(),
+  openingOutstandingDate: timestamp('opening_outstanding_date', { withTimezone: true }),
+  statementDay: integer('statement_day'),
+  dueDay: integer('due_day'),
+  
   lastFour: text('last_four'),
   notes: text('notes'),
   institutionId: text('institution_id'),
+  logo: text('logo'),
   isActive: boolean('is_active').default(true).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
@@ -426,79 +442,63 @@ export const financeAccounts = pgTable('finance_accounts', {
 export const financeTransactions = pgTable('finance_transactions', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
-  type: text('type').notNull(), // 'INCOME' or 'EXPENSE'
-  amountMinor: integer('amount_minor').notNull(),
+  type: text('type').notNull(), // 'INCOME', 'EXPENSE', 'TRANSFER', 'CREDIT_CARD_PAYMENT'
+  amount: integer('amount').notNull(),
   currencyCode: text('currency_code').notNull(),
   transactionDate: date('transaction_date', { mode: 'string' }).notNull(), // YYYY-MM-DD
-  accountId: uuid('account_id').references(() => financeAccounts.id), // Nullable for legacy data migration
-  destinationAccountId: uuid('destination_account_id').references(() => financeAccounts.id), // For transfers
-  categoryId: uuid('category_id').references(() => financeCategories.id), // Make nullable since transfers/payments don't need categories
-  remark: text('remark'),
-  source: text('source').notNull(), // 'MANUAL' or 'RECURRING' or 'IMPORT'
-  originalDescription: text('original_description'),
-  originalAmountMinor: integer('original_amount_minor'),
-  providerTransactionId: text('provider_transaction_id'),
-  recurringRuleId: uuid('recurring_rule_id'), // nullable, references financeRecurringRules.id later
+  
+  accountId: uuid('account_id').references(() => financeAccounts.id), // Source account
+  destinationAccountId: uuid('destination_account_id').references(() => financeAccounts.id), // For transfers/payments
+  externalRecipientName: text('external_recipient_name'), // For external transfers
+  
+  categoryId: uuid('category_id').references(() => financeCategories.id),
+  incomeTypeId: uuid('income_type_id').references(() => financeIncomeTypes.id),
+  
+  description: text('description'),
+  merchant: text('merchant'),
+  notes: text('notes'),
+  
+  source: text('source').notNull(), // 'MANUAL', 'OCR', 'IMPORT'
+  sourceMetadata: jsonb('source_metadata'),
+  
   status: text('status').default('POSTED').notNull(), // 'POSTED' or 'VOIDED'
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 }, (table) => ({
   userIdDateIdx: index('finance_transactions_user_id_date_idx').on(table.userId, table.transactionDate),
   userIdTypeDateIdx: index('finance_transactions_user_id_type_date_idx').on(table.userId, table.type, table.transactionDate),
-  recurringRuleIdx: index('finance_transactions_recurring_rule_idx').on(table.recurringRuleId),
 }));
 
-export const financeAllocationRuleSets = pgTable('finance_allocation_rule_sets', {
+export const financeMonthlyPlans = pgTable('finance_monthly_plans', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
-  effectiveFrom: date('effective_from', { mode: 'string' }),
-  effectiveTo: date('effective_to', { mode: 'string' }),
-  status: text('status').notNull(), // 'DRAFT', 'ACTIVE', 'RETIRED'
+  month: integer('month').notNull(), // 1-12
+  year: integer('year').notNull(), // e.g. 2026
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+  userMonthYearIdx: uniqueIndex('finance_monthly_plans_user_month_year_idx').on(table.userId, table.month, table.year),
+}));
+
+export const financeSavingsGoals = pgTable('finance_savings_goals', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  name: text('name').notNull(),
+  ultimateTargetAmount: integer('ultimate_target_amount'),
+  accountId: uuid('account_id').references(() => financeAccounts.id),
+  monthlyTargetAmount: integer('monthly_target_amount'),
+  currentSavedAmount: integer('current_saved_amount').default(0).notNull(),
+  isActive: boolean('is_active').default(true).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 });
 
-export const financeAllocationRules = pgTable('finance_allocation_rules', {
+export const financeMonthlyPlanItems = pgTable('finance_monthly_plan_items', {
   id: uuid('id').primaryKey().defaultRandom(),
-  ruleSetId: uuid('rule_set_id').notNull().references(() => financeAllocationRuleSets.id, { onDelete: 'cascade' }),
-  label: text('label').notNull(),
-  purpose: text('purpose').notNull(), // 'SPENDING', 'SAVINGS', 'EMERGENCY_FUND', 'OTHER'
-  percentageBasisPoints: integer('percentage_basis_points').notNull(), // 0 - 10000
-  sortOrder: integer('sort_order').default(0).notNull(),
-  expenseCategoryId: uuid('expense_category_id').references(() => financeCategories.id),
-});
-
-export const financeAllocationSnapshots = pgTable('finance_allocation_snapshots', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
-  incomeTransactionId: uuid('income_transaction_id').notNull().references(() => financeTransactions.id, { onDelete: 'cascade' }),
-  ruleId: uuid('rule_id').notNull(), // snapshot reference
-  ruleSetId: uuid('rule_set_id').notNull(), // snapshot reference
-  label: text('label').notNull(),
-  purpose: text('purpose').notNull(),
-  percentageBasisPoints: integer('percentage_basis_points').notNull(),
-  amountMinor: integer('amount_minor').notNull(),
-  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
-}, (table) => ({
-  uniqueIncomeRuleIdx: uniqueIndex('finance_allocation_snapshots_income_rule_idx').on(table.incomeTransactionId, table.ruleId),
-}));
-
-export const financeRecurringRules = pgTable('finance_recurring_rules', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
-  type: text('type').notNull(), // 'INCOME' or 'EXPENSE'
-  amountMinor: integer('amount_minor').notNull(),
-  currencyCode: text('currency_code').notNull(),
-  categoryId: uuid('category_id').notNull().references(() => financeCategories.id),
-  remarkTemplate: text('remark_template'),
-  frequency: text('frequency').default('MONTHLY').notNull(),
-  dayOfMonth: integer('day_of_month').notNull(), // 1 - 31
-  startsOn: date('starts_on', { mode: 'string' }),
-  endsOn: date('ends_on', { mode: 'string' }),
-  nextOccurrenceOn: date('next_occurrence_on', { mode: 'string' }),
-  isActive: boolean('is_active').default(true).notNull(),
-  version: integer('version').default(1).notNull(),
-  replacedByRuleId: uuid('replaced_by_rule_id'), // self reference later if replaced
+  planId: uuid('plan_id').notNull().references(() => financeMonthlyPlans.id, { onDelete: 'cascade' }),
+  amount: integer('amount').notNull(),
+  expenseCategoryId: uuid('expense_category_id').references(() => financeCategories.id), // for spending allocations
+  savingsGoalId: uuid('savings_goal_id').references(() => financeSavingsGoals.id), // for savings allocations
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 });

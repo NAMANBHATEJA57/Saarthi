@@ -63,10 +63,11 @@ export function AddAccountDialog({ open, onOpenChange, onSuccess }: AddAccountDi
         name,
         type,
         institutionId: selectedInst?.id || null,
-        initialBalanceMinor: initialBalance ? Math.round(parseFloat(initialBalance) * 100) : null,
+        openingBalance: type === 'BANK_ACCOUNT' && initialBalance ? Math.round(parseFloat(initialBalance)) : 0,
+        openingOutstanding: type === 'CREDIT_CARD' && initialBalance ? Math.round(parseFloat(initialBalance)) : 0,
         lastFour: lastFour.trim() || null,
         notes: notes.trim() || null,
-        creditLimitMinor: type === 'CREDIT_CARD' && creditLimit ? Math.round(parseFloat(creditLimit) * 100) : null,
+        creditLimit: type === 'CREDIT_CARD' && creditLimit ? Math.round(parseFloat(creditLimit)) : null,
         statementDay: type === 'CREDIT_CARD' && statementDay ? parseInt(statementDay) : null,
         dueDay: type === 'CREDIT_CARD' && dueDay ? parseInt(dueDay) : null,
       };
