@@ -419,12 +419,12 @@ export const financeAccounts = pgTable('finance_accounts', {
   currencyCode: text('currency_code').default('INR').notNull(),
   
   // Bank Account fields
-  openingBalance: integer('opening_balance').default(0).notNull(),
+  openingBalance: doublePrecision('opening_balance').default(0).notNull(),
   openingBalanceDate: timestamp('opening_balance_date', { withTimezone: true }),
   
   // Credit Card fields
-  creditLimit: integer('credit_limit'),
-  openingOutstanding: integer('opening_outstanding').default(0).notNull(),
+  creditLimit: doublePrecision('credit_limit'),
+  openingOutstanding: doublePrecision('opening_outstanding').default(0).notNull(),
   openingOutstandingDate: timestamp('opening_outstanding_date', { withTimezone: true }),
   statementDay: integer('statement_day'),
   dueDay: integer('due_day'),

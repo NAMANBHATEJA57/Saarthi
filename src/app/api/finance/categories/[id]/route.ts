@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
-import { financeSavingsGoals } from '@/lib/db/schema';
+import { financeCategories } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
@@ -12,13 +12,13 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     const { id } = params;
     if (!id) return NextResponse.json({ error: 'Missing ID' }, { status: 400 });
 
-    await db.update(financeSavingsGoals)
+    await db.update(financeCategories)
       .set({ isActive: false })
-      .where(and(eq(financeSavingsGoals.id, id), eq(financeSavingsGoals.userId, session.user.id)));
+      .where(and(eq(financeCategories.id, id), eq(financeCategories.userId, session.user.id)));
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('SavingsGoals DELETE error:', error);
+    console.error('Categories DELETE error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

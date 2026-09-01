@@ -12,8 +12,9 @@ import { AddAccountDialog } from '@/components/finance/AddAccountDialog';
 import { TransactionHistory } from '@/components/finance/TransactionHistory';
 import { TransactionCaptureForm } from '@/components/finance/TransactionCaptureForm';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { IncomeAlignmentCard } from '@/components/finance/IncomeAlignmentCard';
 
-export default function FinanceClient({ initialSummary, initialBalances, initialAccountBalances, currentMonth }: any) {
+export default function FinanceClient({ initialSummary, initialAccountBalances, currentMonth, incomeTypes = [], savingsGoals = [] }: any) {
   const router = useRouter();
   const [summary, setSummary] = useState(initialSummary);
   const [accounts, setAccounts] = useState(initialAccountBalances || []);
@@ -147,6 +148,13 @@ export default function FinanceClient({ initialSummary, initialBalances, initial
                 </CardContent>
               </Card>
             </div>
+
+            {/* INCOME & SAVINGS ALIGNMENT */}
+            {incomeTypes.length > 0 && (
+              <div className="pt-2">
+                <IncomeAlignmentCard incomeTypes={incomeTypes} savingsGoals={savingsGoals} />
+              </div>
+            )}
 
             {/* MONTHLY SUMMARY & LEDGER */}
             <div className="space-y-6">
