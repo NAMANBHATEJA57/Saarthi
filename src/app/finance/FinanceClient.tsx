@@ -204,21 +204,16 @@ export default function FinanceClient({ initialSummary, initialAccountBalances, 
 
       <Dialog open={!!transactionFormType} onOpenChange={(open) => !open && setTransactionFormType(null)}>
         <DialogContent className="sm:max-w-[460px] p-0 overflow-hidden border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]">
-          <DialogHeader className="px-6 py-4 border-b border-[hsl(var(--hairline))] bg-[hsl(var(--surface-elevated))]">
-            <DialogTitle>Log Transaction</DialogTitle>
-          </DialogHeader>
-          <div className="p-6">
-            {transactionFormType && (
-              <TransactionCaptureForm 
-                defaultType={transactionFormType}
-                onSuccess={() => {
-                  setTransactionFormType(null);
-                  window.location.reload();
-                }}
-                onCancel={() => setTransactionFormType(null)}
-              />
-            )}
-          </div>
+          {transactionFormType && (
+            <TransactionCaptureForm 
+              defaultType={transactionFormType}
+              onSuccess={() => {
+                setTransactionFormType(null);
+                window.location.reload();
+              }}
+              onCancel={() => setTransactionFormType(null)}
+            />
+          )}
         </DialogContent>
       </Dialog>
     </div>
