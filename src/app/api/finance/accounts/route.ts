@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
 import { financeAccounts } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, and, isNull } from 'drizzle-orm';
 import { financeTransactions } from '@/lib/db/schema';
 
 export async function GET(req: NextRequest) {
@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
   if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   
   try {
-    const accounts = await db.select().from(financeAccounts).where(eq(financeAccounts.userId, session.user.id));
+    const accounts = await db.select().from(financeAccounts).where(and(eq(financeAccounts.userId, session.user.id), isNull(financeAccounts.deletedAt)));
     return NextResponse.json({ accounts });
   } catch (err) {
     return NextResponse.json({ error: 'Internal error' }, { status: 500 });
