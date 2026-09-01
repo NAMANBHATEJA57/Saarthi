@@ -4,12 +4,12 @@ import { db } from '@/lib/db';
 import { financeCategories } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await auth();
   if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   
   try {
-    const { id } = params;
+    const { id } = await params;
     if (!id) return NextResponse.json({ error: 'Missing ID' }, { status: 400 });
 
     await db.update(financeCategories)
