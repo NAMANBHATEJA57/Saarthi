@@ -1,5 +1,6 @@
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
+import { BackButton } from '@/components/shared/BackButton';
 import { TransactionsClient } from './TransactionsClient';
 import { db } from '@/lib/db';
 import { financeAccounts, financeCategories, financeIncomeTypes, financeSavingsGoals } from '@/lib/db/schema';
@@ -20,7 +21,8 @@ export default async function TransactionsPage() {
 
   return (
     <div className="space-y-6">
-      <header className="flex items-center justify-between">
+      <header className="flex items-center gap-3">
+        <BackButton fallbackHref="/finance" />
         <h1 className="text-2xl font-bold tracking-tight">Transactions</h1>
       </header>
       <TransactionsClient accounts={accounts} categories={categories} incomeTypes={incomeTypes} savingsGoals={savingsGoals} />
