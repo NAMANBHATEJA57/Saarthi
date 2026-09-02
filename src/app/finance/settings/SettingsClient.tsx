@@ -5,7 +5,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import { Plus, Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -287,27 +287,27 @@ export function SettingsClient({
       </div>
 
       {/* Category Dialog */}
-      <Dialog open={isCategoryOpen} onOpenChange={setIsCategoryOpen}>
-        <DialogContent className="max-w-sm">
-          <DialogHeader><DialogTitle>New Category</DialogTitle></DialogHeader>
-          <form onSubmit={handleCreateCategory} className="space-y-4">
+      <Sheet open={isCategoryOpen} onOpenChange={setIsCategoryOpen}>
+        <SheetContent side="bottom" className="max-w-sm mx-auto p-0 flex flex-col bg-[hsl(var(--surface))] rounded-t-xl sm:rounded-xl border-t sm:border border-[hsl(var(--hairline))]">
+          <SheetHeader className="p-6 pb-4 border-b border-[hsl(var(--hairline))] bg-[hsl(var(--surface-elevated))] shrink-0"><SheetTitle>New Category</SheetTitle></SheetHeader>
+          <form onSubmit={handleCreateCategory} className="space-y-4 p-6">
             <div className="space-y-2">
               <Label>Name</Label>
               <Input autoFocus value={newName} onChange={e => setNewName(e.target.value)} required />
             </div>
-            <DialogFooter>
+            <SheetFooter>
               <Button type="button" variant="utility" onClick={() => setIsCategoryOpen(false)}>Cancel</Button>
               <Button type="submit" disabled={loading}>{loading ? 'Creating...' : 'Create'}</Button>
-            </DialogFooter>
+            </SheetFooter>
           </form>
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
 
       {/* Income Type Dialog */}
-      <Dialog open={isIncomeTypeOpen} onOpenChange={setIsIncomeTypeOpen}>
-        <DialogContent className="max-w-sm">
-          <DialogHeader><DialogTitle>New Income Type</DialogTitle></DialogHeader>
-          <form onSubmit={handleCreateIncomeType} className="space-y-4">
+      <Sheet open={isIncomeTypeOpen} onOpenChange={setIsIncomeTypeOpen}>
+        <SheetContent side="bottom" className="max-w-sm mx-auto p-0 flex flex-col bg-[hsl(var(--surface))] rounded-t-xl sm:rounded-xl border-t sm:border border-[hsl(var(--hairline))]">
+          <SheetHeader className="p-6 pb-4 border-b border-[hsl(var(--hairline))] bg-[hsl(var(--surface-elevated))] shrink-0"><SheetTitle>New Income Type</SheetTitle></SheetHeader>
+          <form onSubmit={handleCreateIncomeType} className="space-y-4 p-6">
             <div className="space-y-2">
               <Label>Name</Label>
               <Input autoFocus value={newName} onChange={e => setNewName(e.target.value)} required />
@@ -316,19 +316,19 @@ export function SettingsClient({
               <Label>Expected Monthly Amount (₹, optional)</Label>
               <Input type="number" step="0.01" value={expectedAmount} onChange={e => setExpectedAmount(e.target.value)} placeholder="e.g. 50000" />
             </div>
-            <DialogFooter>
+            <SheetFooter>
               <Button type="button" variant="utility" onClick={() => setIsIncomeTypeOpen(false)}>Cancel</Button>
               <Button type="submit" disabled={loading}>{loading ? 'Creating...' : 'Create'}</Button>
-            </DialogFooter>
+            </SheetFooter>
           </form>
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
 
       {/* Savings Goal Dialog */}
-      <Dialog open={isSavingsGoalOpen} onOpenChange={setIsSavingsGoalOpen}>
-        <DialogContent className="max-w-sm">
-          <DialogHeader><DialogTitle>New Savings Goal</DialogTitle></DialogHeader>
-          <form onSubmit={handleCreateSavingsGoal} className="space-y-4">
+      <Sheet open={isSavingsGoalOpen} onOpenChange={setIsSavingsGoalOpen}>
+        <SheetContent side="bottom" className="max-w-sm mx-auto p-0 flex flex-col bg-[hsl(var(--surface))] rounded-t-xl sm:rounded-xl border-t sm:border border-[hsl(var(--hairline))]">
+          <SheetHeader className="p-6 pb-4 border-b border-[hsl(var(--hairline))] bg-[hsl(var(--surface-elevated))] shrink-0"><SheetTitle>New Savings Goal</SheetTitle></SheetHeader>
+          <form onSubmit={handleCreateSavingsGoal} className="space-y-4 p-6">
             <div className="space-y-2">
               <Label>Name</Label>
               <Input autoFocus value={newName} onChange={e => setNewName(e.target.value)} placeholder="e.g. Emergency Fund" required />
@@ -345,13 +345,13 @@ export function SettingsClient({
                 </div>
               )}
             </div>
-            <DialogFooter>
+            <SheetFooter>
               <Button type="button" variant="utility" onClick={() => setIsSavingsGoalOpen(false)}>Cancel</Button>
               <Button type="submit" disabled={loading}>{loading ? 'Creating...' : 'Create'}</Button>
-            </DialogFooter>
+            </SheetFooter>
           </form>
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

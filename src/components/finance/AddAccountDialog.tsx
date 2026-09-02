@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PUBLIC_INSTITUTIONS, Institution } from "@/lib/constants/institutions";
@@ -103,11 +103,11 @@ export function AddAccountDialog({ open, onOpenChange, onSuccess }: AddAccountDi
   const otherInstitutions = useMemo(() => filteredInstitutions.filter(i => !i.isPopular), [filteredInstitutions]);
 
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-w-md p-0 overflow-hidden bg-[hsl(var(--surface))] max-h-[85vh] flex flex-col">
-        <DialogHeader className="p-6 pb-4 border-b border-[hsl(var(--hairline))] bg-[hsl(var(--surface-elevated))] shrink-0">
-          <DialogTitle>Add Account</DialogTitle>
-        </DialogHeader>
+    <Sheet open={open} onOpenChange={handleOpenChange}>
+      <SheetContent side="bottom" className="max-w-md p-0 overflow-hidden bg-[hsl(var(--surface))] h-[90vh] sm:h-auto rounded-t-xl sm:rounded-xl border-t sm:border border-[hsl(var(--hairline))] flex flex-col mx-auto">
+        <SheetHeader className="p-6 pb-4 border-b border-[hsl(var(--hairline))] bg-[hsl(var(--surface-elevated))] shrink-0">
+          <SheetTitle>Add Account</SheetTitle>
+        </SheetHeader>
 
         {step === 1 ? (
           <div className="p-6 flex-1 overflow-y-auto space-y-6">
@@ -286,15 +286,15 @@ export function AddAccountDialog({ open, onOpenChange, onSuccess }: AddAccountDi
               </p>
             </div>
 
-            <DialogFooter className="pt-4 border-t border-[hsl(var(--hairline))] mt-6 shrink-0">
+            <SheetFooter className="pt-4 border-t border-[hsl(var(--hairline))] mt-6 shrink-0">
               <Button type="button" variant="utility" onClick={() => setStep(1)}>Back</Button>
               <Button type="submit" disabled={loading || !name.trim()}>
                 {loading ? 'Adding...' : 'Add Account'}
               </Button>
-            </DialogFooter>
+            </SheetFooter>
           </form>
         )}
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 }

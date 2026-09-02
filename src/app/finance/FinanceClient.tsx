@@ -11,7 +11,7 @@ import { Landmark, CreditCard, Plus } from 'lucide-react';
 import { AddAccountDialog } from '@/components/finance/AddAccountDialog';
 import { TransactionHistory } from '@/components/finance/TransactionHistory';
 import { TransactionCaptureForm } from '@/components/finance/TransactionCaptureForm';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { IncomeAlignmentCard } from '@/components/finance/IncomeAlignmentCard';
 import { RecurringTransactionsList } from '@/components/finance/RecurringTransactionsList';
 
@@ -48,7 +48,7 @@ export default function FinanceClient({ initialSummary, initialAccountBalances, 
   const netAvailable = totalBankBalance - totalCreditDebt;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-24">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold tracking-tight">Ledger</h1>
         <div className="flex items-center gap-4">
@@ -215,8 +215,8 @@ export default function FinanceClient({ initialSummary, initialAccountBalances, 
         onSuccess={() => window.location.reload()} 
       />
 
-      <Dialog open={!!transactionFormType} onOpenChange={(open) => !open && setTransactionFormType(null)}>
-        <DialogContent className="sm:max-w-[460px] p-0 overflow-hidden border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]">
+      <Sheet open={!!transactionFormType} onOpenChange={(open) => !open && setTransactionFormType(null)}>
+        <SheetContent side="bottom" className="sm:max-w-[460px] mx-auto h-[90vh] sm:h-auto p-0 flex flex-col overflow-hidden bg-[hsl(var(--surface))] rounded-t-xl sm:rounded-xl border-t sm:border border-[hsl(var(--hairline))]">
           {transactionFormType && (
             <TransactionCaptureForm 
               defaultType={transactionFormType}
@@ -227,8 +227,8 @@ export default function FinanceClient({ initialSummary, initialAccountBalances, 
               onCancel={() => setTransactionFormType(null)}
             />
           )}
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

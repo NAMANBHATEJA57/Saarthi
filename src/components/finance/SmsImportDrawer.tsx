@@ -161,8 +161,7 @@ export function SmsImportDrawer({
         onOpenChange(isOpen);
       }
     }}>
-      <SheetContent className="sm:max-w-md p-0 flex flex-col bg-[hsl(var(--surface))] border-l border-[hsl(var(--hairline))]">
-        
+      <SheetContent side="bottom" className="h-[90vh] p-0 flex flex-col bg-[hsl(var(--surface))] rounded-t-xl border-t border-[hsl(var(--hairline))]">
         {step === 'INPUT' && (
           <div className="flex flex-col h-full">
             <SheetHeader className="p-6 pb-4 border-b border-[hsl(var(--hairline))]">

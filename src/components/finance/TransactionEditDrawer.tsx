@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { ArrowDownRight, ArrowUpRight, ArrowRightLeft, Landmark, X, Check } from "lucide-react";
 import { format, parseISO } from "date-fns";
 
@@ -128,8 +128,8 @@ export function TransactionEditDrawer({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[460px] p-0 overflow-hidden border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]">
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent side="bottom" className="sm:max-w-[460px] mx-auto h-[90vh] sm:h-auto p-0 flex flex-col overflow-hidden bg-[hsl(var(--surface))] rounded-t-xl sm:rounded-xl border-t sm:border border-[hsl(var(--hairline))]">
         
         {/* Color-coded hero header */}
         <div className={`relative p-6 pb-5 ${cfg.bgColor}`}>
@@ -294,7 +294,7 @@ export function TransactionEditDrawer({
             </Button>
           </div>
         </form>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 }

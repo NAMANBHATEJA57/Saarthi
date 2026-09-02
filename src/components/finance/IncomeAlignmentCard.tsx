@@ -6,12 +6,10 @@ export function IncomeAlignmentCard({ expectedMonthlyIncome, savingsGoals, curre
   const [spentByGoal, setSpentByGoal] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    // Fetch expenses for the month to calculate fund spending
-    const startDate = `${currentMonth}-01`;
-    const lastDay = new Date(new Date(currentMonth + '-01').getFullYear(), new Date(currentMonth + '-01').getMonth() + 1, 0).getDate();
-    const endDate = `${currentMonth}-${lastDay.toString().padStart(2, '0')}`;
+    // Fetch all expenses since start of tracking for rollover
+    const APP_START_DATE = '2026-08-01';
     
-    fetch(`/api/finance/transactions?type=EXPENSE&startDate=${startDate}&endDate=${endDate}&limit=1000`)
+    fetch(`/api/finance/transactions?type=EXPENSE&startDate=${APP_START_DATE}&limit=5000`)
       .then(r => r.json())
       .then(d => {
         if (d.transactions) {
@@ -24,15 +22,21 @@ export function IncomeAlignmentCard({ expectedMonthlyIncome, savingsGoals, curre
           setSpentByGoal(sums);
         }
       });
-  }, [currentMonth]);
+  }, []);
 
   if (expectedMonthlyIncome <= 0) return null;
+
+  // Calculate elapsed months for rollover target multiplier
+  // e.g. from Aug 2026 to currentMonth
+  const [currYear, currMonth] = currentMonth.split('-').map(Number);
+  const elapsedMonths = (currYear - 2026) * 12 + (currMonth - 8) + 1;
+  const targetMultiplier = Math.max(1, elapsedMonths);
 
   const totalPlannedSavings = savingsGoals.reduce((sum, g) => {
     if (g.targetPercentage) {
       return sum + (expectedMonthlyIncome * (g.targetPercentage / 100));
     }
-    return sum + (g.ultimateTargetAmount || 0);
+    return sum + (g.ultimateTargetAmount || 0); // Assuming ultimateTargetAmount is meant as monthlyTarget for now
   }, 0);
   
   const leftoverBudget = expectedMonthlyIncome - totalPlannedSavings;
@@ -55,7 +59,8 @@ export function IncomeAlignmentCard({ expectedMonthlyIncome, savingsGoals, curre
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {savingsGoals.map(g => {
-              const target = Math.round(g.targetPercentage ? (expectedMonthlyIncome * (g.targetPercentage / 100)) : (g.ultimateTargetAmount || 0));
+              const baseTarget = Math.round(g.targetPercentage ? (expectedMonthlyIncome * (g.targetPercentage / 100)) : (g.ultimateTargetAmount || 0));
+              const target = baseTarget * targetMultiplier;
               const spent = Math.round(spentByGoal[g.id] || 0);
               const remaining = target - spent;
               
