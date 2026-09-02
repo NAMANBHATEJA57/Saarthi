@@ -99,6 +99,13 @@
       "when": 1788250882937,
       "tag": "0013_overjoyed_mentallo",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1788341548171,
+      "tag": "0014_sticky_black_panther",
+      "breakpoints": true
     }
   ]
 }

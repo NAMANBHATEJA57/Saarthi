@@ -509,6 +509,32 @@ export const financeMonthlyPlanItems = pgTable('finance_monthly_plan_items', {
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 });
 
+export const financeRecurringTransactions = pgTable('finance_recurring_transactions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  type: text('type').notNull(), // 'INCOME', 'EXPENSE', 'TRANSFER'
+  amount: doublePrecision('amount').notNull(),
+  currencyCode: text('currency_code').default('INR').notNull(),
+  
+  accountId: uuid('account_id').references(() => financeAccounts.id),
+  destinationAccountId: uuid('destination_account_id').references(() => financeAccounts.id),
+  
+  categoryId: uuid('category_id').references(() => financeCategories.id),
+  incomeTypeId: uuid('income_type_id').references(() => financeIncomeTypes.id),
+  savingsGoalId: uuid('savings_goal_id').references(() => financeSavingsGoals.id),
+  
+  description: text('description'),
+  merchant: text('merchant'),
+  notes: text('notes'),
+  
+  frequency: text('frequency').notNull(), // 'DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY'
+  nextDueDate: date('next_due_date', { mode: 'string' }).notNull(), // YYYY-MM-DD
+  isActive: boolean('is_active').default(true).notNull(),
+  
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
 // ==========================================
 // 8. TASKS
 // ==========================================

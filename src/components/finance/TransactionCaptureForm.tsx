@@ -42,6 +42,10 @@ export function TransactionCaptureForm({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Recurring state
+  const [isRecurring, setIsRecurring] = useState(false);
+  const [frequency, setFrequency] = useState('MONTHLY');
+
   // Inline Category Creation State
   const [isCreatingCategory, setIsCreatingCategory] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
@@ -119,6 +123,39 @@ export function TransactionCaptureForm({
 
       if (!res.ok) {
         throw new Error('Failed to save transaction');
+      }
+
+      // If marked as recurring, create the template
+      if (isRecurring && (type === 'EXPENSE' || type === 'INCOME' || type === 'TRANSFER')) {
+        // Calculate the next due date based on the chosen frequency and the transaction date
+        let nextDueDate = new Date(date);
+        if (frequency === 'DAILY') nextDueDate.setDate(nextDueDate.getDate() + 1);
+        else if (frequency === 'WEEKLY') nextDueDate.setDate(nextDueDate.getDate() + 7);
+        else if (frequency === 'MONTHLY') nextDueDate.setMonth(nextDueDate.getMonth() + 1);
+        else if (frequency === 'YEARLY') nextDueDate.setFullYear(nextDueDate.getFullYear() + 1);
+
+        const recRes = await fetch('/api/finance/recurring', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type,
+            amount: amountParsed,
+            categoryId: type === 'EXPENSE' ? categoryId : undefined,
+            incomeTypeId: type === 'INCOME' ? incomeTypeId : undefined,
+            savingsGoalId: type === 'EXPENSE' ? (savingsGoalId || undefined) : undefined,
+            accountId,
+            destinationAccountId: type === 'TRANSFER' ? destinationAccountId : undefined,
+            description,
+            merchant,
+            frequency,
+            nextDueDate: nextDueDate.toISOString().split('T')[0],
+          }),
+        });
+
+        if (!recRes.ok) {
+          console.error('Failed to save recurring template');
+          // We still succeed the main transaction, so we just log this
+        }
       }
 
       onSuccess();
@@ -361,6 +398,39 @@ export function TransactionCaptureForm({
           <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold">Description / Note</Label>
           <Input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="e.g. Salary, Amazon" className="bg-[hsl(var(--surface-elevated))] border-[hsl(var(--hairline))] h-11 rounded-xl" />
         </div>
+
+        {type !== 'CREDIT_CARD_PAYMENT' && (
+          <div className="pt-2 border-t border-[hsl(var(--hairline))]">
+            <label className="flex items-center gap-3 cursor-pointer">
+              <input 
+                type="checkbox" 
+                checked={isRecurring} 
+                onChange={(e) => setIsRecurring(e.target.checked)} 
+                className="w-4 h-4 accent-[hsl(var(--ink))]" 
+              />
+              <span className="text-sm font-medium">Make this a recurring transaction</span>
+            </label>
+            
+            {isRecurring && (
+              <div className="mt-3 ml-7">
+                <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold mb-1.5 block">Frequency</Label>
+                <select 
+                  value={frequency} 
+                  onChange={(e) => setFrequency(e.target.value)}
+                  className="w-full bg-[hsl(var(--surface-elevated))] border border-[hsl(var(--hairline))] h-10 rounded-lg text-sm px-3 focus:outline-none"
+                >
+                  <option value="DAILY">Daily</option>
+                  <option value="WEEKLY">Weekly</option>
+                  <option value="MONTHLY">Monthly</option>
+                  <option value="YEARLY">Yearly</option>
+                </select>
+                <p className="text-xs text-[hsl(var(--ink-muted))] mt-1.5">
+                  The next transaction will automatically post based on the date you entered above.
+                </p>
+              </div>
+            )}
+          </div>
+        )}
 
         {error && <div className="text-[hsl(var(--destructive))] text-sm font-medium">{error}</div>}
 

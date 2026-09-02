@@ -5,9 +5,11 @@ import { USDAAdapter } from './adapters/usda';
 import { OpenFoodFactsAdapter } from './adapters/openFoodFacts';
 import { IFCTAdapter } from './adapters/ifct';
 import { CuratedIndianAdapter } from './adapters/curated';
+import { FatSecretAdapter } from './adapters/fatsecret';
 import { FoodSourceAdapter, NormalizedFoodRecord, SearchResult } from './types';
 
 const adapters: Record<string, FoodSourceAdapter> = {
+  fatsecret: new FatSecretAdapter(),
   usda: new USDAAdapter(),
   open_food_facts: new OpenFoodFactsAdapter(),
   ifct: new IFCTAdapter(),
@@ -15,6 +17,7 @@ const adapters: Record<string, FoodSourceAdapter> = {
 };
 
 const DEFAULT_SOURCES = [
+  { id: 'fatsecret', displayName: 'FatSecret API' },
   { id: 'usda', displayName: 'USDA FoodData Central' },
   { id: 'open_food_facts', displayName: 'Open Food Facts' },
   { id: 'ifct', displayName: 'Indian Food Composition Tables' },

@@ -155,30 +155,34 @@ export function FoodSearchModal({ open, onOpenChange, mealType, localDate, onSuc
                   <Loader2 className="h-6 w-6 animate-spin" />
                 </div>
               ) : results.length > 0 ? (
-                <div className="space-y-1">
+                <div className="space-y-2">
                   {results.map((r, i) => (
                     <button
                       key={i}
                       onClick={() => handleSelectResult(r)}
-                      className="w-full text-left p-3 hover:bg-[hsl(var(--surface-elevated))] rounded-lg flex items-center justify-between group transition-colors"
+                      className="w-full text-left p-4 bg-[hsl(var(--background))] border border-[hsl(var(--hairline))] hover:border-[hsl(var(--primary))] hover:shadow-sm rounded-xl flex items-center justify-between group transition-all"
                     >
-                      <div>
-                        <p className="font-medium text-[15px]">{r.identity}</p>
-                        <p className="text-[12px] text-[hsl(var(--ink-secondary))] mt-0.5 capitalize">
-                          {r.sourceId.replace('_', ' ')}
-                        </p>
+                      <div className="pr-4">
+                        <p className="font-bold text-[15px] text-[hsl(var(--ink))] line-clamp-1">{r.identity}</p>
+                        <div className="flex items-center gap-2 mt-1.5">
+                          <span className="text-[10px] font-bold text-[hsl(var(--ink-muted))] uppercase tracking-widest px-2 py-0.5 bg-[hsl(var(--surface-elevated))] rounded-md">
+                            {r.sourceId === 'fatsecret' ? 'Premium' : r.sourceId.replace('_', ' ')}
+                          </span>
+                        </div>
                       </div>
-                      <Plus className="w-4 h-4 text-[hsl(var(--primary))] opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <div className="h-8 w-8 rounded-full bg-[hsl(var(--primary)/10)] flex items-center justify-center shrink-0">
+                        <Plus className="w-4 h-4 text-[hsl(var(--primary))]" />
+                      </div>
                     </button>
                   ))}
                 </div>
               ) : query.length > 2 ? (
-                <div className="text-center p-8 text-sm text-[hsl(var(--ink-secondary))]">
+                <div className="text-center p-12 text-sm text-[hsl(var(--ink-secondary))]">
                   No foods found matching "{query}"
                 </div>
               ) : (
-                <div className="text-center p-8 text-sm text-[hsl(var(--ink-secondary))]">
-                  Type at least 3 characters to search OpenFoodFacts and more.
+                <div className="text-center p-12 text-sm text-[hsl(var(--ink-secondary))]">
+                  Type at least 3 characters to search our premium food database.
                 </div>
               )}
             </div>

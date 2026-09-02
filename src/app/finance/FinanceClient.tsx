@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -13,6 +13,7 @@ import { TransactionHistory } from '@/components/finance/TransactionHistory';
 import { TransactionCaptureForm } from '@/components/finance/TransactionCaptureForm';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { IncomeAlignmentCard } from '@/components/finance/IncomeAlignmentCard';
+import { RecurringTransactionsList } from '@/components/finance/RecurringTransactionsList';
 
 export default function FinanceClient({ initialSummary, initialAccountBalances, currentMonth, incomeTypes = [], savingsGoals = [], expectedMonthlyIncome = 0 }: any) {
   const router = useRouter();
@@ -20,6 +21,11 @@ export default function FinanceClient({ initialSummary, initialAccountBalances, 
   const [accounts, setAccounts] = useState(initialAccountBalances || []);
   const [isAddAccountOpen, setIsAddAccountOpen] = useState(false);
   const [transactionFormType, setTransactionFormType] = useState<'EXPENSE' | 'INCOME' | 'TRANSFER' | 'CREDIT_CARD_PAYMENT' | null>(null);
+
+  useEffect(() => {
+    // Lazily process any due recurring transactions when the user opens the finance dashboard
+    fetch('/api/finance/recurring/process', { method: 'POST' }).catch(console.error);
+  }, []);
 
   const prevMonth = () => {
     const d = new Date(currentMonth + '-01');
@@ -46,6 +52,9 @@ export default function FinanceClient({ initialSummary, initialAccountBalances, 
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold tracking-tight">Ledger</h1>
         <div className="flex items-center gap-4">
+          <Button variant="utility" onClick={() => router.push('/finance/analytics')} className="hidden sm:flex text-[hsl(var(--ink-secondary))]">
+            Analytics
+          </Button>
           <Button variant="utility" onClick={() => setIsAddAccountOpen(true)} className="hidden sm:flex gap-2">
             <Plus className="w-4 h-4" /> Add Account
           </Button>
@@ -180,10 +189,15 @@ export default function FinanceClient({ initialSummary, initialAccountBalances, 
                 </CardContent>
               </Card>
               
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3 mb-6">
                 <Button variant="secondary" className="bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))]" onClick={() => router.push('/finance/settings')}>Settings</Button>
                 <Button variant="secondary" className="bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))]" onClick={() => router.push('/finance/transactions')}>All Transactions</Button>
                 <Button variant="secondary" className="bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))] col-span-2 gap-2" onClick={() => router.push('/finance/import')}><Upload className="w-4 h-4" /> Import Transactions</Button>
+              </div>
+
+              {/* RECURRING TRANSACTIONS COMPONENT */}
+              <div className="mb-6">
+                <RecurringTransactionsList />
               </div>
 
               {/* RECENT TRANSACTIONS COMPONENT */}

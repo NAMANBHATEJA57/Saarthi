@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Apple, Flame, Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, Flame, Plus, Trash2 } from "lucide-react";
 import { FoodSearchModal } from "@/components/food/FoodSearchModal";
+import { Progress } from "@/components/ui/progress";
 
 export function FoodClient() {
   const [currentDate, setCurrentDate] = useState(() => new Date().toISOString().split('T')[0]);
@@ -50,6 +51,15 @@ export function FoodClient() {
     setIsSearchOpen(true);
   };
 
+  const deleteItem = async (id: string) => {
+    try {
+      await fetch(`/api/food/log/${id}`, { method: 'DELETE' });
+      fetchDailyData(currentDate);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   // Aggregation logic
   const getMacroTotal = (nutrientKey: string) => {
     if (!data.nutrients) return 0;
@@ -79,55 +89,57 @@ export function FoodClient() {
   const MEAL_TYPES = ['BREAKFAST', 'LUNCH', 'DINNER', 'SNACK'];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-4xl mx-auto">
       <div className="flex items-center justify-between">
-        <div></div>
-        <div className="flex items-center gap-4">
-          <Button variant="utility" onClick={prevDay}><ChevronLeft className="w-4 h-4" /></Button>
-          <span className="font-medium text-sm sm:text-base">
-            {new Date(currentDate).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
+        <h1 className="text-xl font-bold tracking-tight">Food Diary</h1>
+        <div className="flex items-center gap-4 bg-[hsl(var(--surface))] px-4 py-1.5 rounded-full shadow-sm border border-[hsl(var(--hairline))]">
+          <Button variant="icon" className="h-6 w-6" onClick={prevDay}><ChevronLeft className="w-4 h-4" /></Button>
+          <span className="font-medium text-sm w-24 text-center">
+            {new Date(currentDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
           </span>
-          <Button variant="utility" onClick={nextDay}><ChevronRight className="w-4 h-4" /></Button>
+          <Button variant="icon" className="h-6 w-6" onClick={nextDay}><ChevronRight className="w-4 h-4" /></Button>
         </div>
       </div>
 
       {/* MACRO SUMMARY */}
-      <Card>
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <p className="text-sm font-semibold text-[hsl(var(--ink-muted))] tracking-wider">CALORIES IN</p>
-              <div className="flex items-end gap-2 mt-1">
-                <span className="text-3xl font-bold">{Math.round(totalCals)}</span>
-                <span className="text-sm text-[hsl(var(--ink-secondary))] mb-1">/ 2000 kcal</span>
+      <Card className="border-[hsl(var(--hairline))] shadow-sm overflow-hidden">
+        <CardContent className="p-0">
+          <div className="p-6 bg-gradient-to-br from-[hsl(var(--surface))] to-[hsl(var(--surface-elevated))]">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <p className="text-sm font-semibold text-[hsl(var(--ink-secondary))] tracking-wider">CALORIES IN</p>
+                <div className="flex items-baseline gap-2 mt-1">
+                  <span className="text-4xl font-bold text-[hsl(var(--ink))]">{Math.round(totalCals)}</span>
+                  <span className="text-sm text-[hsl(var(--ink-secondary))] font-medium">/ 2000 kcal</span>
+                </div>
+              </div>
+              <div className="h-14 w-14 rounded-full bg-orange-100 flex items-center justify-center shadow-inner">
+                <Flame className="w-7 h-7 text-orange-500" />
               </div>
             </div>
-            <div className="h-12 w-12 rounded-full bg-[hsl(var(--surface-elevated))] flex items-center justify-center border border-[hsl(var(--hairline))]">
-              <Flame className="w-6 h-6 text-orange-500" />
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-3 gap-4 border-t border-[hsl(var(--hairline))] pt-4">
-            <div>
-              <p className="text-xs text-[hsl(var(--ink-secondary))] font-medium mb-1">Carbs</p>
-              <div className="h-2 w-full bg-[hsl(var(--surface-elevated))] rounded-full overflow-hidden mb-1">
-                <div className="h-full bg-blue-500" style={{ width: `${Math.min(100, (totalCarbs / 250) * 100)}%` }} />
+            
+            <div className="grid grid-cols-3 gap-6 pt-2">
+              <div>
+                <div className="flex justify-between mb-2">
+                  <p className="text-xs text-[hsl(var(--ink-secondary))] font-medium">Carbs</p>
+                  <p className="text-xs font-semibold">{Math.round(totalCarbs)}g</p>
+                </div>
+                <Progress value={Math.min(100, (totalCarbs / 250) * 100)} indicatorColor="bg-blue-500" className="h-2 bg-blue-100" />
               </div>
-              <p className="text-xs font-semibold">{Math.round(totalCarbs)}g</p>
-            </div>
-            <div>
-              <p className="text-xs text-[hsl(var(--ink-secondary))] font-medium mb-1">Protein</p>
-              <div className="h-2 w-full bg-[hsl(var(--surface-elevated))] rounded-full overflow-hidden mb-1">
-                <div className="h-full bg-green-500" style={{ width: `${Math.min(100, (totalProtein / 150) * 100)}%` }} />
+              <div>
+                <div className="flex justify-between mb-2">
+                  <p className="text-xs text-[hsl(var(--ink-secondary))] font-medium">Protein</p>
+                  <p className="text-xs font-semibold">{Math.round(totalProtein)}g</p>
+                </div>
+                <Progress value={Math.min(100, (totalProtein / 150) * 100)} indicatorColor="bg-green-500" className="h-2 bg-green-100" />
               </div>
-              <p className="text-xs font-semibold">{Math.round(totalProtein)}g</p>
-            </div>
-            <div>
-              <p className="text-xs text-[hsl(var(--ink-secondary))] font-medium mb-1">Fats</p>
-              <div className="h-2 w-full bg-[hsl(var(--surface-elevated))] rounded-full overflow-hidden mb-1">
-                <div className="h-full bg-yellow-500" style={{ width: `${Math.min(100, (totalFats / 70) * 100)}%` }} />
+              <div>
+                <div className="flex justify-between mb-2">
+                  <p className="text-xs text-[hsl(var(--ink-secondary))] font-medium">Fats</p>
+                  <p className="text-xs font-semibold">{Math.round(totalFats)}g</p>
+                </div>
+                <Progress value={Math.min(100, (totalFats / 70) * 100)} indicatorColor="bg-amber-500" className="h-2 bg-amber-100" />
               </div>
-              <p className="text-xs font-semibold">{Math.round(totalFats)}g</p>
             </div>
           </div>
         </CardContent>
@@ -136,43 +148,68 @@ export function FoodClient() {
       {/* MEALS */}
       <div className="space-y-4">
         {loading ? (
-          <div className="text-center py-10 text-[hsl(var(--ink-secondary))]">Loading meals...</div>
+          <div className="text-center py-10 text-[hsl(var(--ink-secondary))]">Loading diary...</div>
         ) : (
           MEAL_TYPES.map(mealType => {
             const items = getMealItems(mealType);
             const mealCals = items.reduce((sum: number, item: any) => sum + getMealCalories(item.id), 0);
             
             return (
-              <Card key={mealType} className="overflow-hidden">
-                <CardHeader className="flex flex-row items-center justify-between pb-2 pt-4 px-4 bg-[hsl(var(--surface))]">
-                  <CardTitle className="text-base font-semibold capitalize flex items-center gap-2">
-                    {mealType.toLowerCase()}
-                    {mealCals > 0 && <span className="text-xs font-normal text-[hsl(var(--ink-secondary))]">{Math.round(mealCals)} kcal</span>}
-                  </CardTitle>
-                  <Button variant="utility" className="h-7 px-2 text-xs" onClick={() => openSearch(mealType)}>
-                    <Plus className="w-3 h-3 mr-1" /> Add
+              <Card key={mealType} className="overflow-hidden border-[hsl(var(--hairline))] shadow-sm">
+                <CardHeader className="flex flex-row items-center justify-between pb-3 pt-4 px-5 bg-[hsl(var(--surface))] border-b border-[hsl(var(--hairline))]">
+                  <div className="flex items-center gap-3">
+                    <CardTitle className="text-base font-bold capitalize text-[hsl(var(--ink))]">
+                      {mealType.toLowerCase()}
+                    </CardTitle>
+                    {mealCals > 0 && <span className="text-xs font-semibold text-[hsl(var(--ink-secondary))] px-2 py-0.5 bg-[hsl(var(--background))] rounded-full">{Math.round(mealCals)} kcal</span>}
+                  </div>
+                  <Button variant="icon" className="h-8 w-8 text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary-active))/10]" onClick={() => openSearch(mealType)}>
+                    <Plus className="w-5 h-5" />
                   </Button>
                 </CardHeader>
-                <CardContent className="p-0">
+                <CardContent className="p-0 bg-[hsl(var(--background))]">
                   {items.length === 0 ? (
-                    <div className="p-4 text-sm text-[hsl(var(--ink-secondary))]">
+                    <div className="px-5 py-4 text-sm text-[hsl(var(--ink-muted))] italic">
                       No foods logged yet.
                     </div>
                   ) : (
                     <div className="divide-y divide-[hsl(var(--hairline))]">
-                      {items.map((item: any) => (
-                        <div key={item.id} className="p-4 flex items-center justify-between hover:bg-[hsl(var(--surface-elevated))] transition-colors">
-                          <div>
-                            <p className="font-medium text-sm">{item.displaySnapshot.name}</p>
-                            <p className="text-xs text-[hsl(var(--ink-secondary))] mt-0.5">
-                              {item.quantity} x {item.selectedPortionSnapshot.label} {item.selectedPortionSnapshot.grams ? `(${item.selectedPortionSnapshot.grams}g)` : ''}
-                            </p>
+                      {items.map((item: any) => {
+                        const itemCals = Math.round(getMealCalories(item.id));
+                        // Find macros for this item
+                        const getMacro = (key: string) => data.nutrients.find((n: any) => n.mealItemId === item.id && n.nutrientKey === key)?.amount || 0;
+                        const p = Math.round(getMacro('protein'));
+                        const c = Math.round(getMacro('carbohydrates'));
+                        const f = Math.round(getMacro('fat'));
+
+                        return (
+                          <div key={item.id} className="p-5 flex items-start justify-between hover:bg-[hsl(var(--surface))] transition-colors group">
+                            <div className="flex-1 pr-4">
+                              <p className="font-semibold text-[15px] text-[hsl(var(--ink))]">{item.displaySnapshot.name}</p>
+                              <p className="text-xs text-[hsl(var(--ink-secondary))] mt-1 font-medium">
+                                {item.quantity} x {item.selectedPortionSnapshot.label} {item.selectedPortionSnapshot.grams ? `(${Math.round(item.selectedPortionSnapshot.grams)}g)` : ''}
+                              </p>
+                              <div className="flex gap-3 mt-2 text-[11px] font-semibold text-[hsl(var(--ink-muted))]">
+                                <span className="text-green-600/70">P: {p}g</span>
+                                <span className="text-blue-600/70">C: {c}g</span>
+                                <span className="text-amber-600/70">F: {f}g</span>
+                              </div>
+                            </div>
+                            <div className="flex flex-col items-end gap-2">
+                              <div className="text-base font-bold text-[hsl(var(--ink))]">
+                                {itemCals} <span className="text-xs font-medium text-[hsl(var(--ink-secondary))]">kcal</span>
+                              </div>
+                              <Button 
+                                variant="icon" 
+                                className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity text-[hsl(var(--ink-muted))] hover:text-red-500" 
+                                onClick={() => deleteItem(item.id)}
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            </div>
                           </div>
-                          <div className="text-sm font-semibold">
-                            {Math.round(getMealCalories(item.id))} <span className="text-[10px] font-normal text-[hsl(var(--ink-secondary))]">kcal</span>
-                          </div>
-                        </div>
-                      ))}
+                        )
+                      })}
                     </div>
                   )}
                 </CardContent>
