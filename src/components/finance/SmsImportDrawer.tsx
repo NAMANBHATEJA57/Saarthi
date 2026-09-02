@@ -98,6 +98,7 @@ export function SmsImportDrawer({
         destinationAccountId: tx.destinationAccountId,
         categoryId: tx.categoryId,
         incomeTypeId: tx.incomeTypeId,
+        savingsGoalId: tx.savingsGoalId,
         merchant: tx.merchant,
         notes: tx.notes || tx.reference,
         source: 'SMS'
