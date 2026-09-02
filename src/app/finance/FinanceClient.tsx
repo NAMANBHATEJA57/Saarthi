@@ -76,24 +76,24 @@ export default function FinanceClient({ initialSummary, initialAccountBalances, 
       ) : (
         <>
           {/* MONEY OVERVIEW */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4">
             <Card className="hover:border-[hsl(var(--ink-muted))] transition-colors bg-[hsl(var(--surface))]">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-[12px] text-[hsl(var(--ink-secondary))] font-semibold tracking-wider uppercase">Bank Accounts</CardTitle>
+              <CardHeader className="p-3 sm:p-6 pb-1 sm:pb-2">
+                <CardTitle className="text-[10px] sm:text-[12px] text-[hsl(var(--ink-secondary))] font-semibold tracking-wider uppercase truncate">Bank Accounts</CardTitle>
               </CardHeader>
-              <CardContent><p className="text-xl sm:text-2xl font-bold text-[hsl(var(--success))]">₹{totalBankBalance.toLocaleString()}</p></CardContent>
+              <CardContent className="p-3 sm:p-6 pt-0 sm:pt-0"><p className="text-sm sm:text-2xl font-bold text-[hsl(var(--success))] truncate">₹{totalBankBalance.toLocaleString()}</p></CardContent>
             </Card>
             <Card className="hover:border-[hsl(var(--ink-muted))] transition-colors bg-[hsl(var(--surface))]">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-[12px] text-[hsl(var(--ink-secondary))] font-semibold tracking-wider uppercase">Credit Debt</CardTitle>
+              <CardHeader className="p-3 sm:p-6 pb-1 sm:pb-2">
+                <CardTitle className="text-[10px] sm:text-[12px] text-[hsl(var(--ink-secondary))] font-semibold tracking-wider uppercase truncate">Credit Debt</CardTitle>
               </CardHeader>
-              <CardContent><p className="text-xl sm:text-2xl font-bold text-[hsl(var(--destructive))]">₹{totalCreditDebt.toLocaleString()}</p></CardContent>
+              <CardContent className="p-3 sm:p-6 pt-0 sm:pt-0"><p className="text-sm sm:text-2xl font-bold text-[hsl(var(--destructive))] truncate">₹{totalCreditDebt.toLocaleString()}</p></CardContent>
             </Card>
             <Card className="hover:border-[hsl(var(--ink-muted))] transition-colors bg-[hsl(var(--surface))]">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-[12px] text-[hsl(var(--ink-secondary))] font-semibold tracking-wider uppercase">Net Available</CardTitle>
+              <CardHeader className="p-3 sm:p-6 pb-1 sm:pb-2">
+                <CardTitle className="text-[10px] sm:text-[12px] text-[hsl(var(--ink-secondary))] font-semibold tracking-wider uppercase truncate">Net Available</CardTitle>
               </CardHeader>
-              <CardContent><p className="text-xl sm:text-2xl font-bold text-[hsl(var(--ink))]">₹{netAvailable.toLocaleString()}</p></CardContent>
+              <CardContent className="p-3 sm:p-6 pt-0 sm:pt-0"><p className="text-sm sm:text-2xl font-bold text-[hsl(var(--ink))] truncate">₹{netAvailable.toLocaleString()}</p></CardContent>
             </Card>
           </div>
 

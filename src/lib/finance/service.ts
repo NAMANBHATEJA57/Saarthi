@@ -99,7 +99,7 @@ export async function getMonthlySummary(userId: string, yearMonth: string) {
   const reqEndDateObj = new Date(reqYear, reqMonth, 0);
   const reqEndDate = `${yearStr}-${monthStr}-${reqEndDateObj.getDate().toString().padStart(2, '0')}`;
 
-  const APP_START_DATE = '2026-08-01';
+  const APP_START_DATE = '2026-09-01';
 
   // 1. Fetch Income Types to find "Salary"
   const { financeIncomeTypes } = await import('@/lib/db/schema');
@@ -118,7 +118,7 @@ export async function getMonthlySummary(userId: string, yearMonth: string) {
   const validPlans = allPlans.filter(p => {
     const pVal = p.year * 12 + p.month;
     const rVal = reqYear * 12 + reqMonth;
-    const sVal = 2026 * 12 + 8; // August 2026
+    const sVal = 2026 * 12 + 9; // Sept 2026
     return pVal >= sVal && pVal <= rVal;
   });
 

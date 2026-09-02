@@ -6,8 +6,8 @@ export function IncomeAlignmentCard({ expectedMonthlyIncome, savingsGoals, curre
   const [spentByGoal, setSpentByGoal] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    // Fetch all expenses since start of tracking for rollover
-    const APP_START_DATE = '2026-08-01';
+    // Fetch all expenses since start of tracking for rollover (Starts Sept 2026)
+    const APP_START_DATE = '2026-09-01';
     
     fetch(`/api/finance/transactions?type=EXPENSE&startDate=${APP_START_DATE}&limit=5000`)
       .then(r => r.json())
@@ -27,9 +27,9 @@ export function IncomeAlignmentCard({ expectedMonthlyIncome, savingsGoals, curre
   if (expectedMonthlyIncome <= 0) return null;
 
   // Calculate elapsed months for rollover target multiplier
-  // e.g. from Aug 2026 to currentMonth
+  // App Tracking started in Sept 2026
   const [currYear, currMonth] = currentMonth.split('-').map(Number);
-  const elapsedMonths = (currYear - 2026) * 12 + (currMonth - 8) + 1;
+  const elapsedMonths = (currYear - 2026) * 12 + (currMonth - 9) + 1;
   const targetMultiplier = Math.max(1, elapsedMonths);
 
   const totalPlannedSavings = savingsGoals.reduce((sum, g) => {
