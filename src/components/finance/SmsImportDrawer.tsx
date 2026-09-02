@@ -296,6 +296,21 @@ export function SmsImportDrawer({
                 onChange={(updates) => updateTransaction(editingIndex, updates)}
               />
             </div>
+            <div className="p-4 border-t border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]">
+              <Button 
+                variant="primary" 
+                className="w-full h-11"
+                onClick={() => {
+                  if (editingIndex < transactions.length - 1) {
+                    setEditingIndex(editingIndex + 1);
+                  } else {
+                    setStep('LIST');
+                  }
+                }}
+              >
+                {editingIndex < transactions.length - 1 ? 'Save & Next' : 'Save & Back to List'}
+              </Button>
+            </div>
           </div>
         )}
       </SheetContent>

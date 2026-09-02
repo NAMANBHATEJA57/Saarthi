@@ -25,13 +25,29 @@ export interface ParsedSmsTransaction {
 }
 
 export function splitSmsMessages(text: string): string[] {
-  // Support blank line separation or multiple messages pasted together.
-  // We'll primarily split by double newline.
-  const messages = text.split(/\n\s*\n/);
-  return messages
-    .map(m => m.trim())
-    .filter(m => m.length > 0)
-    .slice(0, 10); // Max 10 limit
+  // First, if there are double newlines, use them as the primary delimiter
+  if (/\n\s*\n/.test(text)) {
+    return text.split(/\n\s*\n/).map(m => m.trim()).filter(m => m.length > 0).slice(0, 10);
+  }
+  
+  // Otherwise, split by single newline and merge lines that belong together
+  const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+  const messages: string[] = [];
+  
+  for (const line of lines) {
+    const hasKeyword = /(?:Rs\.?|INR|₹|debited|credited|withdrawn)/i.test(line);
+    if (messages.length === 0) {
+      messages.push(line);
+    } else {
+      if (hasKeyword) {
+        messages.push(line);
+      } else {
+        messages[messages.length - 1] += ' ' + line;
+      }
+    }
+  }
+  
+  return messages.slice(0, 10);
 }
 
 export function parseSingleSms(message: string): ParsedSmsTransaction {

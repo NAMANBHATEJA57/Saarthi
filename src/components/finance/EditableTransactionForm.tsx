@@ -83,6 +83,18 @@ export function EditableTransactionForm({
           ))}
         </div>
 
+        <div className="flex items-center gap-3 mb-4">
+          <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${cfg.bgColor} border border-white/10`}>
+            <Icon className={`w-5 h-5 ${cfg.color}`} />
+          </div>
+          <div>
+            <p className={`text-xs font-semibold uppercase tracking-widest ${cfg.color}`}>{cfg.label}</p>
+            <p className="text-[hsl(var(--ink-secondary))] text-xs">
+              {transaction.date || transaction.transactionDate ? format(new Date(transaction.date || transaction.transactionDate), 'd MMM yyyy') : 'No date'}
+            </p>
+          </div>
+        </div>
+
         <div className="flex items-baseline gap-1">
           <span className="text-2xl text-[hsl(var(--ink-secondary))] font-light shrink-0">{cfg.prefix}₹</span>
           <input
@@ -171,6 +183,28 @@ export function EditableTransactionForm({
                 </div>
               </div>
             )}
+          </div>
+        )}
+
+        {type === 'EXPENSE' && savingsGoals.length > 0 && accounts.find(a => a.id === transaction.accountId)?.type !== 'CREDIT_CARD' && (
+          <div className="space-y-1.5">
+            <Label className="text-xs text-[hsl(var(--ink-secondary))] uppercase tracking-wider font-semibold flex justify-between">
+              <span>Spend from Fund <span className="font-normal">(Optional)</span></span>
+              {transaction.savingsGoalId && (
+                <span className="text-[hsl(var(--destructive))] font-normal cursor-pointer capitalize" onClick={() => onChange({ savingsGoalId: null })}>Clear</span>
+              )}
+            </Label>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-40 overflow-y-auto p-1 custom-scrollbar">
+              {savingsGoals.map(sg => (
+                <div
+                  key={sg.id}
+                  onClick={() => onChange({ savingsGoalId: sg.id })}
+                  className={`p-2 border border-[hsl(var(--hairline))] rounded-lg text-center text-xs cursor-pointer transition-colors ${transaction.savingsGoalId === sg.id ? 'bg-[hsl(var(--primary))] text-white border-[hsl(var(--primary))]' : 'bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-elevated))]'}`}
+                >
+                  {sg.name}
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
