@@ -183,8 +183,7 @@ export default function FinanceClient({ initialSummary, initialAccountBalances, 
               <div className="grid grid-cols-2 gap-3">
                 <Button variant="secondary" className="bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))]" onClick={() => router.push('/finance/settings')}>Settings</Button>
                 <Button variant="secondary" className="bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))]" onClick={() => router.push('/finance/transactions')}>All Transactions</Button>
-                <Button variant="secondary" className="bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))] gap-2" onClick={() => router.push('/finance/ocr')}><Receipt className="w-4 h-4" /> Scan Receipt</Button>
-                <Button variant="secondary" className="bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))] gap-2" onClick={() => router.push('/finance/import')}><Upload className="w-4 h-4" /> Bulk Import</Button>
+                <Button variant="secondary" className="bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))] col-span-2 gap-2" onClick={() => router.push('/finance/import')}><Upload className="w-4 h-4" /> Import Transactions</Button>
               </div>
 
               {/* RECENT TRANSACTIONS COMPONENT */}

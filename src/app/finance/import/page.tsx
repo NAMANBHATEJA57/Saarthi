@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { financeAccounts, financeCategories } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
-import { CSVImportFlow } from '@/components/finance/CSVImportFlow';
+import { ImportHubClient } from './ImportHubClient';
 
 export default async function ImportPage() {
   const session = await auth();
@@ -14,5 +14,5 @@ export default async function ImportPage() {
     db.select().from(financeCategories).where(eq(financeCategories.userId, session.user.id))
   ]);
 
-  return <CSVImportFlow accounts={accounts} categories={categories} />;
+  return <ImportHubClient accounts={accounts} categories={categories} />;
 }
