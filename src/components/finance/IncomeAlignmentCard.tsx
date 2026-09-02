@@ -33,10 +33,13 @@ export function IncomeAlignmentCard({ expectedMonthlyIncome, savingsGoals, curre
   const targetMultiplier = Math.max(1, elapsedMonths);
 
   const totalPlannedSavings = savingsGoals.reduce((sum, g) => {
+    if (g.ultimateTargetAmount) {
+      return sum + g.ultimateTargetAmount;
+    }
     if (g.targetPercentage) {
       return sum + (expectedMonthlyIncome * (g.targetPercentage / 100));
     }
-    return sum + (g.ultimateTargetAmount || 0); // Assuming ultimateTargetAmount is meant as monthlyTarget for now
+    return sum;
   }, 0);
   
   const leftoverBudget = expectedMonthlyIncome - totalPlannedSavings;
@@ -59,7 +62,10 @@ export function IncomeAlignmentCard({ expectedMonthlyIncome, savingsGoals, curre
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {savingsGoals.map(g => {
-              const baseTarget = Math.round(g.targetPercentage ? (expectedMonthlyIncome * (g.targetPercentage / 100)) : (g.ultimateTargetAmount || 0));
+              const baseTarget = Math.round(
+                g.ultimateTargetAmount || 
+                (g.targetPercentage ? (expectedMonthlyIncome * (g.targetPercentage / 100)) : 0)
+              );
               const target = baseTarget * targetMultiplier;
               const spent = Math.round(spentByGoal[g.id] || 0);
               const remaining = target - spent;
