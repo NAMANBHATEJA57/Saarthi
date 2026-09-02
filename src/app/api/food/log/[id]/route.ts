@@ -4,11 +4,12 @@ import { db } from '@/lib/db';
 import { mealItems, mealItemNutrients } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await auth();
   if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const id = params.id;
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
   if (!id) return NextResponse.json({ error: 'Missing ID' }, { status: 400 });
 
   try {
