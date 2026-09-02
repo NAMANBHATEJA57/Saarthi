@@ -125,13 +125,39 @@ export function TransactionHistory({
             <p className="font-medium text-[15px] leading-tight text-[hsl(var(--ink))]">
               {tx.merchant || tx.description || 'Unknown'}
             </p>
-            <p className="text-[11px] text-[hsl(var(--ink-secondary))] mt-0.5 uppercase tracking-wider font-semibold">
-              {subtitle}
-              {tx.accountId && accounts.find(a => a.id === tx.accountId)?.name && ` • 🏦 ${accounts.find(a => a.id === tx.accountId)?.name}`}
-              {tx.categoryId && categories.find(c => c.id === tx.categoryId)?.name && ` • ${categories.find(c => c.id === tx.categoryId)?.name}`}
-              {tx.incomeTypeId && incomeTypes.find(c => c.id === tx.incomeTypeId)?.name && ` • ${incomeTypes.find(c => c.id === tx.incomeTypeId)?.name}`}
-              {tx.savingsGoalId && savingsGoals.find(c => c.id === tx.savingsGoalId)?.name && ` • 🎯 ${savingsGoals.find(c => c.id === tx.savingsGoalId)?.name}`}
-            </p>
+            <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-[hsl(var(--ink-secondary))]">
+                {subtitle}
+              </span>
+              
+              {tx.accountId && accounts.find(a => a.id === tx.accountId) && (() => {
+                const acc = accounts.find(a => a.id === tx.accountId);
+                const isCC = acc.type === 'CREDIT_CARD';
+                return (
+                  <span className={`text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded ${isCC ? 'bg-orange-100 text-orange-700 dark:bg-orange-950 dark:text-orange-400' : 'bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-400'}`}>
+                    🏦 {acc.name}
+                  </span>
+                );
+              })()}
+
+              {tx.categoryId && categories.find(c => c.id === tx.categoryId) && (
+                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-[hsl(var(--surface-elevated))] text-[hsl(var(--ink-muted))] border border-[hsl(var(--hairline))]">
+                  {categories.find(c => c.id === tx.categoryId)?.name}
+                </span>
+              )}
+
+              {tx.incomeTypeId && incomeTypes.find(c => c.id === tx.incomeTypeId) && (
+                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-[hsl(var(--surface-elevated))] text-[hsl(var(--ink-muted))] border border-[hsl(var(--hairline))]">
+                  {incomeTypes.find(c => c.id === tx.incomeTypeId)?.name}
+                </span>
+              )}
+
+              {tx.savingsGoalId && savingsGoals.find(c => c.id === tx.savingsGoalId) && (
+                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
+                  🎯 {savingsGoals.find(c => c.id === tx.savingsGoalId)?.name}
+                </span>
+              )}
+            </div>
           </div>
         </div>
         <div className="text-right">
