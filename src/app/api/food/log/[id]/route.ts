@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
-import { foodLogItems, foodLogNutrients } from '@/lib/db/schema';
+import { mealItems, mealItemNutrients } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
@@ -13,8 +13,8 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
 
   try {
     // Delete nutrients first because of FK (if not cascading)
-    await db.delete(foodLogNutrients).where(eq(foodLogNutrients.mealItemId, id));
-    await db.delete(foodLogItems).where(eq(foodLogItems.id, id));
+    await db.delete(mealItemNutrients).where(eq(mealItemNutrients.mealItemId, id));
+    await db.delete(mealItems).where(eq(mealItems.id, id));
 
     return NextResponse.json({ success: true });
   } catch (error) {
