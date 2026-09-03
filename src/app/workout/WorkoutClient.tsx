@@ -7,6 +7,7 @@ import { RoutineEditor, WorkoutRoutine } from "@/components/workout/RoutineEdito
 import { ScheduleEditor } from "@/components/workout/ScheduleEditor";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { useRouter } from "next/navigation";
+import { WORKOUT_DECKS } from "@/lib/workout/decks";
 
 const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -26,6 +27,27 @@ export function WorkoutClient({
   const [editingScheduleDay, setEditingScheduleDay] = useState<number | null>(null);
 
   const [isDeleting, setIsDeleting] = useState<string | null>(null);
+  const [isImporting, setIsImporting] = useState<string | null>(null);
+
+  const handleImportDeck = async (deckId: string) => {
+    setIsImporting(deckId);
+    try {
+      const res = await fetch('/api/workout/decks/import', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ deckId })
+      });
+      if (res.ok) {
+        router.refresh();
+      } else {
+        console.error('Failed to import deck');
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsImporting(null);
+    }
+  };
 
   const handleDeleteRoutine = async (id: string) => {
     if (!confirm("Delete this routine? This will also remove it from your schedule.")) return;
@@ -219,6 +241,47 @@ export function WorkoutClient({
             ))}
           </div>
         )}
+      </section>
+
+      {/* PRE-MADE DECKS SECTION */}
+      <section className="space-y-4">
+        <h2 className="text-xl font-medium text-[hsl(var(--ink))] tracking-tight">
+          Pre-made Decks
+        </h2>
+        
+        <div className="grid grid-cols-1 gap-3">
+          {WORKOUT_DECKS.map((deck) => (
+            <div 
+              key={deck.id}
+              className="flex items-start justify-between p-4 rounded-xl border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]"
+            >
+              <div className="flex flex-col flex-1 mr-4">
+                <span className="text-lg font-medium text-[hsl(var(--ink))]">
+                  {deck.name}
+                </span>
+                {deck.description && (
+                  <span className="text-sm text-[hsl(var(--ink-secondary))] mt-1">
+                    {deck.description}
+                  </span>
+                )}
+                <div className="mt-3 text-sm text-[hsl(var(--ink-secondary))]">
+                  {deck.routines.length} routines included
+                </div>
+              </div>
+              
+              <div className="flex gap-2">
+                <Button
+                  variant="secondary"
+                  className="bg-[hsl(var(--canvas))] border-[hsl(var(--hairline))] hover:bg-[hsl(var(--hairline))] text-[hsl(var(--ink))]"
+                  onClick={() => handleImportDeck(deck.id)}
+                  disabled={isImporting === deck.id}
+                >
+                  {isImporting === deck.id ? "Importing..." : "Import"}
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
     </div>
   );
