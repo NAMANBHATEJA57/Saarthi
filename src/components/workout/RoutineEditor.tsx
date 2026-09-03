@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2, Trash2, ArrowUp, ArrowDown, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { RelationshipManager } from "@/components/relationships/RelationshipManager";
+import { VisualBuilderDrawer } from "./VisualBuilderDrawer";
 
 export interface RoutineExercise {
   id?: string;
@@ -230,6 +231,23 @@ export function RoutineEditor({ initialRoutine, onSuccess, onCancel }: RoutineEd
             >
               <Plus className="w-5 h-5" />
             </Button>
+            
+            {/* Visual Builder Option */}
+            <VisualBuilderDrawer 
+              onAddExercise={(name) => {
+                setExercises(prev => [...prev, { name }]);
+              }}
+              trigger={
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="h-12 px-4 whitespace-nowrap"
+                  disabled={isSubmitting}
+                >
+                  Visual Builder
+                </Button>
+              }
+            />
           </div>
         </div>
 

@@ -1,0 +1,1 @@
+ALTER TABLE "workout_exercise_library" ADD COLUMN "media_url" text;

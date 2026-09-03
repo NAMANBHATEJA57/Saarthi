@@ -362,6 +362,7 @@ export const workoutExerciseLibrary = pgTable('workout_exercise_library', {
   muscle: text('muscle'),
   equipment: text('equipment'),
   instructions: text('instructions'),
+  mediaUrl: text('media_url'), // Link to GIF or Image
   source: text('source').default('internal').notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 });
