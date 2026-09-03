@@ -6,10 +6,7 @@ export function IncomeAlignmentCard({ expectedMonthlyIncome, savingsGoals, curre
   const [spentByGoal, setSpentByGoal] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    // Fetch all expenses since start of tracking for rollover (Starts Sept 2026)
-    const APP_START_DATE = '2026-09-01';
-    
-    fetch(`/api/finance/transactions?type=EXPENSE&startDate=${APP_START_DATE}&limit=5000`)
+    fetch(`/api/finance/transactions?type=EXPENSE&limit=5000`)
       .then(r => r.json())
       .then(d => {
         if (d.transactions) {

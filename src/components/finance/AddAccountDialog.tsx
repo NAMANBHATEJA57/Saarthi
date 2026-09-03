@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { PUBLIC_INSTITUTIONS, Institution } from "@/lib/constants/institutions";
 import { Landmark, CreditCard, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useMediaQuery } from "@/lib/hooks/use-media-query";
 
 interface AddAccountDialogProps {
   open: boolean;
@@ -28,6 +29,7 @@ export function AddAccountDialog({ open, onOpenChange, onSuccess }: AddAccountDi
   const [statementDay, setStatementDay] = useState('');
   const [dueDay, setDueDay] = useState('');
   const [loading, setLoading] = useState(false);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   // Reset state when opened
   const handleOpenChange = (isOpen: boolean) => {
@@ -104,7 +106,7 @@ export function AddAccountDialog({ open, onOpenChange, onSuccess }: AddAccountDi
 
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
-      <SheetContent side="bottom" className="max-w-md p-0 overflow-hidden bg-[hsl(var(--surface))] h-[90vh] sm:h-auto rounded-t-xl sm:rounded-xl border-t sm:border border-[hsl(var(--hairline))] flex flex-col mx-auto">
+      <SheetContent side={isDesktop ? "right" : "bottom"} className="max-w-md p-0 overflow-hidden bg-[hsl(var(--surface))] h-[90vh] sm:h-full rounded-t-xl sm:rounded-none sm:rounded-l-xl border-t sm:border-t-0 sm:border-l border-[hsl(var(--hairline))] flex flex-col mx-auto sm:mx-0">
         <SheetHeader className="p-6 pb-4 border-b border-[hsl(var(--hairline))] bg-[hsl(var(--surface-elevated))] shrink-0">
           <SheetTitle>Add Account</SheetTitle>
         </SheetHeader>

@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { ArrowDownRight, ArrowUpRight, ArrowRightLeft, Landmark, X, Check } from "lucide-react";
 import { format, parseISO } from "date-fns";
+import { useMediaQuery } from "@/lib/hooks/use-media-query";
 
 const TYPE_CONFIG: Record<string, { label: string; icon: any; color: string; bgColor: string; prefix: string }> = {
   INCOME:              { label: 'Income',       icon: ArrowDownRight, color: 'text-[hsl(var(--success))]', bgColor: 'bg-[hsl(var(--success))]/10', prefix: '+' },
@@ -47,6 +48,7 @@ export function TransactionEditDrawer({
   const [type, setType] = useState("EXPENSE");
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   // Sync state whenever transaction changes (fixes empty form bug)
   useEffect(() => {
@@ -129,7 +131,7 @@ export function TransactionEditDrawer({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="sm:max-w-[460px] mx-auto h-[90vh] sm:h-auto p-0 flex flex-col overflow-hidden bg-[hsl(var(--surface))] rounded-t-xl sm:rounded-xl border-t sm:border border-[hsl(var(--hairline))]">
+      <SheetContent side={isDesktop ? "right" : "bottom"} className="sm:max-w-[460px] mx-auto sm:mx-0 h-[90vh] sm:h-full p-0 flex flex-col overflow-hidden bg-[hsl(var(--surface))] rounded-t-xl sm:rounded-none sm:rounded-l-xl border-t sm:border-t-0 sm:border-l border-[hsl(var(--hairline))]">
         
         {/* Color-coded hero header */}
         <div className={`relative p-6 pb-5 ${cfg.bgColor}`}>

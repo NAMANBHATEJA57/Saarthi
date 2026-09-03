@@ -30,6 +30,15 @@
   }
 }
 
+@layer utilities {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 1rem);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 1rem);
+  }
+}
+
 @layer base {
   * {
     border-color: hsl(var(--hairline));
@@ -45,6 +54,19 @@
     font-family: 'Inter', -apple-system, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* App-like feel */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    overscroll-behavior-y: none;
+    touch-action: manipulation;
+  }
+  
+  /* Allow text selection in inputs and specific areas */
+  input, textarea, [contenteditable] {
+    -webkit-user-select: auto;
+    user-select: auto;
   }
   
   /* Typography Scale from DESIGN.md */

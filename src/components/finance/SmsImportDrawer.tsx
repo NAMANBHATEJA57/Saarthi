@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Loader2, ArrowLeft, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import { EditableTransactionForm } from './EditableTransactionForm';
+import { useMediaQuery } from "@/lib/hooks/use-media-query";
 
 export function SmsImportDrawer({
   open,
@@ -29,6 +30,7 @@ export function SmsImportDrawer({
   const [categories, setCategories] = useState<any[]>([]);
   const [incomeTypes, setIncomeTypes] = useState<any[]>([]);
   const [savingsGoals, setSavingsGoals] = useState<any[]>([]);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   useEffect(() => {
     if (open && step === 'INPUT') {
@@ -161,7 +163,7 @@ export function SmsImportDrawer({
         onOpenChange(isOpen);
       }
     }}>
-      <SheetContent side="bottom" className="h-[90vh] p-0 flex flex-col bg-[hsl(var(--surface))] rounded-t-xl border-t border-[hsl(var(--hairline))]">
+      <SheetContent side={isDesktop ? "right" : "bottom"} className="h-[90vh] sm:h-full sm:w-[460px] p-0 flex flex-col bg-[hsl(var(--surface))] rounded-t-xl sm:rounded-none sm:rounded-l-xl border-t sm:border-t-0 sm:border-l border-[hsl(var(--hairline))]">
         {step === 'INPUT' && (
           <div className="flex flex-col h-full">
             <SheetHeader className="p-6 pb-4 border-b border-[hsl(var(--hairline))]">

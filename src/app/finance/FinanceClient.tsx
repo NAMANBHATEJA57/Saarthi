@@ -14,6 +14,7 @@ import { TransactionCaptureForm } from '@/components/finance/TransactionCaptureF
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { IncomeAlignmentCard } from '@/components/finance/IncomeAlignmentCard';
 import { RecurringTransactionsList } from '@/components/finance/RecurringTransactionsList';
+import { useMediaQuery } from "@/lib/hooks/use-media-query";
 
 export default function FinanceClient({ initialSummary, initialAccountBalances, currentMonth, incomeTypes = [], savingsGoals = [], expectedMonthlyIncome = 0 }: any) {
   const router = useRouter();
@@ -21,6 +22,7 @@ export default function FinanceClient({ initialSummary, initialAccountBalances, 
   const [accounts, setAccounts] = useState(initialAccountBalances || []);
   const [isAddAccountOpen, setIsAddAccountOpen] = useState(false);
   const [transactionFormType, setTransactionFormType] = useState<'EXPENSE' | 'INCOME' | 'TRANSFER' | 'CREDIT_CARD_PAYMENT' | null>(null);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   useEffect(() => {
     // Lazily process any due recurring transactions when the user opens the finance dashboard
@@ -216,7 +218,7 @@ export default function FinanceClient({ initialSummary, initialAccountBalances, 
       />
 
       <Sheet open={!!transactionFormType} onOpenChange={(open) => !open && setTransactionFormType(null)}>
-        <SheetContent side="bottom" className="sm:max-w-[460px] mx-auto h-[90vh] sm:h-auto p-0 flex flex-col overflow-hidden bg-[hsl(var(--surface))] rounded-t-xl sm:rounded-xl border-t sm:border border-[hsl(var(--hairline))]">
+        <SheetContent side={isDesktop ? "right" : "bottom"} className="sm:max-w-[460px] mx-auto sm:mx-0 h-[90vh] sm:h-full p-0 flex flex-col overflow-hidden bg-[hsl(var(--surface))] rounded-t-xl sm:rounded-none sm:rounded-l-xl border-t sm:border-t-0 sm:border-l border-[hsl(var(--hairline))]">
           {transactionFormType && (
             <TransactionCaptureForm 
               defaultType={transactionFormType}

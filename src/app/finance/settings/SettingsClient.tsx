@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import { Plus, Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useMediaQuery } from "@/lib/hooks/use-media-query";
 
 export function SettingsClient({ 
   initialExpectedIncome,
@@ -41,6 +42,7 @@ export function SettingsClient({
   const [targetPercentage, setTargetPercentage] = useState('');
   
   const [loading, setLoading] = useState(false);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   // Bi-directional sync logic using Global Expected Income
   const handleAmountChange = (val: string) => {
@@ -288,7 +290,7 @@ export function SettingsClient({
 
       {/* Category Dialog */}
       <Sheet open={isCategoryOpen} onOpenChange={setIsCategoryOpen}>
-        <SheetContent side="bottom" className="max-w-sm mx-auto p-0 flex flex-col bg-[hsl(var(--surface))] rounded-t-xl sm:rounded-xl border-t sm:border border-[hsl(var(--hairline))]">
+        <SheetContent side={isDesktop ? "right" : "bottom"} className="max-w-sm mx-auto sm:mx-0 p-0 flex flex-col bg-[hsl(var(--surface))] h-[90vh] sm:h-full rounded-t-xl sm:rounded-none sm:rounded-l-xl border-t sm:border-t-0 sm:border-l border-[hsl(var(--hairline))]">
           <SheetHeader className="p-6 pb-4 border-b border-[hsl(var(--hairline))] bg-[hsl(var(--surface-elevated))] shrink-0"><SheetTitle>New Category</SheetTitle></SheetHeader>
           <form onSubmit={handleCreateCategory} className="space-y-4 p-6">
             <div className="space-y-2">
@@ -305,7 +307,7 @@ export function SettingsClient({
 
       {/* Income Type Dialog */}
       <Sheet open={isIncomeTypeOpen} onOpenChange={setIsIncomeTypeOpen}>
-        <SheetContent side="bottom" className="max-w-sm mx-auto p-0 flex flex-col bg-[hsl(var(--surface))] rounded-t-xl sm:rounded-xl border-t sm:border border-[hsl(var(--hairline))]">
+        <SheetContent side={isDesktop ? "right" : "bottom"} className="max-w-sm mx-auto sm:mx-0 p-0 flex flex-col bg-[hsl(var(--surface))] h-[90vh] sm:h-full rounded-t-xl sm:rounded-none sm:rounded-l-xl border-t sm:border-t-0 sm:border-l border-[hsl(var(--hairline))]">
           <SheetHeader className="p-6 pb-4 border-b border-[hsl(var(--hairline))] bg-[hsl(var(--surface-elevated))] shrink-0"><SheetTitle>New Income Type</SheetTitle></SheetHeader>
           <form onSubmit={handleCreateIncomeType} className="space-y-4 p-6">
             <div className="space-y-2">
@@ -326,7 +328,7 @@ export function SettingsClient({
 
       {/* Savings Goal Dialog */}
       <Sheet open={isSavingsGoalOpen} onOpenChange={setIsSavingsGoalOpen}>
-        <SheetContent side="bottom" className="max-w-sm mx-auto p-0 flex flex-col bg-[hsl(var(--surface))] rounded-t-xl sm:rounded-xl border-t sm:border border-[hsl(var(--hairline))]">
+        <SheetContent side={isDesktop ? "right" : "bottom"} className="max-w-sm mx-auto sm:mx-0 p-0 flex flex-col bg-[hsl(var(--surface))] h-[90vh] sm:h-full rounded-t-xl sm:rounded-none sm:rounded-l-xl border-t sm:border-t-0 sm:border-l border-[hsl(var(--hairline))]">
           <SheetHeader className="p-6 pb-4 border-b border-[hsl(var(--hairline))] bg-[hsl(var(--surface-elevated))] shrink-0"><SheetTitle>New Savings Goal</SheetTitle></SheetHeader>
           <form onSubmit={handleCreateSavingsGoal} className="space-y-4 p-6">
             <div className="space-y-2">
