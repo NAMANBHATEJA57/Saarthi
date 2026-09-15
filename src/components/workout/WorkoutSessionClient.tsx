@@ -5,6 +5,7 @@ import { RestTimer } from "./RestTimer";
 import { Check, Plus, History, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getPreviousPerformanceAction } from "@/app/workout/actions";
+import { ExerciseMedia } from "./ExerciseMedia";
 
 export function WorkoutSessionClient({ workoutSession, routine, routineExercises, library, existingSets, latestBodyweight }: any) {
   const router = useRouter();
@@ -104,6 +105,18 @@ export function WorkoutSessionClient({ workoutSession, routine, routineExercises
 
               {isActive && (
                 <div className="mt-6 space-y-4">
+                  {ex.libraryData && (ex.libraryData.animationUrl || ex.libraryData.mediaUrl || ex.libraryData.thumbnailUrl) && (
+                    <div className="w-full h-32 md:h-48 mb-4">
+                      <ExerciseMedia
+                        animationUrl={ex.libraryData.animationUrl}
+                        mediaUrl={ex.libraryData.mediaUrl}
+                        thumbnailUrl={ex.libraryData.thumbnailUrl}
+                        alt={ex.name}
+                        className="w-full h-full rounded-lg"
+                        expandable={true}
+                      />
+                    </div>
+                  )}
                   {exSets.length > 0 && (
                     <div className="space-y-2">
                       <div className="text-[10px] font-semibold text-[hsl(var(--ink-muted))] tracking-wider uppercase">Current Sets</div>

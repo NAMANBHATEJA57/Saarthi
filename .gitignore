@@ -48,3 +48,7 @@ next-env.d.ts
 /Docs/
 /Phase-8-Specs/
 *.zip
+
+# Python Virtual Environments
+venv/
+__pycache__/

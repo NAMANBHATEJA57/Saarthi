@@ -362,7 +362,9 @@ export const workoutExerciseLibrary = pgTable('workout_exercise_library', {
   muscle: text('muscle'),
   equipment: text('equipment'),
   instructions: text('instructions'),
-  mediaUrl: text('media_url'), // Link to GIF or Image
+  mediaUrl: text('media_url'), // Link to static Image (Fallback)
+  animationUrl: text('animation_url'), // Link to GIF or Video
+  thumbnailUrl: text('thumbnail_url'),
   source: text('source').default('internal').notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 });
@@ -612,4 +614,87 @@ export const objectRelationships = pgTable('object_relationships', {
   sourceIdx: index('rel_source_idx').on(table.userId, table.sourceType, table.sourceId),
   targetIdx: index('rel_target_idx').on(table.userId, table.targetType, table.targetId),
   uniqueRelIdx: uniqueIndex('rel_unique_idx').on(table.userId, table.sourceType, table.sourceId, table.targetType, table.targetId),
+}));
+
+// ==========================================
+// 11. JOBS DOMAIN
+// ==========================================
+
+export const jobs = pgTable('jobs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  title: text('title').notNull(),
+  company: text('company').notNull(),
+  companyUrl: text('company_url'),
+  jobUrl: text('job_url'),
+  location: text('location'),
+  remoteType: text('remote_type'), // Remote, Hybrid, On-site
+  jobType: text('job_type'), // Full-time, Contract, etc.
+  description: text('description'),
+  salaryMin: doublePrecision('salary_min'),
+  salaryMax: doublePrecision('salary_max'),
+  salaryCurrency: text('salary_currency'),
+  salaryInterval: text('salary_interval'),
+  datePosted: timestamp('date_posted', { withTimezone: true }),
+  source: text('source').notNull(), // LinkedIn, Indeed, Manual, etc.
+  externalId: text('external_id'),
+  dedupeHash: text('dedupe_hash'), // deterministic hash for deduplication
+  skills: jsonb('skills').$type<string[]>(),
+  companyLogo: text('company_logo'),
+  scrapedAt: timestamp('scraped_at', { withTimezone: true }),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  deletedAt: timestamp('deleted_at', { withTimezone: true }),
+}, (table) => ({
+  jobsUserIdx: index('jobs_user_idx').on(table.userId),
+  jobsDedupeIdx: index('jobs_dedupe_idx').on(table.userId, table.dedupeHash),
+}));
+
+export const jobApplications = pgTable('job_applications', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  jobId: uuid('job_id').notNull().references(() => jobs.id, { onDelete: 'cascade' }),
+  status: text('status').default('Saved').notNull(), // Saved, Applied, Screening, Interview, Offer, Rejected, Withdrawn
+  appliedDate: timestamp('applied_date', { withTimezone: true }),
+  resumeUsed: text('resume_used'),
+  coverLetterUsed: text('cover_letter_used'),
+  recruiterName: text('recruiter_name'),
+  recruiterEmail: text('recruiter_email'),
+  recruiterLinkedin: text('recruiter_linkedin'),
+  applicationDeadline: timestamp('application_deadline', { withTimezone: true }),
+  nextFollowUpDate: timestamp('next_follow_up_date', { withTimezone: true }),
+  notes: text('notes'),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+  jobApplicationsUserIdx: index('job_applications_user_idx').on(table.userId),
+  jobApplicationsJobIdx: uniqueIndex('job_applications_job_idx').on(table.userId, table.jobId),
+}));
+
+export const jobInterviews = pgTable('job_interviews', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  applicationId: uuid('application_id').notNull().references(() => jobApplications.id, { onDelete: 'cascade' }),
+  roundName: text('round_name').notNull(), // Technical, HR, etc.
+  interviewDate: timestamp('interview_date', { withTimezone: true }),
+  type: text('type'), // Video, Phone, In-person
+  meetingUrl: text('meeting_url'),
+  notes: text('notes'),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+  jobInterviewsAppIdx: index('job_interviews_app_idx').on(table.applicationId),
+}));
+
+export const jobSearches = pgTable('job_searches', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  keyword: text('keyword'),
+  location: text('location'),
+  remote: text('remote'),
+  jobType: text('job_type'),
+  sources: jsonb('sources').$type<string[]>(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+  jobSearchesUserIdx: index('job_searches_user_idx').on(table.userId),
 }));

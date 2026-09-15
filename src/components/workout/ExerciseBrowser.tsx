@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Search, Loader2, Plus, Info } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import Image from 'next/image';
+import { ExerciseMedia } from './ExerciseMedia';
 
 interface Exercise {
   id: string;
@@ -16,7 +17,9 @@ interface Exercise {
   muscle: string | null;
   equipment: string | null;
   instructions: string | null;
-  mediaUrl: string | null;
+  animationUrl?: string | null;
+  mediaUrl?: string | null;
+  thumbnailUrl?: string | null;
 }
 
 interface ExerciseBrowserProps {
@@ -81,20 +84,13 @@ export function ExerciseBrowser({ selectedMuscle, onAddExercise }: ExerciseBrows
           exercises.map((ex) => (
             <Card key={ex.id} className="overflow-hidden border-border/50">
               <CardContent className="p-0 flex items-stretch">
-                {ex.mediaUrl ? (
-                  <div className="w-24 h-24 bg-muted relative shrink-0">
-                    <img 
-                      src={ex.mediaUrl} 
-                      alt={ex.name} 
-                      className="w-full h-full object-cover mix-blend-multiply" 
-                      loading="lazy"
-                    />
-                  </div>
-                ) : (
-                  <div className="w-24 h-24 bg-muted flex items-center justify-center shrink-0">
-                    <span className="text-muted-foreground text-xs">No media</span>
-                  </div>
-                )}
+                <ExerciseMedia
+                  animationUrl={ex.animationUrl}
+                  mediaUrl={ex.mediaUrl}
+                  thumbnailUrl={ex.thumbnailUrl}
+                  alt={ex.name}
+                  className="w-24 h-24 shrink-0"
+                />
                 
                 <div className="flex-1 p-3 flex flex-col justify-between min-w-0">
                   <div>
@@ -118,9 +114,16 @@ export function ExerciseBrowser({ selectedMuscle, onAddExercise }: ExerciseBrows
                             <DialogTitle className="capitalize">{ex.name}</DialogTitle>
                           </DialogHeader>
                           <div className="mt-4">
-                            {ex.mediaUrl && (
-                              <div className="w-full h-48 relative mb-4 rounded-md overflow-hidden bg-muted">
-                                <img src={ex.mediaUrl} alt={ex.name} className="w-full h-full object-contain" />
+                            {(ex.animationUrl || ex.mediaUrl || ex.thumbnailUrl) && (
+                              <div className="w-full h-48 mb-4">
+                                <ExerciseMedia
+                                  animationUrl={ex.animationUrl}
+                                  mediaUrl={ex.mediaUrl}
+                                  thumbnailUrl={ex.thumbnailUrl}
+                                  alt={ex.name}
+                                  className="w-full h-full rounded-md"
+                                  expandable={false}
+                                />
                               </div>
                             )}
                             <h5 className="font-semibold mb-2">Instructions</h5>

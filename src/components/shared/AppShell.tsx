@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Calendar, LayoutDashboard, Settings, Plus, Apple, Scale, Search, Dumbbell, IndianRupee, CheckSquare, StickyNote } from "lucide-react";
+import { Calendar, LayoutDashboard, Settings, Plus, Apple, Scale, Search, Dumbbell, IndianRupee, CheckSquare, StickyNote, Briefcase } from "lucide-react";
 import { CommandMenu } from "./CommandMenu";
 import { GlobalCaptureModal } from "./GlobalCaptureModal";
 import { useState } from "react";
@@ -27,6 +27,10 @@ const healthLinks = [
 
 const financeLinks = [
   { name: "Finance", href: "/finance", icon: IndianRupee },
+];
+
+const careerLinks = [
+  { name: "Jobs", href: "/jobs", icon: Briefcase },
 ];
 
 type NavItem = { name: string; href: string; icon: React.ElementType; comingSoon?: boolean };
@@ -122,6 +126,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </div>
             <div className="space-y-1">
               {financeLinks.map((item) => (
+                <NavLink key={item.name} item={item} pathname={pathname} />
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <div className="px-3 mb-2 text-xs font-semibold text-[hsl(var(--ink-muted))] tracking-wider">
+              CAREER
+            </div>
+            <div className="space-y-1">
+              {careerLinks.map((item) => (
                 <NavLink key={item.name} item={item} pathname={pathname} />
               ))}
             </div>
