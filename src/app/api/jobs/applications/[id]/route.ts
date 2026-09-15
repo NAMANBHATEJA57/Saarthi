@@ -4,12 +4,13 @@ import { db } from "@/lib/db";
 import { jobApplications, jobInterviews, jobs } from "@/lib/db/schema";
 import { eq, and } from "drizzle-orm";
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await auth();
     if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const body = await req.json();
+    const { id } = await params;
     
     await db.update(jobApplications)
       .set({
@@ -17,7 +18,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
         updatedAt: new Date()
       })
       .where(and(
-        eq(jobApplications.id, params.id),
+        eq(jobApplications.id, id),
         eq(jobApplications.userId, session.user.id)
       ));
 
@@ -27,10 +28,12 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   }
 }
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await auth();
     if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+    const { id } = await params;
 
     const result = await db.select({
       application: jobApplications,
@@ -39,7 +42,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     .from(jobApplications)
     .innerJoin(jobs, eq(jobApplications.jobId, jobs.id))
     .where(and(
-      eq(jobApplications.id, params.id),
+      eq(jobApplications.id, id),
       eq(jobApplications.userId, session.user.id)
     ))
     .limit(1);
@@ -48,7 +51,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     
     // Fetch interviews
     const interviews = await db.query.jobInterviews.findMany({
-      where: eq(jobInterviews.applicationId, params.id),
+      where: eq(jobInterviews.applicationId, id),
       orderBy: (interviews, { desc }) => [desc(interviews.interviewDate)]
     });
 
