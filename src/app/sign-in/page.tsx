@@ -2,7 +2,16 @@ import { signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-export default function SignInPage() {
+import { AuthError } from "next-auth";
+import { redirect } from "next/navigation";
+
+export default async function SignInPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
+  const { error } = await searchParams;
+  
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
       <div className="w-full max-w-sm space-y-6">
@@ -28,10 +37,25 @@ export default function SignInPage() {
         <form
           action={async (formData) => {
             "use server";
-            await signIn("credentials", formData);
+            try {
+              await signIn("credentials", formData);
+            } catch (err) {
+              if (err instanceof AuthError) {
+                if (err.type === "CredentialsSignin") {
+                  redirect("/sign-in?error=Invalid+credentials");
+                }
+                redirect("/sign-in?error=Authentication+failed");
+              }
+              throw err;
+            }
           }}
           className="space-y-4"
         >
+          {error && (
+            <div className="p-3 text-sm text-red-500 bg-red-500/10 rounded-xl text-center font-medium">
+              {error}
+            </div>
+          )}
           <div className="space-y-4">
             <input
               id="username"
