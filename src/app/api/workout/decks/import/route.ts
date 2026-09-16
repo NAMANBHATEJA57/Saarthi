@@ -63,19 +63,14 @@ export async function POST(request: Request) {
           
           return {
             routineId,
-            exerciseId: libraryId || null, // Might be null if missing from DB, we handle this gracefully
-            sets: ex.sets,
-            reps: ex.reps,
-            orderIndex: index,
+            libraryId: libraryId || null, 
+            name: ex.name,
+            position: index,
           };
         });
 
         if (exercisesToInsert.length > 0) {
-          // Filter out missing exercises for safe insertion (or we could insert raw text if schema allowed)
-          const validExercises = exercisesToInsert.filter((e) => e.exerciseId !== null) as any[];
-          if (validExercises.length > 0) {
-            await tx.insert(workoutExercises).values(validExercises);
-          }
+          await tx.insert(workoutExercises).values(exercisesToInsert);
         }
       }
     });

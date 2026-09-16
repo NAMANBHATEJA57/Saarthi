@@ -55,18 +55,18 @@ export async function GET(req: NextRequest) {
     const status = searchParams.get("status");
 
     // We need to join with jobs table to return job info
+    const conditions = [eq(jobApplications.userId, session.user.id)];
+    if (status) {
+      conditions.push(eq(jobApplications.status, status));
+    }
+
     const query = db.select({
       application: jobApplications,
       job: jobs
     })
     .from(jobApplications)
     .innerJoin(jobs, eq(jobApplications.jobId, jobs.id))
-    .where(
-      and(
-        eq(jobApplications.userId, session.user.id),
-        status ? eq(jobApplications.status, status) : undefined
-      )
-    );
+    .where(and(...conditions));
 
     const results = await query;
     return NextResponse.json({ applications: results });

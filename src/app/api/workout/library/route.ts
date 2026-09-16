@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { workoutExerciseLibrary } from '@/lib/db/schema';
-import { eq, ilike, or, and, sql } from 'drizzle-orm';
+import { eq, ilike, or, and, isNull } from 'drizzle-orm';
 import { getAuthSession } from '@/lib/auth';
 
 export async function GET(request: Request) {
@@ -20,7 +20,7 @@ export async function GET(request: Request) {
     // Only allow public/system exercises (userId IS NULL) or the user's own exercises
     conditions.push(or(
       eq(workoutExerciseLibrary.userId, session.user.id),
-      sql`user_id IS NULL`
+      isNull(workoutExerciseLibrary.userId)
     ));
 
     if (muscle) {
