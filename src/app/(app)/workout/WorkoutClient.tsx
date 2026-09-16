@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Settings2, Trash2, Activity, Dumbbell } from "lucide-react";
+import { Plus, Settings2, Trash2, Activity, Dumbbell, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RoutineEditor, WorkoutRoutine } from "@/components/workout/RoutineEditor";
 import { ScheduleEditor } from "@/components/workout/ScheduleEditor";
 import { EmptyState } from "@/components/shared/EmptyState";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { WORKOUT_DECKS } from "@/lib/workout/decks";
 
@@ -101,6 +99,52 @@ export function WorkoutClient({
           onSuccess={() => setEditingScheduleDay(null)}
           onCancel={() => setEditingScheduleDay(null)}
         />
+      </div>
+    );
+  }
+
+  if (viewingScheduleDay !== null) {
+    const schedule = initialSchedules.find(s => s.weekday === viewingScheduleDay);
+    const routine = initialRoutines.find(r => r.id === schedule?.routineId);
+    
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center gap-4">
+          <Button variant="secondary" className="px-3 bg-[hsl(var(--surface))] border-[hsl(var(--hairline))]" onClick={() => setViewingScheduleDay(null)}>
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back
+          </Button>
+          <h2 className="text-xl font-medium text-[hsl(var(--ink))]">
+            {WEEKDAYS[viewingScheduleDay]} - {routine?.name || "Rest"}
+          </h2>
+        </div>
+
+        {(!routine || routine.exercises.length === 0) ? (
+          <p className="text-sm text-[hsl(var(--ink-secondary))]">No exercises in this routine.</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {routine.exercises.map((ex, i) => (
+              <div key={i} className="flex flex-col gap-3 p-4 rounded-xl border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]">
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[hsl(var(--primary))] text-white text-sm font-bold shadow-sm">
+                    {i + 1}
+                  </div>
+                  <span className="font-medium text-[hsl(var(--ink))] text-lg">{ex.name}</span>
+                </div>
+                
+                {(ex.animationUrl || ex.mediaUrl) && (
+                  <div className="mt-2 relative w-full aspect-video rounded-lg overflow-hidden bg-[hsl(var(--canvas))] border border-[hsl(var(--hairline))] shadow-sm">
+                    <img
+                      src={ex.animationUrl || ex.mediaUrl || ""}
+                      alt={ex.name}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     );
   }
@@ -300,65 +344,6 @@ export function WorkoutClient({
           ))}
         </div>
       </section>
-
-      {/* VIEW ROUTINE DIALOG */}
-      <Dialog 
-        open={viewingScheduleDay !== null} 
-        onOpenChange={(open) => {
-          if (!open) setViewingScheduleDay(null);
-        }}
-      >
-        <DialogContent className="sm:max-w-md max-h-[85vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>
-              {viewingScheduleDay !== null && WEEKDAYS[viewingScheduleDay]} - {
-                viewingScheduleDay !== null && 
-                initialRoutines.find(r => r.id === initialSchedules.find(s => s.weekday === viewingScheduleDay)?.routineId)?.name
-              }
-            </DialogTitle>
-          </DialogHeader>
-          
-          <div className="space-y-4 py-4">
-            {viewingScheduleDay !== null && (() => {
-              const schedule = initialSchedules.find(s => s.weekday === viewingScheduleDay);
-              const routine = initialRoutines.find(r => r.id === schedule?.routineId);
-              
-              if (!routine) return <p>No routine selected.</p>;
-              
-              if (routine.exercises.length === 0) {
-                return <p className="text-sm text-[hsl(var(--ink-secondary))]">No exercises in this routine.</p>;
-              }
-
-              return (
-                <div className="space-y-6">
-                  {routine.exercises.map((ex, i) => (
-                    <div key={i} className="flex flex-col gap-2 p-3 rounded-lg border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]">
-                      <div className="flex items-center gap-2">
-                        <div className="flex items-center justify-center w-6 h-6 rounded-full bg-[hsl(var(--primary))] text-white text-xs font-bold">
-                          {i + 1}
-                        </div>
-                        <span className="font-medium text-[hsl(var(--ink))]">{ex.name}</span>
-                      </div>
-                      
-                      {(ex.animationUrl || ex.mediaUrl) && (
-                        <div className="mt-2 relative w-full aspect-video rounded-md overflow-hidden bg-[hsl(var(--canvas))]">
-                          <Image
-                            src={ex.animationUrl || ex.mediaUrl || ""}
-                            alt={ex.name}
-                            fill
-                            className="object-contain"
-                            unoptimized={!!ex.animationUrl}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              );
-            })()}
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
