@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { AppShell } from '@/components/shared/AppShell';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -33,11 +32,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-screen text-[hsl(var(--ink))] antialiased`}>
-        {/* In the future, a ThemeProvider would wrap AppShell here */}
-        <AppShell>
-          {children}
-        </AppShell>
+      <body className={`${inter.className} min-h-screen text-[hsl(var(--ink))] antialiased bg-[hsl(var(--surface))]`}>
+        {/* In the future, a ThemeProvider would wrap children here */}
+        {children}
       </body>
     </html>
   );
