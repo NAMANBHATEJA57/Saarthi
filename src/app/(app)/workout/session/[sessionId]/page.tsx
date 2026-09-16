@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { workoutSessions, workoutExerciseLibrary, workoutSets, workoutExercises, workoutRoutines } from "@/lib/db/schema";
 import { eq, and } from "drizzle-orm";
-import { WorkoutSessionClient } from "../../../../components/workout/WorkoutSessionClient";
+import { WorkoutSessionClient } from "@/components/workout/WorkoutSessionClient";
 import { WorkoutService } from "@/lib/workouts/service";
 
 export default async function WorkoutSessionPage(
