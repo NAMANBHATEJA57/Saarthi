@@ -4,7 +4,7 @@ import { useState } from "react";
 import { RestTimer } from "./RestTimer";
 import { Check, Plus, History, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { getPreviousPerformanceAction } from "@/app/workout/actions";
+import { getPreviousPerformanceAction } from "@/app/(app)/workout/actions";
 import { ExerciseMedia } from "./ExerciseMedia";
 
 export function WorkoutSessionClient({ workoutSession, routine, routineExercises, library, existingSets, latestBodyweight }: any) {
