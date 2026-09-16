@@ -10,6 +10,8 @@ import { VisualBuilderDrawer } from "./VisualBuilderDrawer";
 export interface RoutineExercise {
   id?: string;
   name: string;
+  animationUrl?: string | null;
+  mediaUrl?: string | null;
 }
 
 export interface WorkoutRoutine {

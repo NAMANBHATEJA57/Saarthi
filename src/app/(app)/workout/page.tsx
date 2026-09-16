@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
-import { workoutRoutines, workoutSchedules, workoutExercises, workoutSessions, workoutSets } from "@/lib/db/schema";
+import { workoutRoutines, workoutSchedules, workoutExercises, workoutSessions, workoutSets, workoutExerciseLibrary } from "@/lib/db/schema";
 import { eq, and, isNull, desc } from "drizzle-orm";
 import { WorkoutClient } from "./WorkoutClient";
 
@@ -31,8 +31,17 @@ export default async function WorkoutPage() {
   if (routineIds.length > 0) {
     for (const rId of routineIds) {
       const ex = await db
-        .select()
+        .select({
+          id: workoutExercises.id,
+          routineId: workoutExercises.routineId,
+          name: workoutExercises.name,
+          position: workoutExercises.position,
+          libraryId: workoutExercises.libraryId,
+          animationUrl: workoutExerciseLibrary.animationUrl,
+          mediaUrl: workoutExerciseLibrary.mediaUrl,
+        })
         .from(workoutExercises)
+        .leftJoin(workoutExerciseLibrary, eq(workoutExercises.libraryId, workoutExerciseLibrary.id))
         .where(eq(workoutExercises.routineId, rId))
         .orderBy(workoutExercises.position);
       allExercises = allExercises.concat(ex);
