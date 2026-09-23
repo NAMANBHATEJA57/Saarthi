@@ -1,0 +1,1842 @@
+[
+  {
+    "sourceId": "curated",
+    "externalId": "cur-roti",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Roti (Wheat, Plain)",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 297,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 10.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 3.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 58.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041451+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-paratha",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Plain Paratha",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 326,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 7.5,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 12.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 48.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041601+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-aloo-paratha",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Aloo Paratha",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 260,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 6.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 10.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 36.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041604+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-white-rice",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "White Rice (Boiled)",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 130,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 2.7,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 0.3,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 28.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041606+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-brown-rice",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Brown Rice (Boiled)",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 111,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 2.6,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 0.9,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 23.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041609+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-poha",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Poha (Cooked)",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 180,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 3.5,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 5.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 30.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041611+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-upma",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Upma",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 150,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 4.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 4.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 25.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041613+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-idli",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Idli (Rice & Dal)",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 148,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 5.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 0.5,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 30.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041616+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-dosa",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Plain Dosa",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 168,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 4.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 4.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 29.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041618+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-masala-dosa",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Masala Dosa",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 210,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 4.5,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 8.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 30.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041620+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-dal-tadka",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Dal Tadka",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 120,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 6.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 4.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 15.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041622+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-dal-makhani",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Dal Makhani",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 145,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 5.5,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 7.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 16.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041624+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-toor-dal",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Toor Dal (Plain, Cooked)",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 110,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 6.5,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 1.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 18.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041626+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-chana-masala",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Chana Masala",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 160,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 6.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 6.5,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 20.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041631+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-rajma-masala",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Rajma Masala",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 140,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 5.5,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 4.5,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 19.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041633+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-paneer-butter-masala",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Paneer Butter Masala",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 280,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 8.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 22.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 12.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041634+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-palak-paneer",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Palak Paneer",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 180,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 9.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 14.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 5.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041636+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-shahi-paneer",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Shahi Paneer",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 300,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 9.5,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 24.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 14.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041638+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-matar-paneer",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Matar Paneer",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 200,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 8.5,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 14.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 12.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041640+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-paneer-tikka",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Paneer Tikka (Dry)",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 260,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 14.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 19.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 8.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041642+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-aloo-gobi",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Aloo Gobi",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 110,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 3.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 5.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 14.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041643+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-bhindi-masala",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Bhindi Masala (Okra)",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 120,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 2.5,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 8.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 10.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041645+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-mix-veg",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Mixed Vegetable Curry",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 95,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 2.5,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 5.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 10.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041647+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-baingan-bharta",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Baingan Bharta (Eggplant)",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 85,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 2.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 4.5,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 9.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041648+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-aloo-jeera",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Jeera Aloo",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 130,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 2.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 6.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 18.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041650+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-samosa",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Samosa (Fried)",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 260,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 4.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 15.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 28.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041652+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-dhokla",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Khaman Dhokla",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 160,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 5.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 3.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 28.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041654+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-pakora",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Veg Pakora",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 280,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 6.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 18.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 25.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041657+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-ghee",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Ghee (Clarified Butter)",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 900,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 0.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 100.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 0.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041660+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-dahi",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Plain Curd (Dahi, Whole Milk)",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 98,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 4.3,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 4.3,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 5.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041662+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-khichdi",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Moong Dal Khichdi",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 120,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 4.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 2.5,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 20.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041664+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-veg-biryani",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Vegetable Biryani",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 160,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 3.5,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 5.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 25.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041665+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-kheer",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Rice Kheer (Pudding)",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 140,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 3.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 4.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 23.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041667+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-gulab-jamun",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Gulab Jamun",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 300,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 4.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 12.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 45.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041669+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-rasgulla",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Rasgulla",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 186,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 4.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 1.8,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 38.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041671+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-green-salad",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Basic Green Salad (No Dressing)",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 20,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 1.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 0.2,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 4.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041673+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-pav-bhaji",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Pav Bhaji (Without extra butter)",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 140,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 3.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 5.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 21.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041674+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-pav",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Pav (Bread Roll)",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 260,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 8.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 3.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 50.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041676+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-puri",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Puri (Fried Bread)",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 320,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 6.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 16.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 40.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041678+00:00"
+  },
+  {
+    "sourceId": "curated",
+    "externalId": "cur-chole-bhature",
+    "normalizedRecordVersion": "1.0",
+    "normalizedIdentity": "Chole Bhature",
+    "provenance": {
+      "brand": "Indian Curated Dataset"
+    },
+    "nutrients": [
+      {
+        "key": "energy",
+        "amount": 280,
+        "unit": "kcal",
+        "status": "known"
+      },
+      {
+        "key": "protein",
+        "amount": 7.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "total_fat",
+        "amount": 14.0,
+        "unit": "g",
+        "status": "known"
+      },
+      {
+        "key": "carbohydrate",
+        "amount": 32.0,
+        "unit": "g",
+        "status": "known"
+      }
+    ],
+    "portions": [
+      {
+        "amount": 100,
+        "unit": "g",
+        "modifier": "100g standard portion",
+        "gramWeight": 100,
+        "label": "100g",
+        "ordering": 1
+      }
+    ],
+    "fetchedAt": "2026-09-17T16:28:33.041681+00:00"
+  }
+]
