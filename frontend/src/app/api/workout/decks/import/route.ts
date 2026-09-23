@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { workoutRoutines, workoutExercises, workoutExerciseLibrary } from '@/lib/db/schema';
-import { eq, inArray } from 'drizzle-orm';
+import { eq, inArray, and } from 'drizzle-orm';
 import { getAuthSession } from '@/lib/auth';
 import { WORKOUT_DECKS } from '@/lib/workout/decks';
 
@@ -42,6 +42,25 @@ export async function POST(request: Request) {
     // Run in a transaction to ensure all or nothing
     await db.transaction(async (tx) => {
       for (const routineData of deck.routines) {
+        // Check if routine already exists to prevent duplicates
+        const existingRoutines = await tx
+          .select()
+          .from(workoutRoutines)
+          .where(
+            and(
+              eq(workoutRoutines.userId, session.user?.id as string),
+              eq(workoutRoutines.name, routineData.name)
+            )
+          );
+
+        // We use hard match on name. If it exists (even soft-deleted), we skip, 
+        // but let's only skip if it's actively not soft-deleted.
+        const activeExisting = existingRoutines.filter(r => r.deletedAt === null);
+
+        if (activeExisting.length > 0) {
+          continue; // Skip this routine since it already exists
+        }
+
         // Create Routine
         const [insertedRoutine] = await tx
           .insert(workoutRoutines)
