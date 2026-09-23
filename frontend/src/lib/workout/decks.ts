@@ -114,27 +114,29 @@ export const WORKOUT_DECKS: WorkoutDeck[] = [
     description: 'A beginner-friendly 7-day plan focused on leg strength, endurance, core stability, and mobility for trekking.',
     routines: [
       {
-        name: 'Monday: Lower Body Strength',
-        description: 'Rebuild leg strength for steep ascents and descents.',
+        name: 'Monday: Full Body & Cardio',
+        description: 'Mixed upper & lower body, cardio, and stretching.',
         exercises: [
+          { name: 'treadmill walking', sets: 1, reps: '10 mins' },
           { name: 'leg press', sets: 3, reps: '10-12' },
+          { name: 'chest press', sets: 3, reps: '10-12' },
           { name: 'seated leg curl', sets: 3, reps: '10-12' },
-          { name: 'leg extension', sets: 2, reps: '12' },
-          { name: 'walking lunge', sets: 2, reps: '20' },
-          { name: 'standing calf raise', sets: 3, reps: '15' }
+          { name: 'cable lat pulldown (wide grip)', sets: 3, reps: '10-12' },
+          { name: 'plank', sets: 3, reps: '30s' },
+          { name: 'hamstring stretch', sets: 1, reps: '1 min' }
         ]
       },
       {
-        name: 'Tuesday: Upper Body & Core',
-        description: 'Core stability for carrying a backpack and upper body strength for trekking poles.',
+        name: 'Tuesday: Endurance & Core',
+        description: 'Trek endurance combined with upper body and core mobility.',
         exercises: [
-          { name: 'chest press', sets: 3, reps: '10-12' },
-          { name: 'cable lat pulldown (wide grip)', sets: 3, reps: '10-12' },
-          { name: 'cable seated row', sets: 3, reps: '12' },
-          { name: 'dumbbell shoulder press', sets: 2, reps: '10' },
+          { name: 'stairmaster', sets: 1, reps: '15 mins' },
+          { name: 'walking lunge', sets: 2, reps: '20' },
+          { name: 'dumbbell shoulder press', sets: 3, reps: '10' },
+          { name: 'standing calf raise', sets: 3, reps: '15' },
           { name: 'dumbbell bicep curl', sets: 2, reps: '12' },
-          { name: 'cable triceps pushdown', sets: 2, reps: '12' },
-          { name: 'plank', sets: 3, reps: '30s' }
+          { name: 'cat-cow stretch', sets: 2, reps: '10' },
+          { name: 'quad stretch', sets: 1, reps: '1 min' }
         ]
       },
       {
@@ -143,28 +145,34 @@ export const WORKOUT_DECKS: WorkoutDeck[] = [
         exercises: [
           { name: 'treadmill walking', sets: 1, reps: '20 mins' },
           { name: 'cat-cow stretch', sets: 2, reps: '10' },
-          { name: 'child\'s pose', sets: 1, reps: '1 min' }
+          { name: 'child\'s pose', sets: 1, reps: '1 min' },
+          { name: 'butterfly stretch', sets: 1, reps: '1 min' }
         ]
       },
       {
-        name: 'Thursday: Trek Endurance',
-        description: 'Mimic trekking uphill and stepping over rocks/roots.',
+        name: 'Thursday: Full Body & Trek Prep',
+        description: 'Mimic trekking uphill with mixed upper body support.',
         exercises: [
+          { name: 'incline treadmill', sets: 1, reps: '15 mins' },
           { name: 'step-up', sets: 3, reps: '10 per leg' },
-          { name: 'leg press', sets: 3, reps: '12' },
-          { name: 'seated leg curl', sets: 3, reps: '12' },
-          { name: 'standing calf raise', sets: 3, reps: '15' }
+          { name: 'cable seated row', sets: 3, reps: '12' },
+          { name: 'leg extension', sets: 2, reps: '12' },
+          { name: 'cable triceps pushdown', sets: 2, reps: '12' },
+          { name: 'plank', sets: 3, reps: '30s' },
+          { name: 'glute stretch', sets: 1, reps: '1 min' }
         ]
       },
       {
         name: 'Friday: Full Body Light',
-        description: 'Light touch-up on muscles, emphasizing core stability.',
+        description: 'Light touch-up on all muscles, emphasizing core stability and stretching.',
         exercises: [
-          { name: 'cable lat pulldown (wide grip)', sets: 3, reps: '12' },
-          { name: 'cable seated row', sets: 2, reps: '12' },
+          { name: 'treadmill walking', sets: 1, reps: '10 mins' },
           { name: 'chest press', sets: 2, reps: '12' },
+          { name: 'leg press', sets: 2, reps: '12' },
+          { name: 'cable lat pulldown (wide grip)', sets: 2, reps: '12' },
           { name: 'walking lunge', sets: 2, reps: '20' },
-          { name: 'plank', sets: 3, reps: '30s' }
+          { name: 'hip-flexor stretch', sets: 1, reps: '1 min' },
+          { name: 'calf stretch', sets: 1, reps: '1 min' }
         ]
       },
       {
@@ -172,7 +180,9 @@ export const WORKOUT_DECKS: WorkoutDeck[] = [
         description: 'Build cardiovascular stamina and mental endurance for long days.',
         exercises: [
           { name: 'incline treadmill', sets: 1, reps: '45-60 mins' },
-          { name: 'standing calf raise', sets: 3, reps: '15' }
+          { name: 'standing calf raise', sets: 3, reps: '15' },
+          { name: 'hamstring stretch', sets: 1, reps: '1 min' },
+          { name: 'quad stretch', sets: 1, reps: '1 min' }
         ]
       }
     ]
