@@ -149,10 +149,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 w-full flex flex-col pb-16 md:pb-0 min-h-0">
+      <main className="flex-1 w-full flex flex-col pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0 min-w-0">
         
         {/* Contextual Topbar */}
-        <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-[hsl(var(--hairline))] bg-[hsl(var(--canvas))]/80 backdrop-blur-md px-4 md:px-8">
+        <header className="sticky top-0 z-30 flex h-14 shrink-0 items-center justify-between border-b border-[hsl(var(--hairline))] bg-[hsl(var(--canvas))]/80 backdrop-blur-md px-4 md:px-8">
           <div className="flex items-center gap-4">
             <span className="font-medium text-[15px] capitalize text-[hsl(var(--ink))]">
               {pathname === '/' ? 'Today' : pathname.split('/')[1]}
@@ -174,7 +174,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto">
+        <div className="w-full">
           <div className="container mx-auto px-4 md:px-8 py-6 md:py-8 max-w-[1024px]">
             {children}
           </div>
@@ -182,12 +182,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </main>
 
       {/* Mobile Bottom Navigation */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-[hsl(var(--canvas))]/90 backdrop-blur-md border-t border-[hsl(var(--hairline))] flex items-center justify-around px-2 pb-safe z-50">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[hsl(var(--canvas))]/90 backdrop-blur-md border-t border-[hsl(var(--hairline))] flex items-center justify-around px-2 pt-1 pb-[calc(0.25rem+env(safe-area-inset-bottom))] z-50">
         <NavLink item={primaryLinks[0]} isMobile pathname={pathname} />
         <NavLink item={healthLinks[0]} isMobile pathname={pathname} />
         
         {/* Mobile FAB-style New Button */}
-        <div className="flex-1 flex justify-center -mt-8">
+        <div className="flex-1 flex justify-center -mt-8 mb-1">
           <button 
             onClick={() => setIsCaptureOpen(true)}
             className="flex items-center justify-center w-14 h-14 bg-[hsl(var(--primary))] text-white rounded-full shadow-lg border-4 border-[hsl(var(--canvas))] active:scale-95 transition-transform"
