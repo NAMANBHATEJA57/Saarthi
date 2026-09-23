@@ -107,5 +107,57 @@ export const WORKOUT_DECKS: WorkoutDeck[] = [
         ]
       }
     ]
+  },
+  {
+    id: 'trek-prep-beginner',
+    name: 'Trek Prep (Beginner)',
+    description: 'A beginner-friendly 7-day plan focused on leg strength, endurance, core stability, and mobility for trekking.',
+    routines: [
+      {
+        name: 'Monday: Lower Body Strength',
+        description: 'Rebuild leg strength for steep ascents and descents.',
+        exercises: [
+          { name: 'leg press', sets: 3, reps: '10-12' },
+          { name: 'seated leg curl', sets: 3, reps: '10-12' },
+          { name: 'leg extension', sets: 2, reps: '12' },
+          { name: 'walking lunge', sets: 2, reps: '20' },
+          { name: 'standing calf raise', sets: 3, reps: '15' }
+        ]
+      },
+      {
+        name: 'Tuesday: Upper Body & Core',
+        description: 'Core stability for carrying a backpack and upper body strength for trekking poles.',
+        exercises: [
+          { name: 'chest press', sets: 3, reps: '10-12' },
+          { name: 'cable lat pulldown (wide grip)', sets: 3, reps: '10-12' },
+          { name: 'cable seated row', sets: 3, reps: '12' },
+          { name: 'dumbbell shoulder press', sets: 2, reps: '10' },
+          { name: 'dumbbell bicep curl', sets: 2, reps: '12' },
+          { name: 'cable triceps pushdown', sets: 2, reps: '12' },
+          { name: 'plank', sets: 3, reps: '30s' }
+        ]
+      },
+      {
+        name: 'Thursday: Trek Endurance',
+        description: 'Mimic trekking uphill and stepping over rocks/roots.',
+        exercises: [
+          { name: 'step-up', sets: 3, reps: '10 per leg' },
+          { name: 'leg press', sets: 3, reps: '12' },
+          { name: 'seated leg curl', sets: 3, reps: '12' },
+          { name: 'standing calf raise', sets: 3, reps: '15' }
+        ]
+      },
+      {
+        name: 'Friday: Full Body Light',
+        description: 'Light touch-up on muscles, emphasizing core stability.',
+        exercises: [
+          { name: 'cable lat pulldown (wide grip)', sets: 3, reps: '12' },
+          { name: 'cable seated row', sets: 2, reps: '12' },
+          { name: 'chest press', sets: 2, reps: '12' },
+          { name: 'walking lunge', sets: 2, reps: '20' },
+          { name: 'plank', sets: 3, reps: '30s' }
+        ]
+      }
+    ]
   }
 ];

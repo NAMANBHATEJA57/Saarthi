@@ -10,14 +10,19 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { keywords, locations, remote, jobType, sources } = body;
+    const { keywords, locations, remote, jobType, sources, yoe } = body;
 
     if (!keywords || !locations || keywords.length === 0 || locations.length === 0) {
       return NextResponse.json({ error: "Keywords and locations are required" }, { status: 400 });
     }
 
+    // Append YOE to keywords if specified
+    const finalKeywords = yoe && yoe !== "any"
+      ? keywords.map((k: string) => `${k} ${yoe} experience`)
+      : keywords;
+
     const jobs = await JobService.searchAndSave(session.user.id, {
-      keywords,
+      keywords: finalKeywords,
       locations,
       remote: remote || "any",
       jobType: jobType || "any",

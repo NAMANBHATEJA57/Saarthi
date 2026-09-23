@@ -8,6 +8,19 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { TagInput } from "@/components/ui/tag-input";
 import { JobCard } from "@/components/jobs/JobCard";
 
+const JOB_TITLE_SUGGESTIONS = [
+  "Software Engineer", "Product Manager", "Product Designer", 
+  "Data Scientist", "Data Analyst", "Frontend Developer", 
+  "Backend Developer", "Full Stack Developer", "UX Designer", 
+  "UI Designer", "DevOps Engineer", "QA Engineer", "Project Manager"
+];
+
+const LOCATION_SUGGESTIONS = [
+  "Delhi", "Mumbai", "Bangalore", "Hyderabad", "Pune", 
+  "Chennai", "Gurgaon", "Noida", "Remote", "New York", 
+  "San Francisco", "London", "Singapore", "Dubai"
+];
+
 export default function JobDiscoverPage() {
   const [isSearching, setIsSearching] = useState(false);
   const [results, setResults] = useState<any[]>([]);
@@ -16,6 +29,7 @@ export default function JobDiscoverPage() {
   const [locations, setLocations] = useState<string[]>([]);
   const [remote, setRemote] = useState("any");
   const [jobType, setJobType] = useState("any");
+  const [yoe, setYoe] = useState("any");
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,7 +46,7 @@ export default function JobDiscoverPage() {
       const res = await fetch("/api/jobs/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ keywords, locations, remote, jobType })
+        body: JSON.stringify({ keywords, locations, remote, jobType, yoe })
       });
       
       const data = await res.json();
@@ -65,6 +79,7 @@ export default function JobDiscoverPage() {
                 onChange={setKeywords}
                 placeholder="e.g. UX Designer (press Enter)"
                 icon={<Briefcase />}
+                suggestions={JOB_TITLE_SUGGESTIONS}
               />
             </div>
             
@@ -75,11 +90,12 @@ export default function JobDiscoverPage() {
                 onChange={setLocations}
                 placeholder="e.g. Delhi (press Enter)"
                 icon={<MapPin />}
+                suggestions={LOCATION_SUGGESTIONS}
               />
             </div>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <div className="space-y-2">
               <label className="text-sm font-medium">Remote</label>
               <Select value={remote} onValueChange={setRemote}>
@@ -106,6 +122,21 @@ export default function JobDiscoverPage() {
                   <SelectItem value="fulltime">Full-time</SelectItem>
                   <SelectItem value="contract">Contract</SelectItem>
                   <SelectItem value="parttime">Part-time</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Years of Experience</label>
+              <Select value={yoe} onValueChange={setYoe}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select YOE" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="any">Any</SelectItem>
+                  <SelectItem value="entry level">Entry Level (0-2 yrs)</SelectItem>
+                  <SelectItem value="mid level">Mid Level (3-5 yrs)</SelectItem>
+                  <SelectItem value="senior level">Senior Level (5+ yrs)</SelectItem>
                 </SelectContent>
               </Select>
             </div>
