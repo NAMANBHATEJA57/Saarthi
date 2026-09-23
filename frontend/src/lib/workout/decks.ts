@@ -138,6 +138,15 @@ export const WORKOUT_DECKS: WorkoutDeck[] = [
         ]
       },
       {
+        name: 'Wednesday: Active Recovery',
+        description: 'Flush out lactic acid and improve joint mobility.',
+        exercises: [
+          { name: 'treadmill walking', sets: 1, reps: '20 mins' },
+          { name: 'cat-cow stretch', sets: 2, reps: '10' },
+          { name: 'child\'s pose', sets: 1, reps: '1 min' }
+        ]
+      },
+      {
         name: 'Thursday: Trek Endurance',
         description: 'Mimic trekking uphill and stepping over rocks/roots.',
         exercises: [
@@ -156,6 +165,14 @@ export const WORKOUT_DECKS: WorkoutDeck[] = [
           { name: 'chest press', sets: 2, reps: '12' },
           { name: 'walking lunge', sets: 2, reps: '20' },
           { name: 'plank', sets: 3, reps: '30s' }
+        ]
+      },
+      {
+        name: 'Saturday: The Long Hike',
+        description: 'Build cardiovascular stamina and mental endurance for long days.',
+        exercises: [
+          { name: 'incline treadmill', sets: 1, reps: '45-60 mins' },
+          { name: 'standing calf raise', sets: 3, reps: '15' }
         ]
       }
     ]

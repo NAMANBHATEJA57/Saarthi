@@ -177,11 +177,11 @@ export function WorkoutClient({
                 }}
                 className="flex items-center justify-between p-4 rounded-xl border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))] hover:bg-[hsl(var(--canvas))] transition-colors text-left"
               >
-                <div className="flex flex-col">
-                  <span className="text-sm font-medium text-[hsl(var(--ink-secondary))] uppercase tracking-wider">
+                <div className="flex flex-col min-w-0 flex-1 mr-2">
+                  <span className="text-sm font-medium text-[hsl(var(--ink-secondary))] uppercase tracking-wider truncate">
                     {dayName}
                   </span>
-                  <span className={`text-base mt-1 ${routine ? 'text-[hsl(var(--ink))]' : 'text-[hsl(var(--ink-secondary))] opacity-60'}`}>
+                  <span className={`text-base mt-1 truncate ${routine ? 'text-[hsl(var(--ink))]' : 'text-[hsl(var(--ink-secondary))] opacity-60'}`}>
                     {routine ? routine.name : 'Rest'}
                   </span>
                 </div>
@@ -272,8 +272,8 @@ export function WorkoutClient({
                 key={routine.id}
                 className="flex items-start justify-between p-4 rounded-xl border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]"
               >
-                <div className="flex flex-col flex-1 mr-4">
-                  <span className="text-lg font-medium text-[hsl(var(--ink))]">
+                <div className="flex flex-col flex-1 mr-4 min-w-0">
+                  <span className="text-lg font-medium text-[hsl(var(--ink))] truncate">
                     {routine.name}
                   </span>
                   {routine.remark && (
@@ -319,8 +319,8 @@ export function WorkoutClient({
               key={deck.id}
               className="flex items-start justify-between p-4 rounded-xl border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]"
             >
-              <div className="flex flex-col flex-1 mr-4">
-                <span className="text-lg font-medium text-[hsl(var(--ink))]">
+              <div className="flex flex-col flex-1 mr-4 min-w-0">
+                <span className="text-lg font-medium text-[hsl(var(--ink))] truncate">
                   {deck.name}
                 </span>
                 {deck.description && (
