@@ -28,17 +28,34 @@ export default async function CalendarSettingsPage() {
           {connections.length === 0 ? (
             <p className="text-sm text-[hsl(var(--ink-secondary))]">No accounts connected yet.</p>
           ) : (
-            connections.map(conn => (
-              <div key={conn.id} className="flex items-center justify-between p-3 border rounded-lg bg-[hsl(var(--surface))]">
-                <div>
-                  <p className="font-medium capitalize">{conn.provider}</p>
-                  <p className="text-xs text-[hsl(var(--ink-secondary))]">{conn.email || 'Connected'}</p>
+            connections.map(conn => {
+              const isExpired = !conn.refreshToken || (conn.expiresAt && Date.now() / 1000 > conn.expiresAt);
+              return (
+                <div key={conn.id} className="flex items-center justify-between p-3 border rounded-lg bg-[hsl(var(--surface))]">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="font-medium capitalize">{conn.provider}</p>
+                      {isExpired && (
+                        <span className="text-[10px] font-semibold uppercase bg-amber-500/15 text-amber-600 dark:text-amber-400 px-1.5 py-0.5 rounded">
+                          Needs Reconnect
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-[hsl(var(--ink-secondary))]">{conn.email || 'Connected'}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {isExpired && (
+                      <a href="/api/calendar/connect" className="text-xs h-8 px-2.5 inline-flex items-center justify-center font-medium border rounded-md bg-[hsl(var(--primary))] text-white hover:opacity-90 transition-opacity">
+                        Reconnect
+                      </a>
+                    )}
+                    <form action={`/api/calendar/disconnect/${conn.id}`} method="POST">
+                      <Button variant="secondary" type="submit" className="text-xs h-8 px-3">Disconnect</Button>
+                    </form>
+                  </div>
                 </div>
-                <form action={`/api/calendar/disconnect/${conn.id}`} method="POST">
-                  <Button variant="secondary" type="submit" className="text-xs h-8 px-3">Disconnect</Button>
-                </form>
-              </div>
-            ))
+              );
+            })
           )}
         </CardContent>
       </Card>

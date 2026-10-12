@@ -48,6 +48,8 @@ next-env.d.ts
 /Docs/
 /Phase-8-Specs/
 *.zip
+*.xlsx
+*.xls
 
 # Python Virtual Environments
 venv/

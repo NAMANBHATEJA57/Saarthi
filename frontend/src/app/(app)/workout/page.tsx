@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import { workoutRoutines, workoutSchedules, workoutExercises, workoutSessions, workoutSets, workoutExerciseLibrary } from "@/lib/db/schema";
 import { eq, and, isNull, desc } from "drizzle-orm";
 import { WorkoutClient } from "./WorkoutClient";
-import { getExerciseMedia } from "@/lib/workout/api";
+import { getExerciseMediaDetails } from "@/lib/workout/api";
 
 export const metadata = {
   title: "Workout",
@@ -44,11 +44,12 @@ export default async function WorkoutPage() {
         
       // Fetch media dynamically from API
       const exWithMedia = await Promise.all(ex.map(async (e) => {
-        const mediaUrl = await getExerciseMedia(e.name);
+        const media = await getExerciseMediaDetails(e.name);
         return {
           ...e,
-          mediaUrl,
-          animationUrl: null // We don't use animations anymore
+          mediaUrl: media.mediaUrl,
+          animationUrl: media.animationUrl,
+          thumbnailUrl: media.thumbnailUrl,
         };
       }));
       

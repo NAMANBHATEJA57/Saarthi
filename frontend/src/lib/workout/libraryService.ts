@@ -1,31 +1,30 @@
 import { db } from '@/lib/db';
 import { workoutExerciseLibrary } from '@/lib/db/schema';
-import { ilike, or, and, isNull, eq } from 'drizzle-orm';
+import { ilike, or, and, eq } from 'drizzle-orm';
+import { searchOnlineExercises } from './onlineDataset';
 
 export class WorkoutLibraryService {
   /**
    * Search for exercises in the library.
-   * Matches against name or muscle group.
-   * Returns system exercises + the user's custom exercises.
+   * Matches against name or muscle group from the online dataset + user custom exercises.
    */
   static async search(query: string, userId: string, limit = 50) {
-    const term = `%${query}%`;
+    const online = await searchOnlineExercises({ query, limit });
     
-    return db.query.workoutExerciseLibrary.findMany({
+    // Also fetch user's custom exercises
+    const term = `%${query}%`;
+    const userCustom = await db.query.workoutExerciseLibrary.findMany({
       where: and(
-        // Must be a system exercise OR belong to the user
-        or(
-          isNull(workoutExerciseLibrary.userId),
-          eq(workoutExerciseLibrary.userId, userId)
-        ),
-        // Must match the search query
+        eq(workoutExerciseLibrary.userId, userId),
         or(
           ilike(workoutExerciseLibrary.name, term),
           ilike(workoutExerciseLibrary.muscle, term)
         )
       ),
-      limit,
+      limit: 20,
     });
+    
+    return [...userCustom, ...online];
   }
 
   /**

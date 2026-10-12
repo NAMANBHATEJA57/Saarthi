@@ -43,7 +43,15 @@ export async function GET(req: NextRequest) {
             if (userData.email) email = userData.email;
           }
 
-          // If they don't get a refresh token, this might be a problem for long-term sync, but it's okay for now.
+          const updateFields: any = {
+            accessToken: tokens.access_token,
+            expiresAt: tokens.expires_in ? Math.floor(Date.now() / 1000) + tokens.expires_in : null,
+            updatedAt: new Date()
+          };
+          if (tokens.refresh_token) {
+            updateFields.refreshToken = tokens.refresh_token;
+          }
+
           await db.insert(calendarConnections).values({
             userId: session.user.id,
             provider: provider,
@@ -53,12 +61,7 @@ export async function GET(req: NextRequest) {
             email: email,
           }).onConflictDoUpdate({
             target: [calendarConnections.userId, calendarConnections.provider, calendarConnections.email],
-            set: {
-              accessToken: tokens.access_token,
-              refreshToken: tokens.refresh_token || null,
-              expiresAt: tokens.expires_in ? Math.floor(Date.now() / 1000) + tokens.expires_in : null,
-              updatedAt: new Date()
-            }
+            set: updateFields
           });
         } else {
           console.error('Failed to get tokens', await tokenRes.text());

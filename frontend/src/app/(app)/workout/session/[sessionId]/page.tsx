@@ -5,6 +5,7 @@ import { workoutSessions, workoutExerciseLibrary, workoutSets, workoutExercises,
 import { eq, and } from "drizzle-orm";
 import { WorkoutSessionClient } from "@/components/workout/WorkoutSessionClient";
 import { WorkoutService } from "@/lib/workouts/service";
+import { getExerciseMediaDetails } from "@/lib/workout/api";
 
 export default async function WorkoutSessionPage(
   props: { params: Promise<{ sessionId: string }> }
@@ -33,9 +34,19 @@ export default async function WorkoutSessionPage(
     const routines = await db.select().from(workoutRoutines).where(eq(workoutRoutines.id, wSession.routineId));
     if (routines.length > 0) {
       routine = routines[0];
-      rExercises = await db.select().from(workoutExercises)
+      const rawExercises = await db.select().from(workoutExercises)
         .where(eq(workoutExercises.routineId, routine.id))
         .orderBy(workoutExercises.position);
+
+      rExercises = await Promise.all(rawExercises.map(async (re) => {
+        const media = await getExerciseMediaDetails(re.name);
+        return {
+          ...re,
+          animationUrl: media.animationUrl,
+          mediaUrl: media.mediaUrl,
+          thumbnailUrl: media.thumbnailUrl,
+        };
+      }));
     }
   }
 

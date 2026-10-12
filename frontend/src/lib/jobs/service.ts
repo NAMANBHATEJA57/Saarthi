@@ -54,6 +54,8 @@ export class JobService {
     remote: string;
     jobType: string;
     sources: string[];
+    hoursOld?: number;
+    offset?: number;
   }) {
     // 1. Log the search
     await db.insert(jobSearches).values({
@@ -73,15 +75,19 @@ export class JobService {
       const dedupeHashes = new Set<string>();
       const jobsToInsert = [];
 
+      const searchLocations = params.locations.length > 0 ? params.locations : [""];
+
       for (const keyword of params.keywords) {
-        for (const location of params.locations) {
+        for (const location of searchLocations) {
           const payload = {
             search_term: keyword,
             location: location,
             site_names: params.sources,
             job_type: params.jobType === "any" ? "fulltime" : params.jobType,
             is_remote: isRemote,
-            results_wanted: 15 // reduced slightly to balance multi-queries
+            results_wanted: 15, // reduced slightly to balance multi-queries
+            hours_old: params.hoursOld,
+            offset: params.offset || 0
           };
 
           const response = await fetch(`${scraperUrl}/scrape`, {

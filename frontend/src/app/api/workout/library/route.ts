@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { workoutExerciseLibrary } from '@/lib/db/schema';
-import { eq, ilike, or, and, isNull } from 'drizzle-orm';
+import { eq, ilike, or, and } from 'drizzle-orm';
 import { getAuthSession } from '@/lib/auth';
+import { searchOnlineExercises } from '@/lib/workout/onlineDataset';
 
 export async function GET(request: Request) {
   try {
@@ -12,35 +13,40 @@ export async function GET(request: Request) {
     }
 
     const { searchParams } = new URL(request.url);
-    const muscle = searchParams.get('muscle');
-    const search = searchParams.get('search');
+    const muscle = searchParams.get('muscle') || '';
+    const equipment = searchParams.get('equipment') || '';
+    const search = searchParams.get('search') || '';
 
-    const conditions = [];
+    // 1. Fetch filtered exercises from online dataset (cached in-memory)
+    const onlineExercises = await searchOnlineExercises({
+      query: search,
+      muscle,
+      equipment,
+      limit: 80,
+    });
 
-    // Only allow public/system exercises (userId IS NULL) or the user's own exercises
-    conditions.push(or(
-      eq(workoutExerciseLibrary.userId, session.user.id),
-      isNull(workoutExerciseLibrary.userId)
-    ));
-
+    // 2. Query any custom exercises created by this user in their DB
+    const customConditions = [eq(workoutExerciseLibrary.userId, session.user.id)];
     if (muscle) {
-      conditions.push(eq(workoutExerciseLibrary.muscle, muscle));
+      customConditions.push(ilike(workoutExerciseLibrary.muscle, `%${muscle}%`));
     }
-    
     if (search) {
-      conditions.push(ilike(workoutExerciseLibrary.name, `%${search}%`));
+      customConditions.push(ilike(workoutExerciseLibrary.name, `%${search}%`));
     }
-    
-    const exercises = await db
+
+    const customExercises = await db
       .select()
       .from(workoutExerciseLibrary)
-      .where(and(...conditions))
-      .orderBy(workoutExerciseLibrary.name)
-      .limit(100); // Limit to prevent massive payloads if no filter is applied
+      .where(and(...customConditions))
+      .limit(20);
 
-    return NextResponse.json(exercises);
+    // 3. Merge custom exercises first, then online exercises
+    const combined = [...customExercises, ...onlineExercises];
+
+    return NextResponse.json(combined);
   } catch (error) {
     console.error('Failed to fetch exercise library:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
+

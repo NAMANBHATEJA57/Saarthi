@@ -30,14 +30,20 @@ export default function JobDiscoverPage() {
   const [remote, setRemote] = useState("any");
   const [jobType, setJobType] = useState("any");
   const [yoe, setYoe] = useState("any");
+  const [datePosted, setDatePosted] = useState("any");
+  const [sortBy, setSortBy] = useState("date-desc");
+  const [offset, setOffset] = useState(0);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSearching(true);
     setError(null);
 
-    if (keywords.length === 0 || locations.length === 0) {
-      setError("At least one keyword and one location are required.");
+    setOffset(0);
+
+    if (keywords.length === 0 || (locations.length === 0 && remote !== "remote")) {
+      setError("At least one keyword is required, and a location is required unless 'Remote Only' is selected.");
       setIsSearching(false);
       return;
     }
@@ -46,7 +52,7 @@ export default function JobDiscoverPage() {
       const res = await fetch("/api/jobs/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ keywords, locations, remote, jobType, yoe })
+        body: JSON.stringify({ keywords, locations, remote, jobType, yoe, datePosted, offset: 0 })
       });
       
       const data = await res.json();
@@ -57,6 +63,35 @@ export default function JobDiscoverPage() {
       setError(err.message);
     } finally {
       setIsSearching(false);
+    }
+  };
+
+  const handleLoadMore = async () => {
+    setIsLoadingMore(true);
+    setError(null);
+    const newOffset = offset + 15;
+    setOffset(newOffset);
+    
+    try {
+      const res = await fetch("/api/jobs/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ keywords, locations, remote, jobType, yoe, datePosted, offset: newOffset })
+      });
+      
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to load more");
+      
+      const newJobs = data.jobs || [];
+      setResults(prev => {
+        const existingIds = new Set(prev.map(j => j.id));
+        const filteredNew = newJobs.filter((j: any) => !existingIds.has(j.id));
+        return [...prev, ...filteredNew];
+      });
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsLoadingMore(false);
     }
   };
 
@@ -143,7 +178,7 @@ export default function JobDiscoverPage() {
 
             <div className="space-y-2">
               <label className="text-sm font-medium">Date Posted</label>
-              <Select defaultValue="any">
+              <Select value={datePosted} onValueChange={setDatePosted}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select date" />
                 </SelectTrigger>
@@ -184,23 +219,73 @@ export default function JobDiscoverPage() {
 
       {/* Results */}
       {results.length > 0 && !isSearching && (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {results.map((job, idx) => (
-            <JobCard key={job.id || idx} job={job} onSave={async (j) => {
-              try {
-                await fetch("/api/jobs/applications", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ jobId: j.id, status: "Saved" })
-                });
-                alert("Job saved!");
-              } catch (e) {
-                console.error(e);
-                alert("Failed to save job");
-              }
-            }} />
-          ))}
-        </div>
+        <>
+          <div className="flex flex-col sm:flex-row justify-between items-center pb-2 border-b border-[hsl(var(--hairline))]">
+            <h2 className="text-lg font-medium">Found {results.length} jobs</h2>
+            <div className="flex items-center gap-2 mt-4 sm:mt-0">
+              <span className="text-sm text-[hsl(var(--ink-muted))]">Sort by:</span>
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="w-[180px] h-9">
+                  <SelectValue placeholder="Sort" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="date-desc">Date Posted: Newest</SelectItem>
+                  <SelectItem value="date-asc">Date Posted: Oldest</SelectItem>
+                  <SelectItem value="company">Company (A-Z)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {[...results]
+              .sort((a, b) => {
+                if (sortBy === "date-desc") {
+                  const dateA = a.datePosted ? new Date(a.datePosted).getTime() : 0;
+                  const dateB = b.datePosted ? new Date(b.datePosted).getTime() : 0;
+                  return dateB - dateA;
+                }
+                if (sortBy === "date-asc") {
+                  const dateA = a.datePosted ? new Date(a.datePosted).getTime() : 0;
+                  const dateB = b.datePosted ? new Date(b.datePosted).getTime() : 0;
+                  return dateA - dateB;
+                }
+                if (sortBy === "company") {
+                  const compA = (a.company || "").toLowerCase();
+                  const compB = (b.company || "").toLowerCase();
+                  return compA.localeCompare(compB);
+                }
+                return 0;
+              })
+              .map((job, idx) => (
+              <JobCard key={job.id || idx} job={job} onSave={async (j) => {
+                try {
+                  await fetch("/api/jobs/applications", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ jobId: j.id, status: "Saved" })
+                  });
+                  alert("Job saved!");
+                } catch (e) {
+                  console.error(e);
+                  alert("Failed to save job");
+                }
+              }} />
+            ))}
+          </div>
+          
+          {results.length > 0 && (
+            <div className="mt-8 flex justify-center">
+              <Button onClick={handleLoadMore} disabled={isLoadingMore} variant="secondary">
+                {isLoadingMore ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Loading more...
+                  </>
+                ) : "Load More Jobs"}
+              </Button>
+            </div>
+          )}
+        </>
       )}
       
       {!isSearching && results.length === 0 && !error && (

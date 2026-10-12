@@ -17,6 +17,8 @@ class ScrapeRequest(BaseModel):
     job_type: str = "fulltime" # fulltime, parttime, internship, contract
     is_remote: bool = False
     results_wanted: int = 20
+    hours_old: Optional[int] = None
+    offset: int = 0
 
 def clean_value(val):
     if pd.isna(val) or (isinstance(val, float) and math.isnan(val)):
@@ -33,6 +35,9 @@ def scrape(req: ScrapeRequest):
             results_wanted=req.results_wanted,
             is_remote=req.is_remote,
             job_type=req.job_type,
+            hours_old=req.hours_old,
+            offset=req.offset,
+            linkedin_fetch_description=True,
             country_dict={"indeed": "India"} if "india" in req.location.lower() else None
         )
         

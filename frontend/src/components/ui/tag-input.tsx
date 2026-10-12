@@ -49,7 +49,7 @@ export function TagInput({ value, onChange, placeholder, icon, className, sugges
     <div className="relative">
       <div className={cn(
         "relative flex min-h-10 w-full flex-wrap gap-2 rounded-xl border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))] px-3 py-2 text-sm transition-colors",
-        "focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500",
+        "focus-within:outline-none focus-within:ring-2 focus-within:ring-[hsl(var(--primary))]",
         icon && "pl-9",
         className
       )}>
@@ -68,7 +68,7 @@ export function TagInput({ value, onChange, placeholder, icon, className, sugges
             <button
               type="button"
               onClick={() => removeTag(tag)}
-              className="ml-1 rounded-full outline-none focus:ring-2 focus:ring-blue-500"
+              className="ml-1 rounded-full outline-none focus:ring-2 focus:ring-[hsl(var(--primary))]"
             >
               <X className="h-3 w-3 text-[hsl(var(--ink-muted))] hover:text-[hsl(var(--ink))]" />
             </button>
@@ -105,7 +105,6 @@ export function TagInput({ value, onChange, placeholder, icon, className, sugges
               onMouseDown={(e) => {
                 e.preventDefault(); // Prevent blur
                 addTag(suggestion);
-                setIsFocused(false);
               }}
               className="cursor-pointer px-3 py-2 text-sm text-[hsl(var(--ink))] hover:bg-[hsl(var(--surface))] transition-colors"
             >

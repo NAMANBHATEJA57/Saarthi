@@ -3,6 +3,7 @@ import { auth } from '@/auth';
 import { db } from '@/lib/db';
 import { workoutRoutines, workoutExercises, workoutExerciseLibrary } from '@/lib/db/schema';
 import { eq, and, desc, isNull, sql } from 'drizzle-orm';
+import { findOnlineExerciseByName } from '@/lib/workout/onlineDataset';
 
 export async function GET(req: NextRequest) {
   const session = await auth();
@@ -88,11 +89,19 @@ export async function POST(req: NextRequest) {
 
           // Auto-create custom exercise if not found
           if (!libraryId) {
+            const onlineMeta = await findOnlineExerciseByName(exName);
+
             const [newLibEx] = await tx.insert(workoutExerciseLibrary).values({
               userId,
-              name: exName,
-              type: 'strength', // default
-              source: 'custom',
+              name: onlineMeta ? onlineMeta.name : exName,
+              type: onlineMeta ? onlineMeta.type : 'strength',
+              muscle: onlineMeta ? onlineMeta.muscle : null,
+              equipment: onlineMeta ? onlineMeta.equipment : null,
+              instructions: onlineMeta ? onlineMeta.instructions : null,
+              animationUrl: onlineMeta ? onlineMeta.animationUrl : null,
+              thumbnailUrl: onlineMeta ? onlineMeta.thumbnailUrl : null,
+              mediaUrl: onlineMeta ? onlineMeta.mediaUrl : null,
+              source: onlineMeta ? 'online-dataset' : 'custom',
             }).returning();
             libraryId = newLibEx.id;
           }

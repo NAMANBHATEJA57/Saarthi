@@ -10,10 +10,10 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { keywords, locations, remote, jobType, sources, yoe } = body;
+    const { keywords, locations, remote, jobType, sources, yoe, datePosted, offset } = body;
 
-    if (!keywords || !locations || keywords.length === 0 || locations.length === 0) {
-      return NextResponse.json({ error: "Keywords and locations are required" }, { status: 400 });
+    if (!keywords || keywords.length === 0 || (!locations || locations.length === 0) && remote !== "remote") {
+      return NextResponse.json({ error: "At least one keyword is required, and a location is required unless 'Remote Only' is selected." }, { status: 400 });
     }
 
     // Append YOE to keywords if specified
@@ -21,12 +21,19 @@ export async function POST(req: NextRequest) {
       ? keywords.map((k: string) => `${k} ${yoe} experience`)
       : keywords;
 
+    let hoursOld: number | undefined = undefined;
+    if (datePosted === "24h") hoursOld = 24;
+    else if (datePosted === "7d") hoursOld = 168;
+    else if (datePosted === "30d") hoursOld = 720;
+
     const jobs = await JobService.searchAndSave(session.user.id, {
       keywords: finalKeywords,
       locations,
       remote: remote || "any",
       jobType: jobType || "any",
-      sources: sources || ["indeed", "linkedin"]
+      sources: sources || ["indeed", "linkedin", "glassdoor", "zip_recruiter"],
+      hoursOld,
+      offset: offset || 0
     });
 
     return NextResponse.json({ jobs });

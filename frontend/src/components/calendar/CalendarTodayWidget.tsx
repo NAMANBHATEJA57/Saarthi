@@ -1,5 +1,5 @@
-import { getTodayEvents, getCalendarConnection } from "@/lib/calendar/service";
-import { Calendar as CalendarIcon, Clock, Settings } from "lucide-react";
+import { getTodayEvents, getCalendarConnection, getValidAccessToken } from "@/lib/calendar/service";
+import { Calendar as CalendarIcon, Clock, Settings, RefreshCw } from "lucide-react";
 import { Suspense } from "react";
 import { RelationshipService } from "@/lib/relationships/service";
 
@@ -16,6 +16,25 @@ async function CalendarEventsList({ userId, localDateStr }: { userId: string, lo
           className="mt-3 px-4 py-2 text-xs font-semibold bg-[hsl(var(--primary))] text-white rounded-md hover:opacity-90"
         >
           Connect Calendar
+        </a>
+      </div>
+    );
+  }
+
+  const validToken = await getValidAccessToken(connection);
+  if (!validToken) {
+    return (
+      <div className="flex flex-col items-center justify-center py-6 text-center text-[hsl(var(--ink-muted))]">
+        <CalendarIcon className="w-8 h-8 mb-2 opacity-60 text-amber-500" />
+        <p className="text-sm font-medium text-[hsl(var(--ink))]">Calendar session expired</p>
+        <p className="text-xs text-[hsl(var(--ink-secondary))] mt-0.5 max-w-[220px]">
+          Google token has expired. Please reconnect to sync today's events.
+        </p>
+        <a 
+          href="/api/calendar/connect" 
+          className="mt-3 inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold bg-[hsl(var(--primary))] text-white rounded-md hover:opacity-90 shadow-xs"
+        >
+          <RefreshCw className="w-3.5 h-3.5" /> Reconnect
         </a>
       </div>
     );
