@@ -98,8 +98,19 @@ export function WorkoutSessionClient({ workoutSession, routine, routineExercises
                 }}
               >
                 <div>
-                  <h3 className="font-semibold text-[hsl(var(--ink))]">{ex.name}</h3>
-                  <p className="text-xs text-[hsl(var(--ink-muted))]">{exSets.length} sets completed</p>
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-semibold text-[hsl(var(--ink))]">{ex.name}</h3>
+                    {ex.isOptional && (
+                      <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                        Optional
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-[hsl(var(--ink-muted))] mt-0.5">
+                    {exSets.length}{ex.sets ? ` of ${ex.sets}` : ''} sets completed
+                    {ex.reps ? ` • Target: ${ex.reps}` : ''}
+                    {ex.rest ? ` • ⏱️ ${ex.rest}` : ''}
+                  </p>
                 </div>
               </div>
 
@@ -128,6 +139,12 @@ export function WorkoutSessionClient({ workoutSession, routine, routineExercises
                           </span>
                         </div>
                       ))}
+                    </div>
+                  )}
+
+                  {ex.instructions && (
+                    <div className="p-3 rounded-lg bg-[hsl(var(--canvas))] border border-[hsl(var(--hairline))] text-xs text-[hsl(var(--ink-secondary))] leading-relaxed">
+                      <span className="font-semibold text-[hsl(var(--ink))]">Cue:</span> {ex.instructions}
                     </div>
                   )}
 

@@ -53,10 +53,23 @@ export async function PATCH(
           const exName = exercises[i]?.name?.trim();
           if (!exName) continue;
           
+          const rawSets = exercises[i]?.sets;
+          const setsStr = rawSets !== undefined && rawSets !== null ? String(rawSets).trim() : null;
+          const repsStr = exercises[i]?.reps ? String(exercises[i].reps).trim() : null;
+          const restStr = exercises[i]?.rest ? String(exercises[i].rest).trim() : null;
+          const instructionsStr = exercises[i]?.instructions ? String(exercises[i].instructions).trim() : null;
+          const isOptionalVal = Boolean(exercises[i]?.isOptional);
+
           const [newEx] = await tx.insert(workoutExercises).values({
             routineId: id,
             name: exName,
             position: i,
+            libraryId: exercises[i]?.libraryId || null,
+            sets: setsStr,
+            reps: repsStr,
+            rest: restStr,
+            instructions: instructionsStr,
+            isOptional: isOptionalVal,
           }).returning();
           createdExercises.push(newEx);
         }

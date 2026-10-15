@@ -8,6 +8,11 @@ import { useRouter } from "next/navigation";
 export interface RoutineExercise {
   id?: string;
   name: string;
+  sets?: string | number | null;
+  reps?: string | null;
+  rest?: string | null;
+  instructions?: string | null;
+  isOptional?: boolean;
 }
 
 export interface WorkoutRoutine {
@@ -104,20 +109,46 @@ export function WorkoutTodayWidget({ routine, localDate, initialDisplayState }: 
             <button
               key={syntheticId}
               onClick={() => toggleCheck(ex.name, i)}
-              className="flex items-center w-full gap-3 py-2 group text-left"
+              className="flex items-start w-full gap-3 py-2 group text-left"
             >
               <div 
-                className={`flex-shrink-0 flex items-center justify-center w-6 h-6 rounded border transition-colors ${
+                className={`mt-0.5 flex-shrink-0 flex items-center justify-center w-5 h-5 rounded border transition-colors ${
                   isChecked 
                     ? 'bg-[hsl(var(--ink))] border-[hsl(var(--ink))] text-[hsl(var(--surface))]' 
                     : 'bg-transparent border-[hsl(var(--ink-secondary))] group-hover:border-[hsl(var(--ink))]'
                 }`}
               >
-                {isChecked && <Check className="w-4 h-4" />}
+                {isChecked && <Check className="w-3.5 h-3.5" />}
               </div>
-              <span className={`text-base transition-colors ${isChecked ? 'text-[hsl(var(--ink-secondary))] line-through' : 'text-[hsl(var(--ink))]'}`}>
-                {ex.name}
-              </span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className={`text-sm font-medium transition-colors ${isChecked ? 'text-[hsl(var(--ink-secondary))] line-through' : 'text-[hsl(var(--ink))]'}`}>
+                    {ex.name}
+                  </span>
+                  {ex.isOptional && (
+                    <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                      Opt
+                    </span>
+                  )}
+                </div>
+                {(ex.sets || ex.reps) && (
+                  <div className="flex items-center gap-1.5 text-xs text-[hsl(var(--ink-secondary))] mt-0.5">
+                    {ex.sets && (
+                      <span className="font-medium text-[hsl(var(--ink))]">
+                        {ex.sets} {ex.sets === '1' || ex.sets === 1 ? 'set' : 'sets'}
+                      </span>
+                    )}
+                    {ex.sets && ex.reps && <span>•</span>}
+                    {ex.reps && <span>{ex.reps} {ex.reps.includes('min') || ex.reps.includes('sec') ? '' : 'reps'}</span>}
+                    {ex.rest && (
+                      <>
+                        <span>•</span>
+                        <span>⏱️ {ex.rest}</span>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
             </button>
           );
         })}

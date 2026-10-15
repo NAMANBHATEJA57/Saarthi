@@ -1,3 +1,12 @@
+export interface WorkoutDeckExercise {
+  name: string; // The exact name matching the dataset
+  sets: number | string;
+  reps: string;
+  rest?: string;
+  instructions?: string;
+  isOptional?: boolean;
+}
+
 export interface WorkoutDeck {
   id: string;
   name: string;
@@ -5,15 +14,78 @@ export interface WorkoutDeck {
   routines: {
     name: string;
     description?: string;
-    exercises: {
-      name: string; // The exact name matching the dataset
-      sets: number;
-      reps: string;
-    }[];
+    exercises: WorkoutDeckExercise[];
   }[];
 }
 
 export const WORKOUT_DECKS: WorkoutDeck[] = [
+  {
+    id: 'beginner-gym-8week',
+    name: '8-Week Beginner Gym Plan',
+    description: 'A gentle 6-day beginner split (Chest/Tri, Quads/Hams, Back/Bi, Shoulders/Mobility, Light Upper, Cardio/Mobility) designed for steady strength and gradual fat loss with clinical safety precautions.',
+    routines: [
+      {
+        name: 'Monday: Chest + triceps',
+        description: 'Chest press variations + triceps • Warm-up: 5–7 min easy walk before; 5 min cooldown walk after.',
+        exercises: [
+          { name: 'chest press machine', sets: 2, reps: '10–12', rest: '90 sec', instructions: 'Back supported; comfortable range. Exhale while pressing.' },
+          { name: 'incline chest press machine', sets: 2, reps: '10–12', rest: '90 sec', instructions: 'Use a light, controlled load; do not hold your breath.' },
+          { name: 'pec deck machine', sets: 2, reps: '10–12', rest: '60 sec', instructions: 'Stop short of a painful or forced stretch.' },
+          { name: 'cable triceps pushdown', sets: 2, reps: '10–12', rest: '60–90 sec', instructions: 'Keep torso steady; breathe continuously.' },
+        ]
+      },
+      {
+        name: 'Tuesday: Quads + hamstrings',
+        description: 'Gentle, clinician-cleared lower-body machines • Skip if unsure or any groin symptoms occur.',
+        exercises: [
+          { name: 'seated leg extension (optional)', sets: '1–2', reps: '10–12', rest: '60–90 sec', instructions: 'Gentle option only if clinician-cleared and symptom-free. Not rehab. Use easy load and comfortable range.', isOptional: true },
+          { name: 'seated leg curl (optional)', sets: '1–2', reps: '10–12', rest: '60–90 sec', instructions: 'Gentle option only if clinician-cleared and symptom-free. Not rehab. Skip if unsure.', isOptional: true },
+          { name: 'leg press (optional)', sets: '1–2', reps: '10', rest: '90 sec', instructions: 'Only if clinician-cleared and symptom-free. Very light, comfortable range; no straining or breath-holding. Skip if unsure.', isOptional: true },
+        ]
+      },
+      {
+        name: 'Wednesday: Back + biceps',
+        description: 'Upper back rows, pulldown, and curls • Warm-up: 5–7 min easy walk before; 5–10 min walk after.',
+        exercises: [
+          { name: 'lat pulldown', sets: 2, reps: '10–12', rest: '60–90 sec', instructions: 'Pull toward upper chest; keep torso steady and avoid swinging.' },
+          { name: 'seated cable row', sets: 2, reps: '10–12', rest: '60–90 sec', instructions: 'Pull toward lower ribs; keep back neutral and avoid jerking.' },
+          { name: 'chest-supported row machine', sets: 2, reps: '10–12', rest: '60–90 sec', instructions: 'Keep chest against pad; pull with control.' },
+          { name: 'standing dumbbell biceps curl', sets: 2, reps: '10–12', rest: '60 sec', instructions: 'Dumbbells; no biceps curl machine substitution. Keep elbows relaxed by sides.' },
+          { name: 'dumbbell hammer curl', sets: 2, reps: '10–12', rest: '60 sec', instructions: 'Use light dumbbells and avoid swinging.' },
+        ]
+      },
+      {
+        name: 'Thursday: Shoulders + gentle leg mobility',
+        description: 'Light overhead pressing, delts, and seated mobility • Warm-up: 5–7 min walk before; 5 min walk after.',
+        exercises: [
+          { name: 'seated machine shoulder press (light)', sets: 2, reps: '10–12', rest: '90 sec', instructions: 'Use back support and a comfortable range; exhale while pressing.' },
+          { name: 'dumbbell lateral raise (light)', sets: 2, reps: '10–12', rest: '60 sec', instructions: 'Raise only to a comfortable height; no swinging.' },
+          { name: 'reverse pec deck', sets: 2, reps: '10–12', rest: '60 sec', instructions: 'Use a light load and smooth motion.' },
+          { name: 'gentle seated hamstring stretch (optional)', sets: 1, reps: '15–20 sec each side', rest: 'As needed', instructions: 'Only if clinician-cleared and symptom-free. No bouncing or forced range; skip with any groin pulling.', isOptional: true },
+          { name: 'ankle circles (optional)', sets: 1, reps: '8–10 each direction per ankle', rest: 'As needed', instructions: 'Gentle mobility option only if comfortable and cleared. This is not a corrective routine.', isOptional: true },
+        ]
+      },
+      {
+        name: 'Friday: Light chest + back',
+        description: 'Light upper-body volume touch-up • Warm-up: 5–7 min walk before; 5 min walk after.',
+        exercises: [
+          { name: 'chest press machine (light)', sets: 2, reps: '12', rest: '60–90 sec', instructions: 'Easy load; finish well short of failure.' },
+          { name: 'lat pulldown (light)', sets: 2, reps: '12', rest: '60–90 sec', instructions: 'Controlled repetitions; no torso swinging.' },
+          { name: 'pec deck (light)', sets: 2, reps: '12', rest: '60 sec', instructions: 'Comfortable range and steady breathing.' },
+          { name: 'seated cable row (light)', sets: 2, reps: '12', rest: '60–90 sec', instructions: 'Stay upright; avoid jerking.' },
+        ]
+      },
+      {
+        name: 'Saturday: Cardio + mobility',
+        description: 'Easy conversational cardio & relaxed mobility • Finish with 5 min easy cooldown.',
+        exercises: [
+          { name: 'easy flat treadmill walk or comfortable cardio', sets: 1, reps: '15–20 min', rest: '—', instructions: 'Easy conversational pace. Choose a pain-free option; stop if symptoms appear.' },
+          { name: 'shoulder rolls and shoulder-blade squeezes', sets: 1, reps: '10 each; squeezes 2 × 10', rest: 'As needed', instructions: 'Relaxed, comfortable motion.' },
+          { name: 'gentle leg mobility options', sets: 1, reps: 'Optional; clinician-directed', rest: 'As needed', instructions: 'Use only movements your clinician has cleared. Do not use this as a left-leg correction routine.', isOptional: true },
+        ]
+      }
+    ]
+  },
   {
     id: 'ppl-classic',
     name: 'Push / Pull / Legs (Classic)',

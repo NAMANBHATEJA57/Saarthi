@@ -85,6 +85,11 @@ export async function POST(request: Request) {
             libraryId: libraryId || null, 
             name: ex.name,
             position: index,
+            sets: ex.sets !== undefined && ex.sets !== null ? String(ex.sets) : null,
+            reps: ex.reps ? String(ex.reps) : null,
+            rest: (ex as any).rest || null,
+            instructions: (ex as any).instructions || null,
+            isOptional: Boolean((ex as any).isOptional),
           };
         });
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Settings2, Trash2, Activity, Dumbbell, ArrowLeft } from "lucide-react";
+import { Plus, Settings2, Trash2, Activity, Dumbbell, ArrowLeft, Timer, Flame, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RoutineEditor, WorkoutRoutine } from "@/components/workout/RoutineEditor";
 import { ScheduleEditor } from "@/components/workout/ScheduleEditor";
@@ -109,31 +109,94 @@ export function WorkoutClient({
     
     return (
       <div className="space-y-6">
-        <div className="flex items-center gap-4">
-          <Button variant="secondary" className="px-3 bg-[hsl(var(--surface))] border-[hsl(var(--hairline))]" onClick={() => setViewingScheduleDay(null)}>
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
-          <h2 className="text-xl font-medium text-[hsl(var(--ink))]">
-            {WEEKDAYS[viewingScheduleDay]} - {routine?.name || "Rest"}
-          </h2>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Button variant="secondary" className="px-3 bg-[hsl(var(--surface))] border-[hsl(var(--hairline))]" onClick={() => setViewingScheduleDay(null)}>
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Button>
+            <div>
+              <span className="text-xs font-semibold text-[hsl(var(--ink-secondary))] uppercase tracking-wider">
+                {WEEKDAYS[viewingScheduleDay]}
+              </span>
+              <h2 className="text-xl font-semibold text-[hsl(var(--ink))]">
+                {routine?.name || "Rest Day"}
+              </h2>
+            </div>
+          </div>
+          {routine && (
+            <span className="text-xs px-2.5 py-1 rounded-full bg-[hsl(var(--canvas))] text-[hsl(var(--ink-secondary))] border border-[hsl(var(--hairline))]">
+              {routine.exercises.length} exercises
+            </span>
+          )}
         </div>
 
+        {routine?.remark && (
+          <div className="flex items-start gap-3 p-4 rounded-xl border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]">
+            <Info className="w-5 h-5 text-[hsl(var(--primary))] shrink-0 mt-0.5" />
+            <p className="text-sm text-[hsl(var(--ink-secondary))] leading-relaxed">
+              {routine.remark}
+            </p>
+          </div>
+        )}
+
         {(!routine || routine.exercises.length === 0) ? (
-          <p className="text-sm text-[hsl(var(--ink-secondary))]">No exercises in this routine.</p>
+          <div className="p-8 text-center rounded-xl border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]">
+            <p className="text-sm text-[hsl(var(--ink-secondary))]">No exercises scheduled for this day.</p>
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {routine.exercises.map((ex, i) => (
-              <div key={i} className="flex flex-col gap-3 p-4 rounded-xl border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]">
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[hsl(var(--primary))] text-white text-sm font-bold shadow-sm">
-                    {i + 1}
+              <div key={i} className="flex flex-col gap-3.5 p-4 rounded-xl border border-[hsl(var(--hairline))] bg-[hsl(var(--surface))] shadow-sm">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-start gap-3 min-w-0">
+                    <div className="flex items-center justify-center w-7 h-7 rounded-full bg-[hsl(var(--primary))] text-white text-xs font-bold shrink-0 mt-0.5 shadow-sm">
+                      {i + 1}
+                    </div>
+                    <div className="min-w-0">
+                      <span className="font-semibold text-[hsl(var(--ink))] text-base block leading-snug">
+                        {ex.name}
+                      </span>
+                    </div>
                   </div>
-                  <span className="font-medium text-[hsl(var(--ink))] text-lg">{ex.name}</span>
+                  {ex.isOptional && (
+                    <span className="shrink-0 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                      Optional
+                    </span>
+                  )}
                 </div>
+
+                {/* Sets, Reps, Rest Badges */}
+                <div className="flex flex-wrap items-center gap-2">
+                  {ex.sets && (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] border border-[hsl(var(--primary))]/20">
+                      <Dumbbell className="w-3.5 h-3.5" />
+                      {ex.sets} {ex.sets === '1' || ex.sets === 1 ? 'set' : 'sets'}
+                    </span>
+                  )}
+                  {ex.reps && (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-[hsl(var(--canvas))] text-[hsl(var(--ink))] border border-[hsl(var(--hairline))]">
+                      <Flame className="w-3.5 h-3.5 text-amber-500" />
+                      {ex.reps} {ex.reps.includes('min') || ex.reps.includes('sec') ? '' : 'reps'}
+                    </span>
+                  )}
+                  {ex.rest && (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-[hsl(var(--canvas))] text-[hsl(var(--ink-secondary))] border border-[hsl(var(--hairline))]">
+                      <Timer className="w-3.5 h-3.5 text-blue-500" />
+                      Rest {ex.rest}
+                    </span>
+                  )}
+                </div>
+
+                {/* Instructions / Safety Cue */}
+                {ex.instructions && (
+                  <div className="p-2.5 rounded-lg bg-[hsl(var(--canvas))] border border-[hsl(var(--hairline))] text-xs text-[hsl(var(--ink-secondary))] leading-relaxed">
+                    <span className="font-semibold text-[hsl(var(--ink))]">Cue:</span> {ex.instructions}
+                  </div>
+                )}
                 
                 {(ex.animationUrl || ex.mediaUrl) && (
-                  <div className="mt-2 relative w-full aspect-video rounded-lg overflow-hidden bg-[hsl(var(--canvas))] border border-[hsl(var(--hairline))] shadow-sm">
+                  <div className="mt-1 relative w-full aspect-video rounded-lg overflow-hidden bg-[hsl(var(--canvas))] border border-[hsl(var(--hairline))] shadow-sm">
                     <img
                       src={ex.animationUrl || ex.mediaUrl || ""}
                       alt={ex.name}
@@ -181,9 +244,14 @@ export function WorkoutClient({
                   <span className="text-sm font-medium text-[hsl(var(--ink-secondary))] uppercase tracking-wider truncate">
                     {dayName}
                   </span>
-                  <span className={`text-base mt-1 truncate ${routine ? 'text-[hsl(var(--ink))]' : 'text-[hsl(var(--ink-secondary))] opacity-60'}`}>
+                  <span className={`text-base mt-1 truncate ${routine ? 'text-[hsl(var(--ink))] font-medium' : 'text-[hsl(var(--ink-secondary))] opacity-60'}`}>
                     {routine ? routine.name : 'Rest'}
                   </span>
+                  {routine && (
+                    <span className="text-xs text-[hsl(var(--ink-secondary))] mt-0.5">
+                      {routine.exercises.length} {routine.exercises.length === 1 ? 'exercise' : 'exercises'}
+                    </span>
+                  )}
                 </div>
                 <div 
                   className="p-2 rounded-md hover:bg-[hsl(var(--hairline))] transition-colors"

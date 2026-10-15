@@ -10,6 +10,11 @@ import { VisualBuilderDrawer } from "./VisualBuilderDrawer";
 export interface RoutineExercise {
   id?: string;
   name: string;
+  sets?: string | number | null;
+  reps?: string | null;
+  rest?: string | null;
+  instructions?: string | null;
+  isOptional?: boolean;
   animationUrl?: string | null;
   mediaUrl?: string | null;
 }
@@ -91,7 +96,14 @@ export function RoutineEditor({ initialRoutine, onSuccess, onCancel }: RoutineEd
       const payload = {
         name: name.trim(),
         remark: remark.trim() || null,
-        exercises: exercises.map(ex => ({ name: ex.name })),
+        exercises: exercises.map(ex => ({
+          name: ex.name,
+          sets: ex.sets !== undefined && ex.sets !== null ? String(ex.sets) : null,
+          reps: ex.reps ? String(ex.reps) : null,
+          rest: ex.rest ? String(ex.rest) : null,
+          instructions: ex.instructions ? String(ex.instructions) : null,
+          isOptional: Boolean(ex.isOptional),
+        })),
       };
 
       const url = initialRoutine
@@ -167,9 +179,9 @@ export function RoutineEditor({ initialRoutine, onSuccess, onCancel }: RoutineEd
             {exercises.map((ex, i) => (
               <div 
                 key={i} 
-                className="flex items-center gap-2 p-2 rounded-md bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))]"
+                className="flex items-start gap-2 p-3 rounded-md bg-[hsl(var(--surface))] border border-[hsl(var(--hairline))]"
               >
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 mt-1">
                   <button
                     type="button"
                     onClick={() => handleMoveUp(i)}
@@ -188,8 +200,45 @@ export function RoutineEditor({ initialRoutine, onSuccess, onCancel }: RoutineEd
                   </button>
                 </div>
                 
-                <div className="flex-1 text-[hsl(var(--ink))] font-medium truncate">
-                  {ex.name}
+                <div className="flex-1 min-w-0">
+                  <div className="text-[hsl(var(--ink))] font-medium truncate">
+                    {ex.name}
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2 mt-2">
+                    <input
+                      type="text"
+                      placeholder="Sets (e.g. 2)"
+                      value={ex.sets || ''}
+                      onChange={(e) => {
+                        const updated = [...exercises];
+                        updated[i] = { ...updated[i], sets: e.target.value };
+                        setExercises(updated);
+                      }}
+                      className="w-24 px-2 py-1 text-xs rounded border border-[hsl(var(--hairline))] bg-[hsl(var(--canvas))] text-[hsl(var(--ink))]"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Reps (e.g. 10-12)"
+                      value={ex.reps || ''}
+                      onChange={(e) => {
+                        const updated = [...exercises];
+                        updated[i] = { ...updated[i], reps: e.target.value };
+                        setExercises(updated);
+                      }}
+                      className="w-28 px-2 py-1 text-xs rounded border border-[hsl(var(--hairline))] bg-[hsl(var(--canvas))] text-[hsl(var(--ink))]"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Rest (e.g. 90s)"
+                      value={ex.rest || ''}
+                      onChange={(e) => {
+                        const updated = [...exercises];
+                        updated[i] = { ...updated[i], rest: e.target.value };
+                        setExercises(updated);
+                      }}
+                      className="w-24 px-2 py-1 text-xs rounded border border-[hsl(var(--hairline))] bg-[hsl(var(--canvas))] text-[hsl(var(--ink))]"
+                    />
+                  </div>
                 </div>
                 
                 <button

@@ -37,6 +37,11 @@ export default async function WorkoutPage() {
           routineId: workoutExercises.routineId,
           name: workoutExercises.name,
           position: workoutExercises.position,
+          sets: workoutExercises.sets,
+          reps: workoutExercises.reps,
+          rest: workoutExercises.rest,
+          instructions: workoutExercises.instructions,
+          isOptional: workoutExercises.isOptional,
         })
         .from(workoutExercises)
         .where(eq(workoutExercises.routineId, rId))

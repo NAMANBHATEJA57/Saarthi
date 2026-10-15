@@ -327,7 +327,11 @@ export const workoutExercises = pgTable('workout_exercises', {
   name: text('name').notNull(),
   position: integer('position').notNull(),
   libraryId: uuid('library_id'), // optional link to exercise library
-
+  sets: text('sets'), // e.g. "2" or "1–2"
+  reps: text('reps'), // e.g. "10–12" or "15–20 min"
+  rest: text('rest'), // e.g. "60–90 sec"
+  instructions: text('instructions'), // cues and safety notes
+  isOptional: boolean('is_optional').default(false).notNull(),
 }, (table) => ({
   workoutExercisesRoutineIdx: index('workout_exercises_routine_idx').on(table.routineId, table.position),
 }));
