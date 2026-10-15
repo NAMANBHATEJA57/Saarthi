@@ -237,6 +237,10 @@ const EXERCISE_SYNONYMS: Record<string, string> = {
   'easy flat treadmill walk or comfortable cardio': 'Walking On Incline Treadmill',
   'shoulder rolls and shoulder-blade squeezes': 'Arm Circles (male)',
   'gentle leg mobility options': 'Hamstring Stretch',
+  'supported standing front leg raise': 'Band Lying Straight Leg Raise',
+  'supported standing side leg raise': 'Side Hip Abduction',
+  'supported standing back leg raise': 'Cable Standing Hip Extension',
+  'supported heel raise': 'Bodyweight Standing Calf Raise',
 };
 
 function getTokens(s: string): string[] {

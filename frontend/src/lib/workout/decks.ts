@@ -63,6 +63,10 @@ export const WORKOUT_DECKS: WorkoutDeck[] = [
           { name: 'reverse pec deck', sets: 2, reps: '10–12', rest: '60 sec', instructions: 'Use a light load and smooth motion.' },
           { name: 'gentle seated hamstring stretch (optional)', sets: 1, reps: '15–20 sec each side', rest: 'As needed', instructions: 'Only if clinician-cleared and symptom-free. No bouncing or forced range; skip with any groin pulling.', isOptional: true },
           { name: 'ankle circles (optional)', sets: 1, reps: '8–10 each direction per ankle', rest: 'As needed', instructions: 'Gentle mobility option only if comfortable and cleared. This is not a corrective routine.', isOptional: true },
+          { name: 'supported standing front leg raise', sets: 1, reps: '8–10 each leg', rest: 'As needed', instructions: 'Hold a stable support; lift one leg a short distance forward, then lower slowly.', isOptional: true },
+          { name: 'supported standing side leg raise', sets: 1, reps: '8–10 each leg', rest: 'As needed', instructions: 'Keep your torso upright; move one leg a short distance sideways, then return slowly.', isOptional: true },
+          { name: 'supported standing back leg raise', sets: 1, reps: '8–10 each leg', rest: 'As needed', instructions: 'Move one leg slightly behind you without arching your back.', isOptional: true },
+          { name: 'supported heel raise', sets: 1, reps: '8–10 reps', rest: 'As needed', instructions: 'Hold the support and rise onto your toes, then lower slowly.', isOptional: true },
         ]
       },
       {
